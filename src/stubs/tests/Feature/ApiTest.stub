@@ -1,0 +1,118 @@
+<?php
+
+namespace {{namespace}}\Feature;
+
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use {{namespace}}\TestCase;
+use {{modelNamespace}}\{{modelName}};
+
+class {{modelName}}Test extends TestCase
+{
+    use RefreshDatabase, WithFaker;
+
+    const BASE_URI = '{{packageRouteName}}/api/{{routeName}}';
+
+    /**
+     * @test
+     */
+    public function {{tableName}}ListIsPaginated()
+    {
+        factory({{modelName}}::class, 30)->create();
+
+        $this->assertCount(30, {{modelName}}::all());
+
+        $response = $this->json('GET', self::BASE_URI);
+
+        $response->assertJsonStructure([
+            'data' => [
+                '*' => [
+                    {{column}}
+                ]
+            ],
+            'links' => ['first', 'last', 'prev', 'next'],
+            'meta' => [
+                'current_page', 'last_page', 'from', 'to',
+                'path', 'per_page', 'total'
+            ]
+        ]);
+    }
+
+    /**
+     * @test
+     */
+    public function checkRequiredFields()
+    {
+        $response = $this->json('POST', self::BASE_URI, []);
+
+        {{required}}
+    }
+
+    /**
+     * @test
+     */
+    public function {{objectName}}CanBeCreated()
+    {
+        ${{objectName}}Fake = factory({{modelName}}::class)->make();
+
+        $response = $this->json('POST', self::BASE_URI, ${{objectName}}Fake->toArray());
+
+        $response->assertStatus(201);
+
+        $this->assertCount(1, {{modelName}}::all());
+
+        $this->assertDatabaseHas('{{tableName}}', ${{objectName}}Fake->getAttributes());
+    }
+
+    /**
+     * @test
+     */
+    public function {{objectName}}CanBeDisplayed()
+    {
+        ${{objectName}}Fake = factory({{modelName}}::class)->make();
+        $this->json('POST', self::BASE_URI, ${{objectName}}Fake->toArray());
+
+        ${{objectName}}  = {{modelName}}::first();
+
+        $response = $this->json('GET', self::BASE_URI . '/' . ${{objectName}}->id);
+
+        $response->assertStatus(200);
+    }
+
+    /**
+     * @test
+     */
+    public function {{objectName}}CanBeUpdated()
+    {
+        ${{objectName}}Fakes = factory({{modelName}}::class, 2)->make();
+        $this->json('POST', self::BASE_URI, ${{objectName}}Fakes->first()->toArray());
+
+        ${{objectName}}  = {{modelName}}::first();
+
+        $response = $this->json('PUT', self::BASE_URI . '/' . ${{objectName}}->id, ${{objectName}}Fakes->last()->toArray());
+
+        $response->assertStatus(200);
+
+        $this->assertDatabaseHas('{{tableName}}', ${{objectName}}Fakes->last()->getAttributes());
+    }
+
+    /**
+     * @test
+     */
+    public function {{objectName}}CanBeDeleted()
+    {
+        ${{objectName}}Fake = factory({{modelName}}::class)->make();
+        $this->json('POST', self::BASE_URI, ${{objectName}}Fake->toArray());
+
+        $this->assertCount(1, {{modelName}}::all());
+
+        ${{objectName}}  = {{modelName}}::first();
+
+        $response = $this->json('DELETE', self::BASE_URI . '/' . ${{objectName}}->id);
+
+        $response->assertStatus(204);
+        $this->assertCount(0, {{modelName}}::all());
+
+        $this->assertDatabaseMissing('{{tableName}}', ${{objectName}}Fake->getAttributes());
+    }
+}

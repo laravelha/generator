@@ -1,0 +1,35 @@
+@extends('layouts.app')
+
+@section('breadcrumbs', Breadcrumbs::render('{{routeName}}.delete', ${{objectName}}))
+
+@section('content')
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 style="color: #7a0d0c">@lang('app.delete.title', ['id' => ${{objectName}}->id])</h1>
+                <p class="lead">@lang('app.delete.question', ['item' => __('{{tableName}}.show', ['{{objectName}}' => ${{objectName}}->id ])])</p>
+                <div class="well">
+                    <dl>
+                        @foreach(${{objectName}}->getAttributes() as $key => $value)
+                            <dt>@lang('{{tableName}}.'.$key)</dt>
+                            @if(in_array($key, ${{objectName}}->getDates()))
+                                <dd>{{ ${{objectName}}->$key->format('d/m/Y H:i:s') }}</dd>
+                            @else
+                                <dd>{{ $value }}</dd>
+                            @endif
+                        @endforeach
+                    </dl>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <form action="{{ route('{{routeName}}.destroy', ['{{objectName}}' => ${{objectName}}]) }}" method="post" name="delete">
+                @method('delete')
+                @csrf
+                <button type="button" class="btn btn-default" onclick="location.href='{{ route('{{routeName}}.show', ['{{objectName}}' => ${{objectName}}]) }}'">@lang('app.cancel')</button>
+                <button type="submit" class="btn btn-primary">@lang('app.delete')</button>
+            </form>
+        </div>
+    </div>
+@endsection
+

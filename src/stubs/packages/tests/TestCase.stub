@@ -1,0 +1,49 @@
+<?php
+
+namespace {{packagesNamespace}}\Tests;
+
+use Illuminate\Foundation\Application;
+use {{packagesNamespace}}\Providers\{{packageName}}ServiceProvider;
+use {{packagesNamespace}}\Providers\RouteServiceProvider;
+use Orchestra\Testbench\TestCase as Orchestra;
+
+abstract class TestCase extends Orchestra
+{
+    /**
+     * Setup the test environment.
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+    }
+
+    /**
+     * add the package provider
+     *
+     * @param $app
+     * @return array
+     */
+    protected function getPackageProviders($app)
+    {
+        return [
+            {{packageName}}ServiceProvider::class,
+            RouteServiceProvider::class,
+        ];
+    }
+
+    /**
+     * Define environment setup.
+     *
+     * @param  Application  $app
+     * @return void
+     */
+    protected function getEnvironmentSetUp($app)
+    {
+        $app['config']->set('database.default', 'testing');
+        $app['config']->set('database.connections.testing', [
+            'driver'   => 'sqlite',
+            'database' => ':memory:',
+            'prefix'   => '',
+        ]);
+    }
+}

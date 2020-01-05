@@ -1,0 +1,21 @@
+@extends('layouts.app')
+
+@section('breadcrumbs', Breadcrumbs::render('{{routeName}}.create'))
+
+@section('content')
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 style="color: #7a0d0c">@lang('app.create.title', ['model' => __('{{tableName}}.model')])</h1>
+                <form action="{{ route('{{routeName}}.store') }}" method="post" name="create">
+                    @csrf
+                    {{column}}
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">@lang('app.save')</button>
+                        <button type="button" class="btn btn-default" onclick="location.href='{{ route('{{routeName}}.index') }}'">@lang('app.cancel')</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+@endsection

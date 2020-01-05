@@ -1,0 +1,78 @@
+<?php
+
+namespace {{namespace}}\Feature;
+
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use {{namespace}}\TestCase;
+use {{modelNamespace}}\{{modelName}};
+
+class {{modelName}}Test extends TestCase
+{
+    use RefreshDatabase, WithFaker;
+
+    const BASE_URI = '{{packageRouteName}}/{{routeName}}';
+
+    /**
+     * @test
+     */
+    public function checkRequiredFields()
+    {
+        $response = $this->post(self::BASE_URI, []);
+
+        {{required}}
+    }
+
+    /**
+     * @test
+     */
+    public function {{objectName}}CanBeCreated()
+    {
+        ${{objectName}}Fake = factory({{modelName}}::class)->make();
+
+        $response = $this->post(self::BASE_URI, ${{objectName}}Fake->toArray());
+
+        $response->assertStatus(302);
+
+        $this->assertCount(1, {{modelName}}::all());
+
+        $this->assertDatabaseHas('{{tableName}}', ${{objectName}}Fake->getAttributes());
+    }
+
+    /**
+     * @test
+     */
+    public function {{objectName}}CanBeUpdated()
+    {
+        ${{objectName}}Fakes = factory({{modelName}}::class, 2)->make();
+        $this->post(self::BASE_URI, ${{objectName}}Fakes->first()->toArray());
+
+        ${{objectName}}  = {{modelName}}::first();
+
+        $response = $this->put(self::BASE_URI . '/' . ${{objectName}}->id, ${{objectName}}Fakes->last()->toArray());
+
+        $response->assertStatus(302);
+
+        $this->assertDatabaseHas('{{tableName}}', ${{objectName}}Fakes->last()->getAttributes());
+    }
+
+    /**
+     * @test
+     */
+    public function {{objectName}}CanBeDeleted()
+    {
+        ${{objectName}}Fake = factory({{modelName}}::class)->make();
+        $this->post(self::BASE_URI, ${{objectName}}Fake->toArray());
+
+        $this->assertCount(1, {{modelName}}::all());
+
+        ${{objectName}}  = {{modelName}}::first();
+
+        $response = $this->delete(self::BASE_URI . '/' . ${{objectName}}->id);
+
+        $response->assertStatus(302);
+        $this->assertCount(0, {{modelName}}::all());
+
+        $this->assertDatabaseMissing('{{tableName}}', ${{objectName}}Fake->getAttributes());
+    }
+}

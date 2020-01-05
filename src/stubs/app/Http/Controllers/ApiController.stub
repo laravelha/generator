@@ -1,0 +1,231 @@
+<?php
+
+namespace {{namespace}}\Http\Controllers;
+
+use {{modelNamespace}}\{{modelName}};
+use {{namespace}}\Http\Requests\{{modelName}}StoreRequest;
+use {{namespace}}\Http\Requests\{{modelName}}UpdateRequest;
+use {{namespace}}\Http\Resources\{{modelName}}Resource;
+use {{namespace}}\Http\Resources\{{modelName}}Collection;
+
+use Exception;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Routing\Controller;
+
+class {{modelName}}Controller extends Controller
+{
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    /**
+     * @OA\Get(
+     *     tags={"{{packageRouteName}}/{{routeName}}"},
+     *     summary="Display a listing of the resource",
+     *     description="get all {{objectName}} on database and paginate then",
+     *     path="{{packageRouteName}}/{{routeName}}",
+     *     @OA\Parameter(
+     *          name="only",
+     *          in="query",
+     *          description="filter results using field1;field2;field3...",
+     *          @OA\Schema(type="string"),
+     *          style="form"
+     *     ),
+     *     @OA\Parameter(
+     *          name="search",
+     *          in="query",
+     *          description="search results using key:value",
+     *          @OA\Schema(type="string"),
+     *          style="form"
+     *     ),
+     *     @OA\Parameter(
+     *          name="operators",
+     *          in="query",
+     *          description="set fileds operators using field1:operator1",
+     *          @OA\Schema(type="string"),
+     *          style="form"
+     *     ),
+     *     @OA\Parameter(
+     *          name="sort",
+     *          in="query",
+     *          description="order results using field:direction",
+     *          @OA\Schema(type="string"),
+     *          style="form"
+     *     ),
+     *     @OA\Parameter(
+     *          name="with",
+     *          in="query",
+     *          description="get relations using relation1;relation2;relation3...",
+     *          @OA\Schema(type="string"),
+     *          style="form"
+     *     ),
+     *     @OA\Parameter(
+     *          name="page",
+     *          in="query",
+     *          description="define page",
+     *          @OA\Schema(type="string"),
+     *          style="form"
+     *     ),
+     *     @OA\Parameter(
+     *          name="limit",
+     *          in="query",
+     *          description="limit per page",
+     *          @OA\Schema(type="int"),
+     *          style="form"
+     *     ),
+     *     @OA\Response(
+     *         response="200", description="List of {{tableName}}"
+     *     )
+     * )
+     *
+     * @return {{modelName}}Collection
+     */
+    public function index()
+    {
+        $limit = request()->has('limit') ? request()->get('limit') : null;
+        return new {{modelName}}Collection({{modelName}}::paginate($limit));
+    }
+
+    /**
+     * @OA\Post(
+     *     tags={"{{packageRouteName}}/{{routeName}}"},
+     *     summary="Store a newly created resource in storage.",
+     *     description="store a new {{objectName}} on database",
+     *     path="{{packageRouteName}}/{{routeName}}",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             type="object",
+     *             {{column}}
+     *       )
+     *     ),
+     *     @OA\Response(
+     *         response="201", description="New {{objectName}} created"
+     *     )
+     * )
+     *
+     * @param  {{modelName}}StoreRequest $request
+     * @return {{modelName}}Resource
+     */
+    public function store({{modelName}}StoreRequest $request)
+    {
+        return new {{modelName}}Resource({{modelName}}::create($request->validated()));
+    }
+
+    /**
+     * @OA\Get(
+     *     tags={"{{packageRouteName}}/{{routeName}}"},
+     *     summary="Display the specified resource.",
+     *     description="show {{objectName}}",
+     *     path="{{packageRouteName}}/{{routeName}}/{{{objectName}}}",
+     *     @OA\Parameter(
+     *         description="{{modelName}} id",
+     *         in="path",
+     *         name="{{objectName}}",
+     *         required=true,
+     *        @OA\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *          name="only",
+     *          in="query",
+     *          description="filter results using field1;field2;field3...",
+     *          @OA\Schema(type="string"),
+     *          style="form"
+     *     ),
+     *     @OA\Parameter(
+     *          name="with",
+     *          in="query",
+     *          description="get relations using relation1;relation2;relation3...",
+     *          @OA\Schema(type="string"),
+     *          style="form"
+     *     ),
+     *     @OA\Response(
+     *         response="200", description="Show {{objectName}}"
+     *     )
+     * )
+     *
+     * @param  {{modelName}} ${{objectName}}
+     * @return {{modelName}}Resource
+     */
+    public function show({{modelName}} ${{objectName}})
+    {
+        return new {{modelName}}Resource(${{objectName}});
+    }
+
+    /**
+     * @OA\Put(
+     *     tags={"{{packageRouteName}}/{{routeName}}"},
+     *     summary="Update the specified resource in storage",
+     *     description="update a {{objectName}} on database",
+     *     path="{{packageRouteName}}/{{routeName}}/{{{objectName}}}",
+     *     @OA\Parameter(
+     *         description="{{modelName}} id",
+     *         in="path",
+     *         name="{{objectName}}",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         )
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             type="object",
+     *             {{column}}
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="201", description="{{modelName}} updated"
+     *     )
+     * )
+     *
+     * @param  {{modelName}}UpdateRequest $request
+     * @param  {{modelName}} ${{objectName}}
+     *
+     * @return {{modelName}}Resource
+     */
+    public function update({{modelName}}UpdateRequest $request, {{modelName}} ${{objectName}})
+    {
+        ${{objectName}}->update($request->validated());
+
+        return new {{modelName}}Resource(${{objectName}});
+    }
+
+    /**
+     * @OA\Delete(
+     *     tags={"{{packageRouteName}}/{{routeName}}"},
+     *     summary="Remove the specified resource from storage.",
+     *     description="remove a {{objectName}} on database",
+     *     path="{{packageRouteName}}/{{routeName}}/{{{objectName}}}",
+     *     @OA\Parameter(
+     *         description="{{modelName}} id",
+     *         in="path",
+     *         name="{{objectName}}",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="200", description="{{modelName}} deleted"
+     *     )
+     * )
+     *
+     * @param  {{modelName}} ${{objectName}}
+     *
+     * @return JsonResponse
+     * @throws Exception
+     */
+    public function destroy({{modelName}} ${{objectName}})
+    {
+        ${{objectName}}->delete();
+
+        return response()->json(null, 204);
+    }
+}

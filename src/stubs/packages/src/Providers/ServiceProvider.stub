@@ -1,0 +1,51 @@
+<?php
+
+namespace {{packagesNamespace}}\Providers;
+
+use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\Database\Eloquent\Factory;
+use Illuminate\Support\ServiceProvider;
+
+class {{packageName}}ServiceProvider extends ServiceProvider
+{
+    const SRC_PATH = __DIR__.'/..';
+
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     * @throws BindingResolutionException
+     */
+    public function boot()
+    {
+        $this->loadViewsFrom(self::SRC_PATH.'/../{{packageViewsFolder}}', '{{folderName}}');
+        $this->loadTranslationsFrom(self::SRC_PATH.'/../{{packageLangsFolder}}', '{{folderName}}');
+        $this->loadMigrationsFrom(self::SRC_PATH.'/../{{packageMigrationsFolder}}');
+        $this->app->make(Factory::class)->load(self::SRC_PATH.'/../{{packageFactoriesFolder}}');
+
+        $this->publishes([
+            self::SRC_PATH.'/../{{packageViewsFolder}}' => resource_path('views/vendor/{{folderName}}'),
+        ], '{{folderName}}-views');
+
+        $this->publishes([
+            self::SRC_PATH.'/../{{packageLangsFolder}}' => resource_path('lang/vendor/{{folderName}}'),
+        ], '{{folderName}}-lang');
+
+        $this->publishes([
+            self::SRC_PATH.'/../{{packageConfigsFolder}}/{{folderName}}.php' => config_path('{{folderName}}.php'),
+        ], '{{folderName}}-config');
+    }
+
+    /**
+     * Register the package services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->mergeConfigFrom(
+            self::SRC_PATH.'/../{{packageConfigsFolder}}/{{folderName}}.php',
+            '{{folderName}}'
+        );
+    }
+}

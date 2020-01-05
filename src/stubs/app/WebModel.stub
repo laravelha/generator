@@ -1,0 +1,19 @@
+<?php
+
+namespace {{modelNamespace}};
+
+use Laravelha\Support\Traits\Tableable;
+use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
+
+class {{modelName}} extends Model
+{
+    use Tableable;
+
+    protected $guarded = ['id'];
+
+    {{dates}}
+
+    {{column}}
+    {{foreign}}
+}

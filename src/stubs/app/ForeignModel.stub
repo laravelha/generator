@@ -1,0 +1,8 @@
+
+    /**
+     * Get the {{objectForeigntName}} of {{modelName}}.
+     */
+    public function {{objectForeigntName}}()
+    {
+        return $this->belongsTo({{ModelForeigntName}}::class);
+    }

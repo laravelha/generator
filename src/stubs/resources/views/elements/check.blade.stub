@@ -1,0 +1,9 @@
+<div class="form-group{{ $errors->has('{{column}}') ? ' has-error' : '' }}">
+    <label for="{{column}}" class="checkbox control-label">@lang('{{tableName}}.{{column}}')</label>
+    <input id="{{column}}" type="checkbox" name="{{column}}" value="{{ old('{{column}}') ? old('{{column}}') : (isset(${{objectName}}->{{column}}) ? ${{objectName}}->{{column}} : '') }}" {{required}} autofocus>
+    @if ($errors->has('{{column}}'))
+        <span class="help-block">
+            <strong>{{ $errors->first('{{column}}') }}</strong>
+        </span>
+    @endif
+</div>

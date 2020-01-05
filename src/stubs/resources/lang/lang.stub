@@ -1,0 +1,13 @@
+<?php
+
+return [
+    'model'      => '{{modelName}}',
+    'index'      => '{{modelNamePlural}}',
+    'show'       => '{{modelName}} :{{objectName}}',
+    'edit'       => 'Editar {{modelName}}',
+    'delete'     => 'Excluir {{modelName}}',
+    'id'         => 'id',
+    'created_at' => 'Criado em',
+    'updated_at' => 'Atualizado em',
+    {{column}}
+];

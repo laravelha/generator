@@ -1,0 +1,18 @@
+<?php
+
+namespace {{modelNamespace}};
+
+use Laravelha\Support\Traits\RequestQueryBuildable;
+use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
+
+class {{modelName}} extends Model
+{
+    use RequestQueryBuildable;
+
+    protected $guarded = ['id'];
+
+    {{dates}}
+    {{foreign}}
+    {{searchables}}
+}

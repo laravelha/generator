@@ -1,0 +1,28 @@
+<div class="form-group{{ $errors->has('{{column}}') ? ' has-error' : '' }}">
+    <label for="{{collection}}" class="control-label">@lang('{{tableName}}.{{column}}')</label>
+    <select id="{{collection}}" class="form-control" name="{{column}}" {{required}}>
+        <option value="">Selecione uma opção</option>
+        @foreach (${{collection}} as ${{object}})
+            <option value="{{ ${{object}}->id }}" {{ ${{object}}->id == old({{column}}) || (isset(${{objectName}}->{{column}}) && ${{object}}->id == ${{objectName}}->{{column}}) ? 'selected' : '' }}>{{ ${{object}}->name }}</option>
+        @endforeach
+    </select>
+    @if ($errors->has('{{column}}'))
+        <span class="help-block">
+            <strong>{{ $errors->first('{{column}}') }}</strong>
+        </span>
+    </div>
+</div>
+@push('scripts')
+<script>
+    $(function () {
+        $('#{{collection}}').select2({
+            theme: "bootstrap",
+            language: {
+                noResults: function (params) {
+                    return "Nenhum resultado encontrado";
+                }
+            }
+        });
+    });
+</script>
+@endpush

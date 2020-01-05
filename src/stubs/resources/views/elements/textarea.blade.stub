@@ -1,0 +1,9 @@
+<div class="form-group{{ $errors->has('{{column}}') ? ' has-error' : '' }}">
+    <label for="{{column}}" class="control-label">@lang('{{tableName}}.{{column}}')</label>
+    <textarea id="{{column}}" class="form-control" name="{{column}}" maxlength="{{maxlength}}" {{required}} autofocus>{{ old('{{column}}') ? old('{{column}}') : (isset(${{objectName}}->{{column}}) ? ${{objectName}}->{{column}} : '') }}</textarea>
+    @if ($errors->has('{{column}}'))
+        <span class="help-block">
+            <strong>{{ $errors->first('{{column}}') }}</strong>
+        </span>
+    @endif
+</div>
