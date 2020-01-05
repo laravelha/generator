@@ -28,7 +28,7 @@
                     <form action="{{ route('{{routeName}}.destroy', ['{{objectName}}' => ${{objectName}}]) }}" method="post" name="delete">
                         @method('delete')
                         @csrf
-                        <button type="button" class="btn btn-default" onclick="location.href='{{ route('{{routeName}}.show', ['{{objectName}}' => ${{objectName}}]) }}'">@lang('app.cancel')</button>
+                        <button type="button" class="btn btn-outline-dark" onclick="location.href='{{ route('{{routeName}}.show', ['{{objectName}}' => ${{objectName}}]) }}'">@lang('app.cancel')</button>
                         <button type="submit" class="btn btn-primary">@lang('app.delete')</button>
                     </form>
                 </div>

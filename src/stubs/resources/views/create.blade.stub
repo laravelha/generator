@@ -15,7 +15,7 @@
                         {{column}}
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary">@lang('app.save')</button>
-                            <button type="button" class="btn btn-default" onclick="location.href='{{ route('{{routeName}}.index') }}'">@lang('app.cancel')</button>
+                            <button type="button" class="btn btn-outline-dark" onclick="location.href='{{ route('{{routeName}}.index') }}'">@lang('app.cancel')</button>
                         </div>
                     </form>
                 </div>
