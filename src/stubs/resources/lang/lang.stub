@@ -3,11 +3,12 @@
 return [
     'model'      => '{{modelName}}',
     'index'      => '{{modelNamePlural}}',
+    'create'     => 'Create',
     'show'       => '{{modelName}} :{{objectName}}',
-    'edit'       => 'Editar {{modelName}}',
-    'delete'     => 'Excluir {{modelName}}',
+    'edit'       => 'Edit {{modelName}}',
+    'delete'     => 'Remove {{modelName}}',
     'id'         => 'id',
-    'created_at' => 'Criado em',
-    'updated_at' => 'Atualizado em',
+    'created_at' => 'Created at',
+    'updated_at' => 'Update at',
     {{column}}
 ];

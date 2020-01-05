@@ -16,7 +16,7 @@ class LangCommand extends AbstractCommand
      */
     protected $signature = 'ha-generator:lang
         {name : Model name (singular) for example User}
-        {folder=pt-br : Lang folder}
+        {folder=en : Lang folder}
         {--no-log : No logging}
         {--s|schema= : Schema options?}';
 
