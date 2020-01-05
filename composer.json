@@ -1,13 +1,14 @@
 {
     "name": "laravelha/generator",
     "description": "Laravelha Generator",
+    "keywords": ["RAD", "Laravel", "Generator"],
+    "license": "MIT",
     "authors": [
         {
             "name": "Pedro Augusto",
             "email": "pedro.e@ufv.br"
         }
     ],
-    "keywords": ["RAD", "Laravel", "Generator"],
     "require": {
         "illuminate/console": "^6.0",
         "illuminate/filesystem": "^6.0",
