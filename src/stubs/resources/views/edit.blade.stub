@@ -3,16 +3,22 @@
 @section('content')
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <h1 style="color: #7a0d0c">@lang('app.edit.title', ['id' => ${{objectName}}->id])</h1>
-            <form action="{{ route('{{routeName}}.update', ['{{objectName}}' => ${{objectName}}]) }}" method="post" name="edit">
-                @method('patch')
-                @csrf
-                {{column}}
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">@lang('app.save')</button>
-                    <button type="button" class="btn btn-default" onclick="location.href='{{ route('{{routeName}}.show', ['{{objectName}}' => ${{objectName}}]) }}'">@lang('app.cancel')</button>
+            <div class="card">
+                <div class="card-header">
+                    <h2>@lang('app.edit.title', ['id' => ${{objectName}}->id])</h2>
                 </div>
-            </form>
+                <div class="card-body">
+                    <form action="{{ route('{{routeName}}.update', ['{{objectName}}' => ${{objectName}}]) }}" method="post" name="edit">
+                        @method('patch')
+                        @csrf
+                        {{column}}
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">@lang('app.save')</button>
+                            <button type="button" class="btn btn-default" onclick="location.href='{{ route('{{routeName}}.show', ['{{objectName}}' => ${{objectName}}]) }}'">@lang('app.cancel')</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 @endsection

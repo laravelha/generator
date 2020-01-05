@@ -3,30 +3,36 @@
 @section('content')
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <h1 style="color: #7a0d0c">@lang('app.show.title', ['item' => __('{{tableName}}.show', ['{{objectName}}' => ${{objectName}}->id])])</h1>
-            <div class="form-group">
-                <button type="button" class="btn btn-default"
-                        onclick="location.href='{{ route('{{routeName}}.edit', ['{{objectName}}' => ${{objectName}}]) }}'"
-                        title="@lang('app.edit.title', ['id' => ${{objectName}}->id])">
-                    @lang('app.edit')
-                </button>
-                <button class="btn btn-default"
-                        onclick="window.location='{{ route('{{routeName}}.delete', ['{{objectName}}' => ${{objectName}}]) }}'"
-                        title="@lang('app.delete.title', ['id' => ${{objectName}}->id])">
-                    @lang('app.delete')
-                </button>
-            </div>
-            <div class="well">
-                <dl>
-                    @foreach(${{objectName}}->toArray() as $key => $value)
-                        <dt>@lang('{{tableName}}.'.$key)</dt>
-                        @if(in_array($key, ${{objectName}}->getDates()) && ${{objectName}}->$key)
-                            <dd>{{ ${{objectName}}->$key->format('d/m/Y H:i:s') }}</dd>
-                        @else
-                            <dd>{{ $value }}</dd>
-                        @endif
-                    @endforeach
-                </dl>
+            <div class="card">
+                <div class="card-header">
+                    <h2>@lang('app.show.title', ['item' => __('{{tableName}}.show', ['{{objectName}}' => ${{objectName}}->id])])</h2>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-outline-primary"
+                                onclick="location.href='{{ route('{{routeName}}.edit', ['{{objectName}}' => ${{objectName}}]) }}'"
+                                title="@lang('app.edit.title', ['id' => ${{objectName}}->id])">
+                            @lang('app.edit')
+                        </button>
+                        <button class="btn btn-outline-danger"
+                                onclick="window.location='{{ route('{{routeName}}.delete', ['{{objectName}}' => ${{objectName}}]) }}'"
+                                title="@lang('app.delete.title', ['id' => ${{objectName}}->id])">
+                            @lang('app.delete')
+                        </button>
+                    </div>
+                    <div class="well">
+                        <dl>
+                            @foreach(${{objectName}}->toArray() as $key => $value)
+                                <dt>@lang('{{tableName}}.'.$key)</dt>
+                                @if(in_array($key, ${{objectName}}->getDates()) && ${{objectName}}->$key)
+                                    <dd>{{ ${{objectName}}->$key->format('d/m/Y H:i:s') }}</dd>
+                                @else
+                                    <dd>{{ $value }}</dd>
+                                @endif
+                            @endforeach
+                        </dl>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
