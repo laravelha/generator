@@ -18,6 +18,7 @@ ha-generator:route       "Insert new resources routes"
 ha-generator:test        "Create a new feature test and apply schema at the same time"
 ha-generator:lang        "Create a new lang resource and apply schema at the same time"
 ha-generator:view        "Create a new views resource and apply schema at the same time"
+ha-generator:breadcrumb  "Insert new resources breadcrumb"
 ha-generator:crud        "Run all commands"
 ha-generator:package     "Create scaffolding structure to packages"
 ```
@@ -64,6 +65,7 @@ resources
   
 routes
 ├── api.php
+├── breadcrumbs.php
 └── web.php
 
 ```
