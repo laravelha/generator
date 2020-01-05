@@ -1,28 +1,34 @@
+@extends('layouts.app')
+
 @section('content')
-<div class="container">
-    <div class="panel panel-default form-inline">
-        <div class="panel-heading">
-            <a href="{{ route('{{routeName}}.create') }}" class="btn btn-sm btn-primary">
-                @lang('app.add')...
-            </a>
-        </div>
-        <div class="panel-body">
-            <div class="table-responsive">
-                <table class="table table-striped table-hover" id="{{tableName}}-table">
-                    <thead>
-                        <tr>
-                            @foreach($columns as $column)
-                                <th>@lang('{{tableName}}.'.$column['data'])</th>
-                            @endforeach
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <a href="{{ route('{{routeName}}.create') }}" class="btn btn-sm btn-primary">
+                        @lang('app.add')...
+                    </a>
+                </div>
+
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover" id="{{tableName}}-table">
+                            <thead>
+                                <tr>
+                                    @foreach($columns as $column)
+                                        <th>@lang('{{tableName}}.'.$column['data'])</th>
+                                    @endforeach
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
 @endsection
+
 
 @push('scripts')
 <script id="script">
@@ -39,6 +45,5 @@
             pagingType: 'full_numbers'
         });
     });
-
 </script>
 @endpush
