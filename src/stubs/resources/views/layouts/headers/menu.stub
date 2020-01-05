@@ -1,3 +1,0 @@
-<li class="{{ active_class(if_route_pattern(['{{routeName}}.index', '{{routeName}}.create', '{{routeName}}.show', '{{routeName}}.edit', '{{routeName}}.delete'])) }}" role="menuitem">
-    <a href="{{route('{{routeName}}.index')}}">@lang('{{tableName}}.index')</a>
-</li>

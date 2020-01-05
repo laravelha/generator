@@ -1,7 +1,3 @@
-@extends('layouts.app')
-
-@section('breadcrumbs', Breadcrumbs::render('{{routeName}}.index'))
-
 @section('content')
 <div class="container">
     <div class="panel panel-default form-inline">
@@ -40,13 +36,7 @@
                 url: '{{routeName}}/data'
             },
             columns: @json($columns),
-            language: {
-                url: 'lang/pt-br/datatables.json'
-            },
-            pagingType: 'full_numbers',
-            drawCallback: function () {
-                $('.dataTables_paginate > .pagination').addClass('input-sm');
-            }
+            pagingType: 'full_numbers'
         });
     });
 
