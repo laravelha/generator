@@ -194,19 +194,15 @@ class CrudGenerator extends Command
         $this->viewFile($name);
 
         // create view create
-        $this->migalhas($name, 'create', 'index');
         $this->viewFile($name, 'create', $this->option('schema'));
 
         // create view show
-        $this->migalhas($name, 'show', 'index');
         $this->viewFile($name, 'show');
 
         // create view edit
-        $this->migalhas($name, 'edit', 'show');
         $this->viewFile($name, 'edit', $this->option('schema'));
 
         // create view delete
-        $this->migalhas($name, 'delete', 'show');
         $this->viewFile($name, 'delete');
 
         $this->info("Views '".Str::plural(strtolower($name))."' created");
@@ -226,32 +222,23 @@ class CrudGenerator extends Command
             $this->lang($name);
         }
 
-        if ($this->confirm('Do you wish to create the menu?', true)) {
-            $this->menu($name);
-        }
-
         if ($this->confirm('Do you wish to create the view index?', true)) {
-            $this->migalhas($name);
             $this->viewFile($name);
         }
 
         if ($this->confirm('Do you wish to create the view create?', true)) {
-            $this->migalhas($name, 'create', 'index');
             $this->viewFile($name, 'create', $this->option('schema'));
         }
 
         if ($this->confirm('Do you wish to create the view show?', true)) {
-            $this->migalhas($name, 'show', 'index');
             $this->viewFile($name, 'show');
         }
 
         if ($this->confirm('Do you wish to create the view edit?', true)) {
-            $this->migalhas($name, 'edit', 'show');
             $this->viewFile($name, 'edit', $this->option('schema'));
         }
 
         if ($this->confirm('Do you wish to create the view delete?', true)) {
-            $this->migalhas($name, 'delete', 'show');
             $this->viewFile($name, 'delete');
         }
 
