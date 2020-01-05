@@ -2,7 +2,7 @@
 name: Documentation report
 about: Use this template for documentation related issues
 title: ''
-labels: docs
+labels: documentation
 assignees: ''
 ---
 
