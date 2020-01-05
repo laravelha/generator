@@ -8,18 +8,18 @@ After install fresh Laravel application:
 2. Run `php artisan ha-generator:<COMMAND> <ARGUMENTS> <OPTIONS>` to create automatically generated code.
 3. The following commands are available.:
 ```shell script
-ha-generator:migration   Create a new migration class and apply schema at the same timecreated
-ha-generator:model       Create a new model class and apply schema at the same time
-ha-generator:factory     Create a new factory class and apply schema at the same time
-ha-generator:requests    Create a new requests class and apply schema at the same time
-ha-generator:controller  Create a new controller and resources for api
-ha-generator:resources   Create a new resources class and apply schema at the same time
-ha-generator:route       Insert new resources routes
-ha-generator:test        Create a new feature test and apply schema at the same time
-ha-generator:lang        Create a new lang resource and apply schema at the same time
-ha-generator:view        Create a new views resource and apply schema at the same time
-ha-generator:crud        Run all commands
-ha-generator:package     Create scaffolding structure to packages
+ha-generator:migration   "Create a new migration class and apply schema at the same time"
+ha-generator:model       "Create a new model class and apply schema at the same time"
+ha-generator:factory     "Create a new factory class and apply schema at the same time"
+ha-generator:requests    "Create a new requests class and apply schema at the same time"
+ha-generator:controller  "Create a new controller and resources for api"
+ha-generator:resources   "Create a new resources class and apply schema at the same time"
+ha-generator:route       "Insert new resources routes"
+ha-generator:test        "Create a new feature test and apply schema at the same time"
+ha-generator:lang        "Create a new lang resource and apply schema at the same time"
+ha-generator:view        "Create a new views resource and apply schema at the same time"
+ha-generator:crud        "Run all commands"
+ha-generator:package     "Create scaffolding structure to packages"
 ```
 4. For more information for each command use:
 `php artisan help ha-generator:<COMMAND>`
