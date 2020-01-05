@@ -8,7 +8,7 @@ After install fresh Laravel application:
 2. Run `php artisan ha-generator:<COMMAND> <ARGUMENTS> <OPTIONS>` to create automatically generated code.
 3. The following commands are available.:
 ```shell script
-ha-generator:migration   Create a new migration class and apply schema at the same time
+ha-generator:migration   Create a new migration class and apply schema at the same timecreated
 ha-generator:model       Create a new model class and apply schema at the same time
 ha-generator:factory     Create a new factory class and apply schema at the same time
 ha-generator:requests    Create a new requests class and apply schema at the same time
@@ -18,6 +18,8 @@ ha-generator:route       Insert new resources routes
 ha-generator:test        Create a new feature test and apply schema at the same time
 ha-generator:lang        Create a new lang resource and apply schema at the same time
 ha-generator:view        Create a new views resource and apply schema at the same time
+ha-generator:crud        Run all commands
+ha-generator:package     Create scaffolding structure to packages
 ```
 4. For more information for each command use:
 `php artisan help ha-generator:<COMMAND>`
@@ -31,9 +33,6 @@ app/
 └── Http
     ├── Controllers
     |   ├── Auth
-    |   |   └── CasController.php
-    |   |
-    |   ├── HomeController.php
     |   ├── IndexController.php
     |   └── <SINGULAR_CLASS_NAME>Controller.php
     |
@@ -42,8 +41,7 @@ app/
             ├── <SINGULAR_CLASS_NAME>StoreRequest.php
             └── <SINGULAR_CLASS_NAME>UpdateRequest.php
 config/
-├── breadcrumbs.php
-└── cas.php
+└── ha-generator.php
 
 database
 ├── factories
@@ -52,32 +50,20 @@ database
 └── migrations
   └── YYYY_MM_DD_HHmmSS_create_<PLURAL_CLASS_NAME>_table.php
 
-public
-├── css
-|   └── app.css
-|
-└── js
-  └── app.js
-
 resources
 ├── lang/pt-br
-|   ├── app.php
-|   ├── auth.php
-|   ├── datatables.json
 |   └── <PLURAL_CLASS_NAME>.php
 |
-├── views
-|   └── <PLURAL_CLASS_NAME>
-|       ├── index.blade
-|       └── show.blade
-|    
-└── layouts
-  ├── app.blade
-  ├── footer.blade
-  └── header.blade
+└── views
+   └── <PLURAL_CLASS_NAME>
+       ├── create.blade
+       ├── delete.blade
+       ├── edit.blade
+       ├── index.blade
+       └── show.blade
   
 routes
-├── breadcrumbs.php
+├── api.php
 └── web.php
 
 ```
