@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('breadcrumbs', Breadcrumbs::render('{{routeName}}.delete', ${{objectName}}))
+
 @section('content')
     <div class="row justify-content-center">
         <div class="col-md-12">

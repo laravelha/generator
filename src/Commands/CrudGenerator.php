@@ -191,18 +191,23 @@ class CrudGenerator extends Command
         $this->lang($name);
 
         // create view index
+        $this->breadcrumbs($name);
         $this->viewFile($name);
 
         // create view create
+        $this->breadcrumbs($name, 'create', 'index');
         $this->viewFile($name, 'create', $this->option('schema'));
 
         // create view show
+        $this->breadcrumbs($name, 'show', 'index');
         $this->viewFile($name, 'show');
 
         // create view edit
+        $this->breadcrumbs($name, 'edit', 'show');
         $this->viewFile($name, 'edit', $this->option('schema'));
 
         // create view delete
+        $this->breadcrumbs($name, 'delete', 'show');
         $this->viewFile($name, 'delete');
 
         $this->info("Views '".Str::plural(strtolower($name))."' created");
@@ -223,22 +228,27 @@ class CrudGenerator extends Command
         }
 
         if ($this->confirm('Do you wish to create the view index?', true)) {
+            $this->breadcrumbs($name);
             $this->viewFile($name);
         }
 
         if ($this->confirm('Do you wish to create the view create?', true)) {
+            $this->breadcrumbs($name, 'create', 'index');
             $this->viewFile($name, 'create', $this->option('schema'));
         }
 
         if ($this->confirm('Do you wish to create the view show?', true)) {
+            $this->breadcrumbs($name, 'show', 'index');
             $this->viewFile($name, 'show');
         }
 
         if ($this->confirm('Do you wish to create the view edit?', true)) {
+            $this->breadcrumbs($name, 'edit', 'show');
             $this->viewFile($name, 'edit', $this->option('schema'));
         }
 
         if ($this->confirm('Do you wish to create the view delete?', true)) {
+            $this->breadcrumbs($name, 'delete', 'show');
             $this->viewFile($name, 'delete');
         }
 
@@ -256,6 +266,31 @@ class CrudGenerator extends Command
             $this->call("ha-generator:lang",  ['name' => $name, '--no-log' => $this->noLogDetailed, '--schema' => $this->option('schema')]);
         } catch (\Exception $exception) {
             $this->warn("Unable to create lang to {$name}. {$exception->getMessage()}");
+        }
+    }
+
+    /**
+     * @param  string  $name
+     * @param  string|null  $view
+     * @param  string|null  $parent
+     * @return void
+     */
+    protected function breadcrumbs(string $name, string $view = null, string $parent = null): void
+    {
+        $params = ['name' => $name, '--no-log' => $this->noLogDetailed];
+
+        if($view) $params['view'] = $view;
+
+        if($parent) $params['--parent'] = $parent;
+
+        if($parent != 'index') $params['--argparent'] = true;
+
+        if($view != 'create') $params['--ownarg'] = true;
+
+        try {
+            $this->call("ha-generator:breadcrumb",  $params);
+        } catch (\Exception $exception) {
+            $this->warn("Unable to create breadcrumb to {$name} {$view}");
         }
     }
 

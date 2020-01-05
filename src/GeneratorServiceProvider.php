@@ -4,6 +4,7 @@ namespace Laravelha\Generator;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Support\DeferrableProvider;
+use Laravelha\Generator\Commands\BreadcrumbCommand;
 use Laravelha\Generator\Commands\ControllerCommand;
 use Laravelha\Generator\Commands\CrudGenerator;
 use Laravelha\Generator\Commands\FactoryCommand;
@@ -46,6 +47,7 @@ class GeneratorServiceProvider extends ServiceProvider implements DeferrableProv
 
         if ($this->app->runningInConsole()) {
             $this->commands([
+                BreadcrumbCommand::class,
                 ControllerCommand::class,
                 CrudGenerator::class,
                 FactoryCommand::class,
@@ -71,6 +73,7 @@ class GeneratorServiceProvider extends ServiceProvider implements DeferrableProv
     public function provides()
     {
         return [
+            BreadcrumbCommand::class,
             ControllerCommand::class,
             CrudGenerator::class,
             FactoryCommand::class,
