@@ -73,6 +73,12 @@ routes
 
 ```
 
+## Examples
+[API] (https://github.com/laravelha/poc-api)
+[WEB] (https://github.com/laravelha/poc-api)
 
+## Screenshots
+![API](/.github/images/api.jpeg)
+![WEB](/.github/images/web.jpeg)
 
 
