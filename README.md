@@ -28,6 +28,71 @@ ha-generator:package     "Create scaffolding structure to packages"
 6. For more information for each command use:
 `php artisan help ha-generator:<COMMAND>`
 
+## Happy way
+This is my approach to use it.
+
+1. Install laravel fresh application
+```shell script
+composer create-project --prefer-dist laravel/laravel blog && cd blog
+```
+
+2. Make the first commit
+```shell script
+git init
+git add .
+git commit -m 'feat: install laravel fresh app'
+```
+
+3. Install Laravelha/Preset for your case
+```shell script
+composer require laravelha/preset-web --dev
+```
+
+4. Run preset
+```shell script
+php artisan preset ha-web --option=auth
+```
+
+5. Make the commit
+```shell script
+git add .
+git commit -m 'feat: install and run laravel laravelha/preset-web with auth'
+```
+
+6. Install generator and publish config
+```shell script
+composer require laravelha/generator --dev
+php artisan vendor:publish --tag=ha-generator
+```
+
+7. Run crud generator
+```shell script
+php artisan ha-generator:crud Category -s 'title:string(150), description:text:nullable, published_at:timestamp:nullable'
+```
+
+8. Commit then
+```shell script
+git add .
+git commit -m 'feat: create category crud by generator'
+```
+
+9. Run other crud generator
+```shell script
+php artisan ha-generator:crud Post -a -s 'title:string(150), content:text, published_at:timestamp:nullable, category_id:unsignedBigInteger:foreign'
+```
+
+10. Commit last crud
+```shell script
+git add .
+git commit -m 'feat: create post crud by generator'
+```
+
+> It is very important that the stage is clean before running the generator, because if you give up what was generated it is possible to undo completely with `git clean -fd; git checkout .`
+
+
+> Every command generated is store on /storage/logs, if you need detailer each command within crud, use the option `--log-details`
+
+
 ## Auto generated structure
   
 ```
