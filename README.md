@@ -25,7 +25,7 @@ ha-generator:nav         "Insert new nav item"
 ha-generator:crud        "Run all commands"
 ha-generator:package     "Create scaffolding structure to packages"
 ```
-4. For more information for each command use:
+6. For more information for each command use:
 `php artisan help ha-generator:<COMMAND>`
 
 ## Auto generated structure
