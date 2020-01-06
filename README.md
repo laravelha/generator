@@ -74,8 +74,8 @@ routes
 ```
 
 ## Examples
-[API] (https://github.com/laravelha/poc-api)
-[WEB] (https://github.com/laravelha/poc-api)
+[API](https://github.com/laravelha/poc-api) api generated from generator   
+[WEB](https://github.com/laravelha/poc-api) web application generated from generator
 
 ## Screenshots
 ![API](/.github/images/api.jpeg)
