@@ -12,6 +12,7 @@ use Laravelha\Generator\Commands\LangCommand;
 use Laravelha\Generator\Commands\MigrationCommand;
 use Laravelha\Generator\Commands\MigrationPivotCommand;
 use Laravelha\Generator\Commands\ModelCommand;
+use Laravelha\Generator\Commands\NavCommand;
 use Laravelha\Generator\Commands\PackageCommand;
 use Laravelha\Generator\Commands\RequestsCommand;
 use Laravelha\Generator\Commands\ResourcesCommand;
@@ -55,6 +56,7 @@ class GeneratorServiceProvider extends ServiceProvider implements DeferrableProv
                 MigrationCommand::class,
                 MigrationPivotCommand::class,
                 ModelCommand::class,
+                NavCommand::class,
                 PackageCommand::class,
                 RequestsCommand::class,
                 ResourcesCommand::class,
@@ -81,6 +83,7 @@ class GeneratorServiceProvider extends ServiceProvider implements DeferrableProv
             MigrationCommand::class,
             MigrationPivotCommand::class,
             ModelCommand::class,
+            NavCommand::class,
             PackageCommand::class,
             RequestsCommand::class,
             ResourcesCommand::class,

@@ -13,7 +13,8 @@
         "illuminate/console": "^6.0",
         "illuminate/filesystem": "^6.0",
         "illuminate/support": "^6.0",
-        "laravelha/support": "^1.0.0"
+        "laravelha/support": "^1.0.0",
+        "ext-dom": "*"
     },
     "autoload": {
         "psr-4": {

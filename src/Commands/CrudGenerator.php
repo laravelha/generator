@@ -189,6 +189,7 @@ class CrudGenerator extends Command
             return;
 
         $this->lang($name);
+        $this->nav($name);
 
         // create view index
         $this->breadcrumbs($name);
@@ -225,6 +226,10 @@ class CrudGenerator extends Command
 
         if ($this->confirm('Do you wish to create the lang?', true)) {
             $this->lang($name);
+        }
+
+        if ($this->confirm('Do you wish to create the navigation?', true)) {
+            $this->nav($name);
         }
 
         if ($this->confirm('Do you wish to create the view index?', true)) {
@@ -266,6 +271,19 @@ class CrudGenerator extends Command
             $this->call("ha-generator:lang",  ['name' => $name, '--no-log' => $this->noLogDetailed, '--schema' => $this->option('schema')]);
         } catch (\Exception $exception) {
             $this->warn("Unable to create lang to {$name}. {$exception->getMessage()}");
+        }
+    }
+
+    /**
+     * @param  string  $name
+     * @return void
+     */
+    protected function nav(string $name): void
+    {
+        try {
+            $this->call("ha-generator:nav",  ['name' => $name, '--no-log' => $this->noLogDetailed]);
+        } catch (\Exception $exception) {
+            $this->warn("Unable to create nav to {$name}");
         }
     }
 
