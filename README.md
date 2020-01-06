@@ -4,9 +4,11 @@
 ## Install
 After install fresh Laravel application:
 
-1. Via `composer require laravelha/generator --dev`
-2. Run `php artisan ha-generator:<COMMAND> <ARGUMENTS> <OPTIONS>` to create automatically generated code.
-3. The following commands are available.:
+1. Install preset `composer require laravelha/preset-api --dev` or `composer require laravelha/preset-web --dev` 
+2. Run preset `php artisan ha-api` or `php artisan ha-web --option=auth`
+3. Via `composer require laravelha/generator --dev`
+4. Run `php artisan ha-generator:<COMMAND> <ARGUMENTS> <OPTIONS>` to create automatically generated code.
+5. The following commands are available.:
 ```shell script
 ha-generator:migration   "Create a new migration class and apply schema at the same time"
 ha-generator:model       "Create a new model class and apply schema at the same time"
@@ -19,6 +21,7 @@ ha-generator:test        "Create a new feature test and apply schema at the same
 ha-generator:lang        "Create a new lang resource and apply schema at the same time"
 ha-generator:view        "Create a new views resource and apply schema at the same time"
 ha-generator:breadcrumb  "Insert new resources breadcrumb"
+ha-generator:nav         "Insert new nav item"
 ha-generator:crud        "Run all commands"
 ha-generator:package     "Create scaffolding structure to packages"
 ```
