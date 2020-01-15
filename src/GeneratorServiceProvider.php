@@ -8,6 +8,7 @@ use Laravelha\Generator\Commands\BreadcrumbCommand;
 use Laravelha\Generator\Commands\ControllerCommand;
 use Laravelha\Generator\Commands\CrudGenerator;
 use Laravelha\Generator\Commands\FactoryCommand;
+use Laravelha\Generator\Commands\FromExistingCommand;
 use Laravelha\Generator\Commands\LangCommand;
 use Laravelha\Generator\Commands\MigrationCommand;
 use Laravelha\Generator\Commands\MigrationPivotCommand;
@@ -52,6 +53,7 @@ class GeneratorServiceProvider extends ServiceProvider implements DeferrableProv
                 ControllerCommand::class,
                 CrudGenerator::class,
                 FactoryCommand::class,
+                FromExistingCommand::class,
                 LangCommand::class,
                 MigrationCommand::class,
                 MigrationPivotCommand::class,
@@ -79,6 +81,7 @@ class GeneratorServiceProvider extends ServiceProvider implements DeferrableProv
             ControllerCommand::class,
             CrudGenerator::class,
             FactoryCommand::class,
+            FromExistingCommand::class,
             LangCommand::class,
             MigrationCommand::class,
             MigrationPivotCommand::class,
