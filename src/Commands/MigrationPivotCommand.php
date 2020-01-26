@@ -78,6 +78,11 @@ class MigrationPivotCommand extends Command
             return;
         }
 
+        if ($this->migrationAlreadyExist()) {
+            $this->error("A {$this->getClassName()} class already exists.");
+            return;
+        }
+
         $this->files->put($path, $this->buildClass());
 
         $filename = pathinfo($path, PATHINFO_FILENAME);
@@ -235,5 +240,19 @@ class MigrationPivotCommand extends Command
             strtolower($this->argument('tableOne')),
             strtolower($this->argument('tableTwo'))
         ];
+    }
+
+    /**
+     * @return bool
+     */
+    protected function migrationAlreadyExist()
+    {
+        $migrationFiles = $this->files->glob(config('ha-generator.packageMigrationsFolder').'/*.php');
+
+        foreach ($migrationFiles as $migrationFile) {
+            $this->files->requireOnce($migrationFile);
+        }
+
+        return class_exists($this->getClassName());
     }
 }

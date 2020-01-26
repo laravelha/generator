@@ -46,7 +46,6 @@ class MigrationCommand extends AbstractCommand
      *
      * @return void
      * @throws FileNotFoundException
-     * @throws GeneratorException
      */
     public function handle(): void
     {
@@ -58,6 +57,11 @@ class MigrationCommand extends AbstractCommand
 
         if ($this->files->exists($path = $this->getPath($name))) {
             $this->error('Migration already exists!');
+            return;
+        }
+
+        if ($this->migrationAlreadyExist($name)) {
+            $this->error("A {$this->getClassName($name)} class already exists.");
             return;
         }
 
@@ -140,5 +144,29 @@ class MigrationCommand extends AbstractCommand
         $stub = str_replace(['{{schema_up}}', '{{schema_down}}'], $schema, $stub);
 
         return $this;
+    }
+
+    /**
+     * @param $name
+     * @return string
+     */
+    private function getClassName($name)
+    {
+        return Str::studly($name);
+    }
+
+    /**
+     * @param $name
+     * @return bool
+     */
+    protected function migrationAlreadyExist($name)
+    {
+        $migrationFiles = $this->files->glob(config('ha-generator.packageMigrationsFolder').'/*.php');
+
+        foreach ($migrationFiles as $migrationFile) {
+            $this->files->requireOnce($migrationFile);
+        }
+
+        return class_exists($this->getClassName($name));
     }
 }
