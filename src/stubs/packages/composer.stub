@@ -30,11 +30,5 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true,
-    "repositories": [
-        {
-            "type": "gitlab",
-            "url": "https://gitlab.com/ha-generator/support"
-        }
-    ]
+    "prefer-stable": true
 }
