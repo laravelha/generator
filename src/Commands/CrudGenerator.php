@@ -16,7 +16,7 @@ class CrudGenerator extends Command
     protected $signature = 'ha-generator:crud
         {name : Class (singular) for example User}
         {package? : Package name (Optional)}
-        {--log-detailed : No logging}
+        {--log-detailed : Show log for each command on this}
         {--no-log : No logging}
         {--y|yes : Skip confirmation}
         {--a|api : The application is an API?}

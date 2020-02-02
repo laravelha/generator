@@ -17,7 +17,7 @@ class FromExistingCommand extends Command
      * @var string
      */
     protected $signature = 'ha-generator:existing:crud
-                    {--log-detailed : No logging}
+                    {--log-detailed : Show log for each command on this}
                     {--no-log : No logging}
                     {--y|yes : Skip confirmation}
                     {--a|api : The application is an API?}
