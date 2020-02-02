@@ -116,9 +116,6 @@ class RequestSyntaxBuilder extends AbstractSintaxBuilder
                 $type .= 'max:'.$field['arguments'][0].'|';
         }
 
-        if (in_array($field['type'], $this->dateTypes))
-            $type .=  'date_format:d/m/Y|';
-
         if (in_array($field['type'], $this->integerTypes))
             $type .=  'integer|';
 
