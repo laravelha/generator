@@ -79,7 +79,7 @@ git commit -m 'feat: create category crud by generator'
 
 9. Run other crud generator
 ```shell script
-php artisan ha-generator:crud Post -a -s 'title:string(150), content:text, published_at:timestamp:nullable, category_id:unsignedBigInteger:foreign'
+php artisan ha-generator:crud Post -s 'title:string(150), content:text, published_at:timestamp:nullable, category_id:unsignedBigInteger:foreign'
 ```
 
 10. Commit last crud
