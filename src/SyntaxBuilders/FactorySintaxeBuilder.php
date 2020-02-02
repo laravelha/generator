@@ -125,7 +125,7 @@ class FactorySintaxeBuilder extends AbstractSintaxBuilder
         }
 
         if (in_array($field['type'], $this->dateTypes))
-            $type =  "date('d/m/Y'";
+            $type =  "date(";
 
         if (!in_array($field['type'], $this->floatTypes) && $field['arguments']) {
             $type .= implode(', ', $field['arguments']);
