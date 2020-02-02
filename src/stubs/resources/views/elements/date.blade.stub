@@ -7,13 +7,3 @@
         </span>
     @endif
 </div>
-@push('scripts')
-    <script>
-        $(function () {
-            $("#{{column}}").datepicker({
-                format: 'dd/mm/yyyy',
-                language: 'pt-BR'
-            }).mask('00/00/0000');
-        });
-    </script>
-@endpush

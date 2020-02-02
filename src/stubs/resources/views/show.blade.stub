@@ -26,11 +26,7 @@
                         <dl>
                             @foreach(${{objectName}}->toArray() as $key => $value)
                                 <dt>@lang('{{tableName}}.'.$key)</dt>
-                                @if(in_array($key, ${{objectName}}->getDates()) && ${{objectName}}->$key)
-                                    <dd>{{ ${{objectName}}->$key->format('d/m/Y H:i:s') }}</dd>
-                                @else
-                                    <dd>{{ $value }}</dd>
-                                @endif
+                                <dd>{{ $value }}</dd>
                             @endforeach
                         </dl>
                     </div>
