@@ -69,7 +69,7 @@ class {{modelName}}Controller extends Controller
                 ->with(['type' => 'success', 'message' => __('messages.success.store', ['item' => __('{{tableName}}.show', ['{{objectName}}' => ${{objectName}}->id])])]);
         } catch (\Exception $e) {
             return redirect()->back()
-                ->with(['type' => 'danger', 'message' => __('messages.danger.store', ['item' => __('{{tableName}}.moidel')])])->withInput();
+                ->with(['type' => 'danger', 'message' => __('messages.danger.store', ['item' => __('{{tableName}}.model')])])->withInput();
         }
     }
 
