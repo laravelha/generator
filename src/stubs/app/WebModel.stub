@@ -12,8 +12,6 @@ class {{modelName}} extends Model
 
     protected $guarded = ['id'];
 
-    {{dates}}
-
     {{column}}
     {{foreign}}
 }

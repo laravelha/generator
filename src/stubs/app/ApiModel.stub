@@ -12,7 +12,6 @@ class {{modelName}} extends Model
 
     protected $guarded = ['id'];
 
-    {{dates}}
     {{foreign}}
     {{searchables}}
 }

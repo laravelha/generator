@@ -15,23 +15,11 @@ class ModelSyntaxBuilder extends AbstractSintaxBuilder
      */
     public function create(array $schema): array
     {
-        $dates = $this->createSchemaForDates($schema);
         $column = $this->createSchemaForColumn($schema);
         $foreign = $this->createSchemaForForeign($schema);
         $searchable = $this->createSchemaForSearchable($schema);
 
-        return compact('dates', 'column', 'foreign', 'searchable');
-    }
-
-    /**
-     * Create the schema for the dates.
-     *
-     * @param  array $schema
-     * @return string
-     */
-    private function createSchemaForDates(array $schema): string
-    {
-        return $this->constructSchema($schema, 'addDate');
+        return compact('column', 'foreign', 'searchable');
     }
 
     /**
@@ -123,20 +111,6 @@ class ModelSyntaxBuilder extends AbstractSintaxBuilder
         }, $schema);
 
         return implode("\n" . str_repeat(' ', 12), $this->removeEmpty($fields));
-    }
-
-    /**
-     * Construct the syntax to add a date.
-     *
-     * @param  array $field
-     * @return string
-     */
-    private function addDate(array $field): string
-    {
-        if (!in_array($field['type'], $this->dateTypes))
-            return '';
-
-        return str_replace(['{{dateStudly}}', '{{date}}'], [Str::studly($field['name']), $field['name']], $this->getSchemaWrapper('Dates'));
     }
 
     /**
