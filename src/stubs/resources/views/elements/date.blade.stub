@@ -1,9 +1,19 @@
 <div class="form-group{{ $errors->has('{{column}}') ? ' has-error' : '' }}">
     <label for="{{column}}" class="control-label">@lang('{{tableName}}.{{column}}')</label>
-    <input id="{{column}}" type="text" class="form-control" name="{{column}}" value="{{ old('{{column}}') ? old('{{column}}') : (isset(${{objectName}}->{{column}}) ? ${{objectName}}->{{column}} : '') }}" {{required}} autofocus>
+    <input id="{{column}}" type="text" class="form-control" autocomplete="off" name="{{column}}" value="{{ old('{{column}}') ? old('{{column}}') : (isset(${{objectName}}->{{column}}) ? ${{objectName}}->{{column}} : '') }}" {{required}} autofocus>
     @if ($errors->has('{{column}}'))
         <span class="help-block">
             <strong>{{ $errors->first('{{column}}') }}</strong>
         </span>
     @endif
 </div>
+@push('scripts')
+    <script>
+        $(function () {
+            $("#published_at").datepicker({
+                format: 'yyyy-mm-dd',
+                language: 'en'
+            }).mask('0000-00-00');
+        });
+    </script>
+@endpush
