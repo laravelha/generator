@@ -5,7 +5,7 @@
 After install fresh Laravel application:
 
 1. Install preset `composer require laravelha/preset-api --dev` or `composer require laravelha/preset-web --dev` 
-2. Run preset `php artisan ha-api` or `php artisan ha-web --option=auth`
+2. Run preset `php artisan preset ha-api` or `php artisan preset ha-web --option=auth`
 3. Via `composer require laravelha/generator --dev`
 4. Run `php artisan ha-generator:<COMMAND> <ARGUMENTS> <OPTIONS>` to create automatically generated code.
 5. The following commands are available.:
