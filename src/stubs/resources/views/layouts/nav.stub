@@ -1,3 +1,3 @@
-<li class="{{ in_array(Route::currentRouteName(), ['{{routeName}}.index', '{{routeName}}.create', '{{routeName}}.show', '{{routeName}}.edit', '{{routeName}}.delete']) ? 'active' : '' }}" role="menuitem">
+<li class="{{ Request::is('routeName*') ? 'active' : '' }}" role="menuitem">
     <a class="nav-link" href="{{route('{{routeName}}.index')}}">@lang('{{tableName}}.index')</a>
 </li>
