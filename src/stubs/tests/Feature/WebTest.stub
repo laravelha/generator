@@ -32,7 +32,7 @@ class {{modelName}}Test extends TestCase
 
         $response = $this->post(self::BASE_URI, ${{objectName}}Fake->toArray());
 
-        $response->assertStatus(302);
+        $response->assertSessionHas('type', 'success');
 
         $this->assertCount(1, {{modelName}}::all());
 
@@ -44,16 +44,14 @@ class {{modelName}}Test extends TestCase
      */
     public function {{objectName}}CanBeUpdated()
     {
-        ${{objectName}}Fakes = factory({{modelName}}::class, 2)->make();
-        $this->post(self::BASE_URI, ${{objectName}}Fakes->first()->toArray());
+        ${{objectName}} = factory({{modelName}}::class)->create();
+        ${{objectName}}Fake = factory({{modelName}}::class)->make();
 
-        ${{objectName}}  = {{modelName}}::first();
+        $response = $this->put(self::BASE_URI . '/' . ${{objectName}}->id, ${{objectName}}Fake->toArray());
 
-        $response = $this->put(self::BASE_URI . '/' . ${{objectName}}->id, ${{objectName}}Fakes->last()->toArray());
+        $response->assertSessionHas('type', 'success');
 
-        $response->assertStatus(302);
-
-        $this->assertDatabaseHas('{{tableName}}', ${{objectName}}Fakes->last()->getAttributes());
+        $this->assertDatabaseHas('{{tableName}}', ${{objectName}}Fake->getAttributes());
     }
 
     /**
@@ -61,18 +59,12 @@ class {{modelName}}Test extends TestCase
      */
     public function {{objectName}}CanBeDeleted()
     {
-        ${{objectName}}Fake = factory({{modelName}}::class)->make();
-        $this->post(self::BASE_URI, ${{objectName}}Fake->toArray());
-
-        $this->assertCount(1, {{modelName}}::all());
-
-        ${{objectName}}  = {{modelName}}::first();
+        ${{objectName}} = factory({{modelName}}::class)->create();
 
         $response = $this->delete(self::BASE_URI . '/' . ${{objectName}}->id);
 
-        $response->assertStatus(302);
-        $this->assertCount(0, {{modelName}}::all());
+        $response->assertSessionHas('type', 'success');
 
-        $this->assertDatabaseMissing('{{tableName}}', ${{objectName}}Fake->getAttributes());
+        $this->assertDatabaseMissing('{{tableName}}', ${{objectName}}->getAttributes());
     }
 }

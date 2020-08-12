@@ -30,7 +30,7 @@ class {{modelName}}Controller extends Controller
     {
         $columns = {{modelName}}::getColumns();
 
-        return view('{{tableName}}.index', compact('columns'));
+        return view('{{routeName}}.index', compact('columns'));
     }
 
     /**
@@ -51,7 +51,7 @@ class {{modelName}}Controller extends Controller
      */
     public function create()
     {
-        return view('{{tableName}}.create');
+        return view('{{routeName}}.create');
     }
 
     /**
@@ -65,11 +65,25 @@ class {{modelName}}Controller extends Controller
     {
         try {
             ${{objectName}} = {{modelName}}::create($request->validated());
-            return redirect()->route('{{tableName}}.show', ['{{objectName}}' => ${{objectName}}->id])
-                ->with(['type' => 'success', 'message' => __('messages.success.store', ['item' => __('{{tableName}}.show', ['{{objectName}}' => ${{objectName}}->id])])]);
-        } catch (\Exception $e) {
-            return redirect()->back()
-                ->with(['type' => 'danger', 'message' => __('messages.danger.store', ['item' => __('{{tableName}}.model')])])->withInput();
+            return redirect()
+                ->route('{{routeName}}.show', ${{objectName}})
+                ->with([
+                    'type' => 'success',
+                    'message' => __('messages.success.store', [
+                        'item' => __('{{routeName}}.show', ['{{objectName}}' => ${{objectName}}->id]),
+                    ]),
+                ]);
+        } catch (\Exception  $exception) {
+            return redirect()
+                ->back()
+                ->with([
+                    'type' => 'danger',
+                    'message' => __('messages.danger.store', [
+                        'item' => __('{{routeName}}.model'),
+                    ]),
+                    'error' => $exception->getMessage(),
+                ])
+                ->withInput();
         }
     }
 
@@ -82,7 +96,7 @@ class {{modelName}}Controller extends Controller
      */
     public function show({{modelName}} ${{objectName}})
     {
-        return view('{{tableName}}.show', compact('{{objectName}}'));
+        return view('{{routeName}}.show', compact('{{objectName}}'));
     }
 
     /**
@@ -94,7 +108,7 @@ class {{modelName}}Controller extends Controller
      */
     public function edit({{modelName}} ${{objectName}})
     {
-        return view('{{tableName}}.edit', compact('{{objectName}}'));
+        return view('{{routeName}}.edit', compact('{{objectName}}'));
     }
 
     /**
@@ -109,11 +123,24 @@ class {{modelName}}Controller extends Controller
     {
         try {
             ${{objectName}}->update($request->validated());
-            return redirect()->route('{{tableName}}.show', ['{{objectName}}' => ${{objectName}}->id])
-                ->with(['type' => 'success', 'message' => __('messages.success.update', ['item' => __('{{tableName}}.show', ['{{objectName}}' => ${{objectName}}->id])])]);
-        } catch (\Exception $e) {
-            return redirect()->back()
-                ->with(['type' => 'danger', 'message' => __('messages.danger.update', ['item' => __('{{tableName}}.show', ['{{objectName}}' => ${{objectName}}->id])])])
+            return redirect()
+                ->route('{{routeName}}.show', ${{objectName}})
+                ->with([
+                    'type' => 'success',
+                    'message' => __('messages.success.update', [
+                        'item' => __('{{routeName}}.show', ['{{objectName}}' => ${{objectName}}->id]),
+                    ]),
+                ]);
+        } catch (\Exception  $exception) {
+            return redirect()
+                ->back()
+                ->with([
+                    'type' => 'danger',
+                    'message' => __('messages.danger.update', [
+                        'item' => __('{{routeName}}.show', ['{{objectName}}' => ${{objectName}}->id]),
+                    ]),
+                    'error' => $exception->getMessage(),
+                ])
                 ->withInput();
         }
     }
@@ -127,7 +154,7 @@ class {{modelName}}Controller extends Controller
      */
     public function delete({{modelName}} ${{objectName}})
     {
-        return view('{{tableName}}.delete', compact('{{objectName}}'));
+        return view('{{routeName}}.delete', compact('{{objectName}}'));
     }
 
     /**
@@ -141,12 +168,24 @@ class {{modelName}}Controller extends Controller
     {
         try {
             ${{objectName}}->delete();
-
-            return redirect()->route('{{tableName}}.index')
-                ->with(['type' => 'success', 'message' => __('messages.success.destroy', ['item' => __('{{tableName}}.show', ['{{objectName}}' => ${{objectName}}->id])])]);
-        } catch (\Exception $e) {
-            return redirect()->back()
-                ->with(['type' => 'danger', 'message' => __('messages.danger.destroy', ['item' => __('{{tableName}}.show', ['{{objectName}}' => ${{objectName}}->id])])])
+            return redirect()
+                ->route('{{routeName}}.index')
+                ->with([
+                    'type' => 'success',
+                    'message' => __('messages.success.destroy', [
+                        'item' => __('{{routeName}}.show', ['{{objectName}}' => ${{objectName}}->id]),
+                    ]),
+                ]);
+        } catch (\Exception  $exception) {
+            return redirect()
+                ->back()
+                ->with([
+                    'type' => 'danger',
+                    'message' => __('messages.danger.destroy', [
+                        'item' => __('{{routeName}}.show', ['{{objectName}}' => ${{objectName}}->id]),
+                    ]),
+                    'error' => $exception->getMessage(),
+                ])
                 ->withInput();
         }
     }

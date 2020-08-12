@@ -8,7 +8,7 @@
             <div class="card">
                 <div class="card-header">
                     <h2>@lang('app.delete.title', ['id' => ${{objectName}}->id])</h2>
-                    <p class="lead">@lang('app.delete.question', ['item' => __('{{tableName}}.show', ['{{objectName}}' => ${{objectName}}->id ])])</p>
+                    <p class="lead">@lang('app.delete.question', ['item' => __('{{routeName}}.show', ['{{objectName}}' => ${{objectName}}->id ])])</p>
                 </div>
                 <div class="card-body">
                     <div class="well">
