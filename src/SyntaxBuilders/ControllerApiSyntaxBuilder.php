@@ -60,7 +60,7 @@ class ControllerApiSyntaxBuilder extends AbstractSintaxBuilder
      */
     private function getSchemaWrapper(): string
     {
-        return file_get_contents(self::STUB_DIR.'/app/Http/Controllers/ApiController.stub');
+        return file_get_contents($this->resolveStubPath('/app/Http/Controllers/ApiController.stub'));
     }
 
     /**

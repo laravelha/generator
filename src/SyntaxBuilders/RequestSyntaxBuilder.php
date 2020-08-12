@@ -60,7 +60,7 @@ class RequestSyntaxBuilder extends AbstractSintaxBuilder
      */
     private function getSchemaWrapper(): string
     {
-        return file_get_contents(self::STUB_DIR.'/app/Http/Requests/Request.stub');
+        return file_get_contents($this->resolveStubPath('/app/Http/Requests/Request.stub'));
     }
 
     /**

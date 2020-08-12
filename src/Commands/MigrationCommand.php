@@ -101,7 +101,7 @@ class MigrationCommand extends AbstractCommand
      */
     protected function compileStub(): string
     {
-        $stub = $this->files->get(self::STUB_DIR . "/database/migrations/migration.stub");
+        $stub = $this->files->get($this->resolveStubPath("/database/migrations/migration.stub"));
 
         $this->replaceClassName($stub)
             ->replaceSchema($stub)

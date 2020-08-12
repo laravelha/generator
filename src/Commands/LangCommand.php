@@ -78,7 +78,7 @@ class LangCommand extends AbstractCommand
      */
     protected function compileStub(): string
     {
-        $stub = $this->files->get(self::STUB_DIR . "/resources/lang/lang.stub");
+        $stub = $this->files->get($this->resolveStubPath("/resources/lang/lang.stub"));
 
         if($this->option('schema')) {
             $this->replaceSchema($stub);

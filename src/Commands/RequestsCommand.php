@@ -98,7 +98,7 @@ class RequestsCommand extends AbstractCommand
      */
     protected function compileStub(string $type = 'store'): string
     {
-        $stub = $this->files->get(self::STUB_DIR . "/app/Http/Requests/Request.stub");
+        $stub = $this->files->get($this->resolveStubPath("/app/Http/Requests/Request.stub"));
 
         $this
             ->replaceSchema($stub)

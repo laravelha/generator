@@ -91,7 +91,7 @@ class ViewSyntaxBuilder extends AbstractSintaxBuilder
      */
     private function getSchemaWrapper(): string
     {
-        return file_get_contents(self::STUB_DIR . "/resources/views/{$this->viewName}.blade.stub");
+        return file_get_contents($this->resolveStubPath("/resources/views/{$this->viewName}.blade.stub"));
     }
 
     /**
@@ -151,7 +151,7 @@ class ViewSyntaxBuilder extends AbstractSintaxBuilder
         if (in_array($field['type'], $this->dateTypes))
             $element = 'date';
 
-        $strSub = $this->files->get(self::STUB_DIR . "/resources/views/elements/{$element}.blade.stub");
+        $strSub = $this->files->get($this->resolveStubPath("/resources/views/elements/{$element}.blade.stub"));
 
         $strSub = str_replace('{{required}}', !array_key_exists('nullable', $field['options']) ? 'required' : '', $strSub);
 

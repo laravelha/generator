@@ -60,7 +60,7 @@ class LangSyntaxBuilder extends AbstractSintaxBuilder
      */
     private function getSchemaWrapper(): string
     {
-        return file_get_contents(self::STUB_DIR.'/resources/lang/lang.stub');
+        return file_get_contents($this->resolveStubPath('/resources/lang/lang.stub'));
     }
 
     /**

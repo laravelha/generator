@@ -283,4 +283,14 @@ abstract class AbstractCommand extends Command
     {
         return ($this->hasArgument('package') AND $this->argument('package'));
     }
+
+    /**
+     * @return mixed
+     */
+    protected function resolveStubPath($stub)
+    {
+        return file_exists($customPath = base_path('stubs/ha-generator/' . trim($stub, '/'))) && config('ha-generator.customStubs')
+                    ? $customPath
+                    : static::STUB_DIR.$stub;
+    }
 }

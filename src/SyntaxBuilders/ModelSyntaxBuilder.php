@@ -92,7 +92,7 @@ class ModelSyntaxBuilder extends AbstractSintaxBuilder
      */
     private function getSchemaWrapper(string $type = 'Column'): string
     {
-        return file_get_contents(self::STUB_DIR."/app/{$type}Model.stub");
+        return file_get_contents($this->resolveStubPath("/app/{$type}Model.stub"));
     }
 
     /**

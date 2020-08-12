@@ -97,7 +97,7 @@ class NavCommand extends AbstractCommand
      */
     protected function compileStub(): string
     {
-        $stub = $this->files->get(self::STUB_DIR  .  "/resources/views/layouts/nav.stub");
+        $stub = $this->files->get($this->resolveStubPath("/resources/views/layouts/nav.stub"));
 
         $this->replaceRouteName($stub)
             ->replaceTableName($stub);

@@ -361,7 +361,7 @@ class PackageCommand extends Command
      */
     protected function compileStub($type = 'src/Providers/ServiceProvider')
     {
-        $stub = $this->files->get(self::STUB_DIR . "/packages/{$type}.stub");
+        $stub = $this->files->get($this->resolveStubPath("/packages/{$type}.stub"));
 
         $this
             ->replacePackageNamespace($stub)
@@ -467,5 +467,15 @@ class PackageCommand extends Command
             $log = 'php artisan ' . $this->name . ' ' . $this->argument('name') ;
             $this->files->append(storage_path('logs/'.config('ha-generator.logFile').'-'.now()->format('Y-m-d').'.log'), $log.PHP_EOL);
         }
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function resolveStubPath($stub)
+    {
+        return file_exists($customPath = base_path('stubs/ha-generator/' . trim($stub, '/'))) && config('ha-generator.customStubs')
+            ? $customPath
+            : static::STUB_DIR.$stub;
     }
 }

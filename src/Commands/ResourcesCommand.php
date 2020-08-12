@@ -95,7 +95,7 @@ class ResourcesCommand extends AbstractCommand
      */
     protected function compileStub(string $sufix = 'Resource'): string
     {
-        $stub = $this->files->get(self::STUB_DIR . "/app/Http/Resources/{$sufix}.stub");
+        $stub = $this->files->get($this->resolveStubPath("/app/Http/Resources/{$sufix}.stub"));
 
         $this
             ->replaceNamespace($stub)

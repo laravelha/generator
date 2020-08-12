@@ -92,7 +92,7 @@ class ControllerCommand extends AbstractCommand
      */
     protected function compileApiControllerStub(): string
     {
-        $stub = $this->files->get(self::STUB_DIR . "/app/Http/Controllers/ApiController.stub");
+        $stub = $this->files->get($this->resolveStubPath("/app/Http/Controllers/ApiController.stub"));
 
         $this->apiResources();
 
@@ -117,7 +117,7 @@ class ControllerCommand extends AbstractCommand
      */
     protected function compileWebControllerStub(): string
     {
-        $stub = $this->files->get(self::STUB_DIR . "/app/Http/Controllers/WebController.stub");
+        $stub = $this->files->get($this->resolveStubPath("/app/Http/Controllers/WebController.stub"));
 
         $this
             ->replaceNamespace($stub)

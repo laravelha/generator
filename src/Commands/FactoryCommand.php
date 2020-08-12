@@ -81,7 +81,7 @@ class FactoryCommand extends AbstractCommand
      */
     protected function compileStub(): string
     {
-        $stub = $this->files->get(self::STUB_DIR . "/database/factories/factory.stub");
+        $stub = $this->files->get($this->resolveStubPath("/database/factories/factory.stub"));
 
         $this
             ->replaceSchema($stub)

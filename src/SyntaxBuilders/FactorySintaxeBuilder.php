@@ -62,7 +62,7 @@ class FactorySintaxeBuilder extends AbstractSintaxBuilder
      */
     private function getSchemaWrapper(): string
     {
-        return file_get_contents(self::STUB_DIR.'/database/factories/factory.stub');
+        return file_get_contents($this->resolveStubPath('/database/factories/factory.stub'));
     }
 
     /**

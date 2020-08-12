@@ -33,6 +33,10 @@ class GeneratorServiceProvider extends ServiceProvider implements DeferrableProv
         $this->publishes([
             __DIR__.'/Config/ha-generator.php' => config_path('ha-generator.php'),
         ], 'ha-generator');
+
+        $this->publishes([
+            __DIR__.'/stubs' => base_path('stubs/ha-generator'),
+        ], 'ha-generator');
     }
 
     /**

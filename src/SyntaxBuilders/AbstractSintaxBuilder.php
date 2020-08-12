@@ -90,4 +90,14 @@ class AbstractSintaxBuilder
 
         return $fields;
     }
+
+    /**
+     * @return mixed
+     */
+    protected function resolveStubPath($stub)
+    {
+        return file_exists($customPath = base_path('stubs/ha-generator/' . trim($stub, '/'))) && config('ha-generator.customStubs')
+            ? $customPath
+            : static::STUB_DIR.$stub;
+    }
 }

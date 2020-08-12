@@ -120,7 +120,7 @@ class MigrationSyntaxBuilder extends AbstractSintaxBuilder
      */
     private function getCreateSchemaWrapper(): string
     {
-        return file_get_contents(self::STUB_DIR.'/database/migrations/schema-create.stub');
+        return file_get_contents($this->resolveStubPath('/database/migrations/schema-create.stub'));
     }
 
     /**
@@ -130,7 +130,7 @@ class MigrationSyntaxBuilder extends AbstractSintaxBuilder
      */
     private function getChangeSchemaWrapper(): string
     {
-        return file_get_contents(self::STUB_DIR.'/database/migrations/schema-change.stub');
+        return file_get_contents($this->resolveStubPath('/database/migrations/schema-change.stub'));
     }
 
     /**

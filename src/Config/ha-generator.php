@@ -2,6 +2,8 @@
 
 return [
 
+    'customStubs' => true,
+
     'stringTypes' => [
         'char', 'string', 'text', 'mediumText', 'longText', 'json', 'jsonb'
     ],

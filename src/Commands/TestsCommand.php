@@ -84,8 +84,8 @@ class TestsCommand extends AbstractCommand
     protected function compileStub(): string
     {
         $stub = $this->option('api')
-            ? $this->files->get(self::STUB_DIR . "/tests/Feature/ApiTest.stub")
-            : $this->files->get(self::STUB_DIR . "/tests/Feature/WebTest.stub");
+            ? $this->files->get($this->resolveStubPath("/tests/Feature/ApiTest.stub"))
+            : $this->files->get($this->resolveStubPath("/tests/Feature/WebTest.stub"));
 
         $this->replaceSchema($stub)
             ->replacePackageRouteName($stub)

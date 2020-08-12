@@ -114,7 +114,17 @@ class MigrationPivotCommand extends Command
      */
     protected function getStub(): string
     {
-        return self::STUB_DIR . '/database/migrations/pivot.stub';
+        return $this->resolveStubPath('/database/migrations/pivot.stub');
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function resolveStubPath($stub)
+    {
+        return file_exists($customPath = base_path('stubs/ha-generator/' . trim($stub, '/'))) && config('ha-generator.customStubs')
+            ? $customPath
+            : static::STUB_DIR.$stub;
     }
 
     /**

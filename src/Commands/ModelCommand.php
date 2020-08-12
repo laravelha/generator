@@ -92,7 +92,7 @@ class ModelCommand extends AbstractCommand
      */
     protected function compileApiModelStub(): string
     {
-        $stub = $this->files->get(self::STUB_DIR . "/app/ApiModel.stub");
+        $stub = $this->files->get($this->resolveStubPath("/app/ApiModel.stub"));
 
         $this
             ->replaceSchema($stub)
@@ -110,7 +110,7 @@ class ModelCommand extends AbstractCommand
      */
     protected function compileWebModelStub(): string
     {
-        $stub = $this->files->get(self::STUB_DIR . "/app/WebModel.stub");
+        $stub = $this->files->get($this->resolveStubPath("/app/WebModel.stub"));
 
         $this
             ->replaceSchema($stub)

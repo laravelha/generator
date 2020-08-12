@@ -83,7 +83,7 @@ class ViewCommand extends AbstractCommand
      */
     protected function compileStub(): string
     {
-        $stub = $this->files->get(self::STUB_DIR . "/resources/views/{$this->viewName}.blade.stub");
+        $stub = $this->files->get($this->resolveStubPath("/resources/views/{$this->viewName}.blade.stub"));
 
         if($this->option('schema'))
             $this->replaceSchema($stub);
