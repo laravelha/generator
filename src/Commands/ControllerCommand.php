@@ -124,6 +124,7 @@ class ControllerCommand extends AbstractCommand
             ->replaceModelNamespace($stub)
             ->replaceModelName($stub)
             ->replaceTableName($stub)
+            ->replaceRouteName($stub)
             ->replaceObjectName($stub);
 
         return $stub;
