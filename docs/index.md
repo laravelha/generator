@@ -1,6 +1,6 @@
 # Getting Started
 ## Introduction
-**Laravelha** is an open source tool (MIT) made to speed up your development and make your life easier.
+**Laravelha generator** is an open source code generation tool (MIT) made to speed up your development and make your life easier.
 Stop writing boilerplate code, with a unique command you can build a whole CRUD (views included), using 
 Bootstrap and soon Tailwindcss.
 ## Installation
