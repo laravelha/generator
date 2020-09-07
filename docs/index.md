@@ -1,7 +1,7 @@
 # Getting Started
 ## Introduction
 **Laravelha** is an open source tool (MIT) made to speed up your development and make your life easier.
-Stop writing boilerplate code. With a unique command you can build a whole CRUD (views included), using 
+Stop writing boilerplate code, with a unique command you can build a whole CRUD (views included), using 
 Bootstrap and soon Tailwindcss.
 ## Installation
 After a fresh laravel application install, run the following command:
