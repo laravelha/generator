@@ -98,7 +98,6 @@ class RouteCommand extends AbstractCommand
     protected function compileWebStub(): string
     {
         $stub = PHP_EOL.
-            "Route::get('/{{routeName}}/data', '{{modelName}}Controller@data')->name('{{routeName}}.data');".PHP_EOL.
             "Route::get('/{{routeName}}/{{{objectName}}}/delete', '{{modelName}}Controller@delete')->name('{{routeName}}.delete');".PHP_EOL.
             "Route::resource('{{routeName}}', '{{modelName}}Controller');".PHP_EOL;
 
