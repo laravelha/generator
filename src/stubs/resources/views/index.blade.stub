@@ -17,8 +17,8 @@
                         <table class="table table-striped table-hover" id="{{tableName}}-table">
                             <thead>
                                 <tr>
-                                    @foreach(${{routeName}}->first()->getAttributes() as $key => $value)
-                                    <th>@lang('{{tableName}}.'.$key)</th>
+                                    @foreach(Schema::getColumnListing('{{tableName}}') as $column)
+                                    <th>@lang('{{tableName}}.'.$column)</th>
                                     @endforeach
                                 </tr>
                             </thead>
