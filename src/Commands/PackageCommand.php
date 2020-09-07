@@ -38,30 +38,30 @@ class PackageCommand extends Command
      */
     protected $composer;
 
-
     /**
-     * Package namespace: defined on config file
+     * Package namespace: defined on config file.
      *
      * @var string
      */
     private $packageNamespace;
 
     /**
-     * Package name: singular studly
+     * Package name: singular studly.
      *
      * @var string
      */
     protected $packageName;
 
     /**
-     * Folder name: package name kebab
+     * Folder name: package name kebab.
      *
      * @var string
      */
     protected $folderName;
 
     /**
-     * Route name: plural package name kebab
+     * Route name: plural package name kebab.
+     *
      * @var string
      */
     protected $routeName;
@@ -69,13 +69,13 @@ class PackageCommand extends Command
     /**
      * @var string
      */
-    const STUB_DIR = __DIR__ . "/../stubs";
+    const STUB_DIR = __DIR__.'/../stubs';
 
     /**
      * Create a new command instance.
      *
-     * @param  Filesystem  $files
-     * @param  Composer  $composer
+     * @param Filesystem $files
+     * @param Composer   $composer
      */
     public function __construct(Filesystem $files, Composer $composer)
     {
@@ -88,8 +88,9 @@ class PackageCommand extends Command
     /**
      * Execute the console command.
      *
-     * @return void
      * @throws FileNotFoundException
+     *
+     * @return void
      */
     public function handle(): void
     {
@@ -116,7 +117,8 @@ class PackageCommand extends Command
     }
 
     /**
-     * Setup names
+     * Setup names.
+     *
      * @return void
      */
     protected function setNames(): void
@@ -128,14 +130,17 @@ class PackageCommand extends Command
     }
 
     /**
-     * Create composer
-     * @return void
+     * Create composer.
+     *
      * @throws FileNotFoundException
+     *
+     * @return void
      */
     protected function makeComposer(): void
     {
         if ($this->files->exists($path = $this->getPath().'/composer.json')) {
             $this->error('Composer already exists!');
+
             return;
         }
 
@@ -152,14 +157,17 @@ class PackageCommand extends Command
     }
 
     /**
-     * Create composer
-     * @return void
+     * Create composer.
+     *
      * @throws FileNotFoundException
+     *
+     * @return void
      */
     protected function makeGitIgnore(): void
     {
         if ($this->files->exists($path = $this->getPath().'/.gitignore')) {
             $this->error('GitIgnore already exists!');
+
             return;
         }
 
@@ -172,14 +180,17 @@ class PackageCommand extends Command
     }
 
     /**
-     * Create composer
-     * @return void
+     * Create composer.
+     *
      * @throws FileNotFoundException
+     *
+     * @return void
      */
     protected function makePHPUnit(): void
     {
         if ($this->files->exists($path = $this->getPath().'/phpunit.xml')) {
             $this->error('PHPUnit already exists!');
+
             return;
         }
 
@@ -192,14 +203,17 @@ class PackageCommand extends Command
     }
 
     /**
-     * Create composer
-     * @return void
+     * Create composer.
+     *
      * @throws FileNotFoundException
+     *
+     * @return void
      */
     protected function makeTestCase(): void
     {
         if ($this->files->exists($path = $this->getPath().'/tests/TestCase.php')) {
             $this->error('TestCase already exists!');
+
             return;
         }
 
@@ -212,14 +226,17 @@ class PackageCommand extends Command
     }
 
     /**
-     * Create readme
-     * @return void
+     * Create readme.
+     *
      * @throws FileNotFoundException
+     *
+     * @return void
      */
     protected function makeReadme(): void
     {
         if ($this->files->exists($path = $this->getPath().'/README.md')) {
             $this->error('Readme already exists!');
+
             return;
         }
 
@@ -232,14 +249,17 @@ class PackageCommand extends Command
     }
 
     /**
-     * Create config
-     * @return void
+     * Create config.
+     *
      * @throws FileNotFoundException
+     *
+     * @return void
      */
     protected function makeConfig(): void
     {
         if ($this->files->exists($path = $this->getPath().'/'.config('ha-generator.packageConfigsFolder').'/'.$this->folderName.'.php')) {
             $this->error('Config already exists!');
+
             return;
         }
 
@@ -252,14 +272,17 @@ class PackageCommand extends Command
     }
 
     /**
-     * Create package service provider
-     * @return void
+     * Create package service provider.
+     *
      * @throws FileNotFoundException
+     *
+     * @return void
      */
     protected function makePackageServiceProvider(): void
     {
         if ($this->files->exists($path = $this->getPath().'/src/Providers/'.$this->packageName.'ServiceProvider.php')) {
             $this->error('ServiceProvider already exists!');
+
             return;
         }
 
@@ -272,14 +295,17 @@ class PackageCommand extends Command
     }
 
     /**
-     * Create routes web
-     * @return void
+     * Create routes web.
+     *
      * @throws FileNotFoundException
+     *
+     * @return void
      */
     protected function makeRoutesWeb(): void
     {
         if ($this->files->exists($path = $this->getPath().'/'.config('ha-generator.packageRoutesFolder').'/web.php')) {
             $this->error('Route web already exists!');
+
             return;
         }
 
@@ -292,14 +318,17 @@ class PackageCommand extends Command
     }
 
     /**
-     * Create routes api
-     * @return void
+     * Create routes api.
+     *
      * @throws FileNotFoundException
+     *
+     * @return void
      */
     protected function makeRoutesApi(): void
     {
         if ($this->files->exists($path = $this->getPath().'/'.config('ha-generator.packageRoutesFolder').'/api.php')) {
             $this->error('Route web already exists!');
+
             return;
         }
 
@@ -312,14 +341,17 @@ class PackageCommand extends Command
     }
 
     /**
-     * Create route service provider
-     * @return void
+     * Create route service provider.
+     *
      * @throws FileNotFoundException
+     *
+     * @return void
      */
     protected function makeRouteServiceProvider(): void
     {
         if ($this->files->exists($path = $this->getPath().'/src/Providers/RouteServiceProvider.php')) {
             $this->error('RouteServiceProvider already exists!');
+
             return;
         }
 
@@ -334,7 +366,7 @@ class PackageCommand extends Command
     /**
      * Build the directory for the command result if necessary.
      *
-     * @param  string $path
+     * @param string $path
      */
     protected function makeDirectory($path): void
     {
@@ -344,7 +376,7 @@ class PackageCommand extends Command
     }
 
     /**
-     * Get package path
+     * Get package path.
      *
      * @return string
      */
@@ -354,10 +386,13 @@ class PackageCommand extends Command
     }
 
     /**
-     * Compile stub
+     * Compile stub.
+     *
      * @param string $type
-     * @return string
+     *
      * @throws FileNotFoundException
+     *
+     * @return string
      */
     protected function compileStub($type = 'src/Providers/ServiceProvider')
     {
@@ -377,7 +412,8 @@ class PackageCommand extends Command
     /**
      * Replace the package namespace in the stub.
      *
-     * @param  string $stub
+     * @param string $stub
+     *
      * @return PackageCommand
      */
     protected function replacePackageNamespace(string &$stub): PackageCommand
@@ -390,7 +426,8 @@ class PackageCommand extends Command
     /**
      * Replace the package namespace in the stub.
      *
-     * @param  string $stub
+     * @param string $stub
+     *
      * @return PackageCommand
      */
     protected function replacePackageVendor(string &$stub): PackageCommand
@@ -403,7 +440,8 @@ class PackageCommand extends Command
     /**
      * Replace the package namespace in the stub.
      *
-     * @param  string $stub
+     * @param string $stub
+     *
      * @return PackageCommand
      */
     protected function replacePackageFolders(string &$stub): PackageCommand
@@ -421,7 +459,8 @@ class PackageCommand extends Command
     /**
      * Replace the package name in the stub.
      *
-     * @param  string $stub
+     * @param string $stub
+     *
      * @return PackageCommand
      */
     protected function replacePackageName(string &$stub): PackageCommand
@@ -434,7 +473,8 @@ class PackageCommand extends Command
     /**
      * Replace the package name in the stub.
      *
-     * @param  string $stub
+     * @param string $stub
+     *
      * @return PackageCommand
      */
     protected function replaceFolderName(string &$stub): PackageCommand
@@ -447,7 +487,8 @@ class PackageCommand extends Command
     /**
      * Replace the package name in the stub.
      *
-     * @param  string $stub
+     * @param string $stub
+     *
      * @return PackageCommand
      */
     protected function replaceRouteName(string &$stub): PackageCommand
@@ -458,13 +499,14 @@ class PackageCommand extends Command
     }
 
     /**
-     * Log command
+     * Log command.
+     *
      * @return void
      */
     protected function writeLog(): void
     {
         if (!$this->option('no-log')) {
-            $log = 'php artisan ' . $this->name . ' ' . $this->argument('name') ;
+            $log = 'php artisan '.$this->name.' '.$this->argument('name');
             $this->files->append(storage_path('logs/'.config('ha-generator.logFile').'-'.now()->format('Y-m-d').'.log'), $log.PHP_EOL);
         }
     }
@@ -474,7 +516,7 @@ class PackageCommand extends Command
      */
     protected function resolveStubPath($stub)
     {
-        return file_exists($customPath = base_path('stubs/ha-generator/' . trim($stub, '/'))) && config('ha-generator.customStubs')
+        return file_exists($customPath = base_path('stubs/ha-generator/'.trim($stub, '/'))) && config('ha-generator.customStubs')
             ? $customPath
             : static::STUB_DIR.$stub;
     }

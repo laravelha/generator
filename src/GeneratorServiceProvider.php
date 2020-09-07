@@ -2,8 +2,8 @@
 
 namespace Laravelha\Generator;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Support\DeferrableProvider;
+use Illuminate\Support\ServiceProvider;
 use Laravelha\Generator\Commands\BreadcrumbCommand;
 use Laravelha\Generator\Commands\ControllerCommand;
 use Laravelha\Generator\Commands\CrudGenerator;

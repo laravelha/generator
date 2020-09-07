@@ -9,10 +9,12 @@ class MigrationSyntaxBuilder extends AbstractSintaxBuilder
     /**
      * Create the PHP syntax for the given schema.
      *
-     * @param  array $schema
-     * @param  array $meta
-     * @return array
+     * @param array $schema
+     * @param array $meta
+     *
      * @throws GeneratorException
+     *
+     * @return array
      */
     public function create(array $schema, array $meta): array
     {
@@ -25,10 +27,12 @@ class MigrationSyntaxBuilder extends AbstractSintaxBuilder
     /**
      * Create the schema for the "up" method.
      *
-     * @param  array $schema
-     * @param  array $meta
-     * @return string
+     * @param array $schema
+     * @param array $meta
+     *
      * @throws GeneratorException
+     *
+     * @return string
      */
     private function createSchemaForUpMethod(array $schema, array $meta): string
     {
@@ -49,16 +53,18 @@ class MigrationSyntaxBuilder extends AbstractSintaxBuilder
         }
 
         // Otherwise, we have no idea how to proceed.
-        throw new GeneratorException;
+        throw new GeneratorException();
     }
 
     /**
      * Construct the syntax for a down field.
      *
-     * @param  array $schema
-     * @param  array $meta
-     * @return string
+     * @param array $schema
+     * @param array $meta
+     *
      * @throws GeneratorException
+     *
+     * @return string
      */
     private function createSchemaForDownMethod(array $schema, array $meta): string
     {
@@ -85,13 +91,14 @@ class MigrationSyntaxBuilder extends AbstractSintaxBuilder
         }
 
         // Otherwise, we have no idea how to proceed.
-        throw new GeneratorException;
+        throw new GeneratorException();
     }
 
     /**
      * Store the given template, to be inserted somewhere.
      *
-     * @param  string $template
+     * @param string $template
+     *
      * @return MigrationSyntaxBuilder
      */
     private function insert(string $template): MigrationSyntaxBuilder
@@ -104,13 +111,14 @@ class MigrationSyntaxBuilder extends AbstractSintaxBuilder
     /**
      * Get the stored template, and insert into the given wrapper.
      *
-     * @param  string $wrapper
-     * @param  string $placeholder
+     * @param string $wrapper
+     * @param string $placeholder
+     *
      * @return string
      */
     private function into(string $wrapper, string $placeholder = 'schema_up'): string
     {
-        return str_replace('{{' . $placeholder . '}}', $this->template, $wrapper);
+        return str_replace('{{'.$placeholder.'}}', $this->template, $wrapper);
     }
 
     /**
@@ -136,13 +144,16 @@ class MigrationSyntaxBuilder extends AbstractSintaxBuilder
     /**
      * Construct the schema fields.
      *
-     * @param  array $schema
-     * @param  string $direction
+     * @param array  $schema
+     * @param string $direction
+     *
      * @return string|array
      */
     private function constructSchema(array $schema, string $direction = 'Add')
     {
-        if (!$schema) return '';
+        if (!$schema) {
+            return '';
+        }
 
         $fields = array_map(function ($field) use ($direction) {
             $method = "{$direction}Column";
@@ -150,14 +161,14 @@ class MigrationSyntaxBuilder extends AbstractSintaxBuilder
             return $this->$method($field);
         }, $schema);
 
-        return implode("\n" . str_repeat(' ', 12), $fields);
+        return implode("\n".str_repeat(' ', 12), $fields);
     }
-
 
     /**
      * Construct the syntax to add a column.
      *
-     * @param  array $field
+     * @param array $field
+     *
      * @return string
      */
     private function addColumn(array $field): string
@@ -167,13 +178,13 @@ class MigrationSyntaxBuilder extends AbstractSintaxBuilder
         // If there are arguments for the schema type, like decimal('amount', 5, 2)
         // then we have to remember to work those in.
         if ($field['arguments']) {
-            $syntax = substr($syntax, 0, -1) . ', ';
+            $syntax = substr($syntax, 0, -1).', ';
 
-            $syntax .= implode(', ', $field['arguments']) . ')';
+            $syntax .= implode(', ', $field['arguments']).')';
         }
 
         foreach ($field['options'] as $method => $value) {
-            $syntax .= sprintf("->%s(%s)", $method, $value === true ? '' : $value);
+            $syntax .= sprintf('->%s(%s)', $method, $value === true ? '' : $value);
         }
 
         return $syntax .= ';';
@@ -182,7 +193,8 @@ class MigrationSyntaxBuilder extends AbstractSintaxBuilder
     /**
      * Construct the syntax to drop a column.
      *
-     * @param  string $field
+     * @param string $field
+     *
      * @return string
      */
     private function dropColumn($field)

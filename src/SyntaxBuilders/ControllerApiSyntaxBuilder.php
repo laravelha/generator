@@ -7,7 +7,8 @@ class ControllerApiSyntaxBuilder extends AbstractSintaxBuilder
     /**
      * Create the PHP syntax for the given schema.
      *
-     * @param  array $schema
+     * @param array $schema
+     *
      * @return string
      */
     public function create(array $schema): string
@@ -18,7 +19,8 @@ class ControllerApiSyntaxBuilder extends AbstractSintaxBuilder
     /**
      * Create the schema.
      *
-     * @param  array $schema
+     * @param array $schema
+     *
      * @return string
      */
     private function createSchema(array $schema): string
@@ -31,7 +33,8 @@ class ControllerApiSyntaxBuilder extends AbstractSintaxBuilder
     /**
      * Store the given template, to be inserted somewhere.
      *
-     * @param  string $template
+     * @param string $template
+     *
      * @return ControllerApiSyntaxBuilder
      */
     private function insert(string $template): ControllerApiSyntaxBuilder
@@ -44,13 +47,14 @@ class ControllerApiSyntaxBuilder extends AbstractSintaxBuilder
     /**
      * Get the stored template, and insert into the given wrapper.
      *
-     * @param  string $wrapper
-     * @param  string $placeholder
+     * @param string $wrapper
+     * @param string $placeholder
+     *
      * @return string
      */
     private function into(string $wrapper, string $placeholder = 'column'): string
     {
-        return str_replace('{{' . $placeholder . '}}', $this->template, $wrapper);
+        return str_replace('{{'.$placeholder.'}}', $this->template, $wrapper);
     }
 
     /**
@@ -66,52 +70,61 @@ class ControllerApiSyntaxBuilder extends AbstractSintaxBuilder
     /**
      * Construct the schema fields.
      *
-     * @param  array $schema
+     * @param array $schema
+     *
      * @return string|array
      */
     private function constructSchema(array $schema)
     {
-        if (!$schema) return '';
+        if (!$schema) {
+            return '';
+        }
 
         $fields = array_map(function ($field) {
             return $this->addColumn($field);
         }, $schema);
 
-        return implode("\n" . str_repeat(' ', 5) . '*' . str_repeat(' ', 13), $this->removeEmpty($fields));
+        return implode("\n".str_repeat(' ', 5).'*'.str_repeat(' ', 13), $this->removeEmpty($fields));
     }
 
     /**
      * Construct the syntax to add a column.
      *
-     * @param  array $field
+     * @param array $field
+     *
      * @return string
      */
     private function addColumn(array $field): string
     {
-        if($this->hasForeignConstraint($field))
+        if ($this->hasForeignConstraint($field)) {
             return '';
+        }
 
         return sprintf("@OA\Property(property=\"%s\", type=\"%s\"),", $field['name'], $this->getDataType($field['type']));
-
     }
 
     /**
-     * @param  string  $fieldType
+     * @param string $fieldType
+     *
      * @return string
      */
     private function getDataType(string $fieldType): string
     {
-        if(in_array($fieldType, $this->integerTypes))
+        if (in_array($fieldType, $this->integerTypes)) {
             return 'integer';
+        }
 
-        if(in_array($fieldType,  $this->stringTypes))
+        if (in_array($fieldType, $this->stringTypes)) {
             return 'string';
+        }
 
-        if(in_array($fieldType,  $this->floatTypes))
+        if (in_array($fieldType, $this->floatTypes)) {
             return 'number';
+        }
 
-        if(in_array($fieldType, ['boolean']))
+        if (in_array($fieldType, ['boolean'])) {
             return 'boolean';
+        }
 
         return 'string';
     }

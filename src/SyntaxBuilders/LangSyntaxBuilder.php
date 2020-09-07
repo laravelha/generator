@@ -7,7 +7,8 @@ class LangSyntaxBuilder extends AbstractSintaxBuilder
     /**
      * Create the PHP syntax for the given schema.
      *
-     * @param  array $schema
+     * @param array $schema
+     *
      * @return string
      */
     public function create(array $schema): string
@@ -18,7 +19,8 @@ class LangSyntaxBuilder extends AbstractSintaxBuilder
     /**
      * Create the schema for the lang array.
      *
-     * @param  array $schema
+     * @param array $schema
+     *
      * @return string
      */
     private function createSchema(array $schema): string
@@ -31,7 +33,8 @@ class LangSyntaxBuilder extends AbstractSintaxBuilder
     /**
      * Store the given template, to be inserted somewhere.
      *
-     * @param  string $template
+     * @param string $template
+     *
      * @return LangSyntaxBuilder
      */
     private function insert(string $template): LangSyntaxBuilder
@@ -44,13 +47,14 @@ class LangSyntaxBuilder extends AbstractSintaxBuilder
     /**
      * Get the stored template, and insert into the given wrapper.
      *
-     * @param  string $wrapper
-     * @param  string $placeholder
+     * @param string $wrapper
+     * @param string $placeholder
+     *
      * @return string
      */
     private function into(string $wrapper, string $placeholder = 'column'): string
     {
-        return str_replace('{{' . $placeholder . '}}', $this->template, $wrapper);
+        return str_replace('{{'.$placeholder.'}}', $this->template, $wrapper);
     }
 
     /**
@@ -66,32 +70,36 @@ class LangSyntaxBuilder extends AbstractSintaxBuilder
     /**
      * Construct the schema fields.
      *
-     * @param  array $schema
+     * @param array $schema
+     *
      * @return string|array
      */
     private function constructSchema(array $schema)
     {
-        if (!$schema) return '';
+        if (!$schema) {
+            return '';
+        }
 
         $fields = array_map(function ($field) {
             return $this->addColumn($field);
         }, $schema);
 
-        return implode("\n" . str_repeat(' ', 4), $this->removeEmpty($fields));
+        return implode("\n".str_repeat(' ', 4), $this->removeEmpty($fields));
     }
 
     /**
      * Construct the syntax to add a column.
      *
-     * @param  array $field
+     * @param array $field
+     *
      * @return string
      */
     private function addColumn(array $field): string
     {
-        if($this->hasForeignConstraint($field))
+        if ($this->hasForeignConstraint($field)) {
             return '';
+        }
 
         return sprintf("'%s' => '%s',", $field['name'], $field['name']);
-
     }
 }

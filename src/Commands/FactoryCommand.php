@@ -29,13 +29,14 @@ class FactoryCommand extends AbstractCommand
     /**
      * @var string
      */
-    const STUB_DIR = __DIR__ . "/../stubs";
+    const STUB_DIR = __DIR__.'/../stubs';
 
     /**
      * Execute the console command.
      *
-     * @return void
      * @throws FileNotFoundException
+     *
+     * @return void
      */
     public function handle(): void
     {
@@ -43,6 +44,7 @@ class FactoryCommand extends AbstractCommand
 
         if ($this->files->exists($path = $this->getPath())) {
             $this->error('Factory already exists!');
+
             return;
         }
 
@@ -62,12 +64,13 @@ class FactoryCommand extends AbstractCommand
      * Get the path to where we should store the factory.
      *
      * @param array $args
+     *
      * @return string
      */
     protected function getPath(...$args): string
     {
         if ($this->hasPackage()) {
-            return $this->packagePath . '/' . config('ha-generator.packageFactoriesFolder') . "/{$this->modelName}Factory.php";
+            return $this->packagePath.'/'.config('ha-generator.packageFactoriesFolder')."/{$this->modelName}Factory.php";
         }
 
         return database_path("factories/{$this->modelName}Factory.php");
@@ -76,12 +79,13 @@ class FactoryCommand extends AbstractCommand
     /**
      * Compile the factory stub.
      *
-     * @return string
      * @throws FileNotFoundException
+     *
+     * @return string
      */
     protected function compileStub(): string
     {
-        $stub = $this->files->get($this->resolveStubPath("/database/factories/factory.stub"));
+        $stub = $this->files->get($this->resolveStubPath('/database/factories/factory.stub'));
 
         $this
             ->replaceSchema($stub)
@@ -95,16 +99,17 @@ class FactoryCommand extends AbstractCommand
     /**
      * Replace the schema for the stub.
      *
-     * @param  string  $stub
+     * @param string $stub
+     *
      * @return FactoryCommand
      */
     protected function replaceSchema(string &$stub): FactoryCommand
     {
         if ($schema = $this->option('schema')) {
-            $schema = (new SchemaParser)->parse($schema);
+            $schema = (new SchemaParser())->parse($schema);
         }
 
-        $stub = (new FactorySintaxeBuilder)->create($schema);
+        $stub = (new FactorySintaxeBuilder())->create($schema);
 
         return $this;
     }

@@ -26,13 +26,14 @@ class ResourcesCommand extends AbstractCommand
     /**
      * @var string
      */
-    const STUB_DIR = __DIR__ . "/../stubs";
+    const STUB_DIR = __DIR__.'/../stubs';
 
     /**
      * Execute the console command.
      *
-     * @return void
      * @throws FileNotFoundException
+     *
+     * @return void
      */
     public function handle(): void
     {
@@ -48,16 +49,14 @@ class ResourcesCommand extends AbstractCommand
 
         $this->makeDirectory($path);
 
-        if (! $this->files->exists($path = $this->getPath('Resource'))) {
-
+        if (!$this->files->exists($path = $this->getPath('Resource'))) {
             $this->files->put($path, $this->compileStub());
 
             $filename = pathinfo($path, PATHINFO_FILENAME);
             $this->line("<info>Created Resource:</info> {$filename}");
         }
 
-        if (! $this->files->exists($path = $this->getPath('Collection'))) {
-
+        if (!$this->files->exists($path = $this->getPath('Collection'))) {
             $this->files->put($path, $this->compileStub('Collection'));
 
             $filename = pathinfo($path, PATHINFO_FILENAME);
@@ -73,25 +72,28 @@ class ResourcesCommand extends AbstractCommand
      * Get the path to where we should store the resources.
      *
      * @param array $args
+     *
      * @return string
      */
     protected function getPath(...$args): string
     {
         if ($this->hasPackage()) {
-            $this->makeDirectory($path = $this->packagePath . "/src/Http/Resources/{$this->modelName}{$args[0]}.php");
+            $this->makeDirectory($path = $this->packagePath."/src/Http/Resources/{$this->modelName}{$args[0]}.php");
+
             return $path;
         }
 
         return app_path("Http/Resources/{$this->modelName}{$args[0]}.php");
     }
 
-
     /**
      * Compile the resources stub.
      *
-     * @param String $sufix
-     * @return string
+     * @param string $sufix
+     *
      * @throws FileNotFoundException
+     *
+     * @return string
      */
     protected function compileStub(string $sufix = 'Resource'): string
     {

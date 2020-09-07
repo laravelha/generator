@@ -34,13 +34,14 @@ class ViewCommand extends AbstractCommand
     /**
      * @var string
      */
-    const STUB_DIR = __DIR__ . "/../stubs";
+    const STUB_DIR = __DIR__.'/../stubs';
 
     /**
      * Execute the console command.
      *
-     * @return void
      * @throws FileNotFoundException
+     *
+     * @return void
      */
     public function handle(): void
     {
@@ -50,6 +51,7 @@ class ViewCommand extends AbstractCommand
 
         if ($this->files->exists($path = $this->getPath())) {
             $this->error('View already exists!');
+
             return;
         }
 
@@ -69,6 +71,7 @@ class ViewCommand extends AbstractCommand
      * Get the path to where we should store the view.
      *
      * @param array $args
+     *
      * @return string
      */
     protected function getPath(...$args): string
@@ -78,15 +81,18 @@ class ViewCommand extends AbstractCommand
 
     /**
      * Compile the view stub.
-     * @return string
+     *
      * @throws FileNotFoundException
+     *
+     * @return string
      */
     protected function compileStub(): string
     {
         $stub = $this->files->get($this->resolveStubPath("/resources/views/{$this->viewName}.blade.stub"));
 
-        if($this->option('schema'))
+        if ($this->option('schema')) {
             $this->replaceSchema($stub);
+        }
 
         $this->replaceTableName($stub)
             ->replaceRouteName($stub)
@@ -98,13 +104,14 @@ class ViewCommand extends AbstractCommand
     /**
      * Replace the schema for the stub.
      *
-     * @param  string  $stub
+     * @param string $stub
+     *
      * @return ViewCommand
      */
     protected function replaceSchema(string &$stub): ViewCommand
     {
         if ($schema = $this->option('schema')) {
-            $schema = (new SchemaParser)->parse($schema);
+            $schema = (new SchemaParser())->parse($schema);
         }
 
         $stub = (new ViewSyntaxBuilder($this->viewName, $this->files))->create($schema);
@@ -114,13 +121,14 @@ class ViewCommand extends AbstractCommand
 
     /**
      * @param $content
-     * @param  string  $tab
+     * @param string $tab
+     *
      * @return string
      * @See https://stackoverflow.com/questions/7838929/keeping-line-breaks-when-using-phps-domdocument-appendchild
      */
-    protected function indentContent($content, $tab="\t")
+    protected function indentContent($content, $tab = "\t")
     {
-        $indent=0;
+        $indent = 0;
 
         // add marker linefeeds to aid the pretty-tokeniser (adds a linefeed between all tag-end boundaries)
         $content = preg_replace('/(>)(<)(\/*)/', "$1\n$2$3", $content);
@@ -129,29 +137,35 @@ class ViewCommand extends AbstractCommand
         $token = strtok($content, "\n");
         $result = ''; // holds formatted version as it is built
         $pad = 0; // initial indent
-        $matches = array(); // returns from preg_matches()
+        $matches = []; // returns from preg_matches()
 
         // scan each line and adjust indent based on opening/closing tags
-        while ($token !== false)
-        {
+        while ($token !== false) {
             $token = trim($token);
             // test for the various tag states
 
             // 1. open and closing tags on same line - no change
-            if (preg_match('/.+<\/\w[^>]*>$/', $token, $matches)) $indent=0;
+            if (preg_match('/.+<\/\w[^>]*>$/', $token, $matches)) {
+                $indent = 0;
+            }
             // 2. closing tag - outdent now
-            elseif (preg_match('/^<\/\w/', $token, $matches))
-            {
+            elseif (preg_match('/^<\/\w/', $token, $matches)) {
                 $pad--;
-                if($indent>0) $indent=0;
+                if ($indent > 0) {
+                    $indent = 0;
+                }
             }
             // 3. opening tag - don't pad this one, only subsequent tags
-            elseif (preg_match('/^<\w[^>]*[^\/]>.*$/', $token, $matches)) $indent=1;
+            elseif (preg_match('/^<\w[^>]*[^\/]>.*$/', $token, $matches)) {
+                $indent = 1;
+            }
             // 4. no indentation needed
-            else $indent = 0;
+            else {
+                $indent = 0;
+            }
 
             // pad the line with the required number of leading spaces
-            $line = str_pad($token, strlen($token)+$pad, $tab, STR_PAD_LEFT);
+            $line = str_pad($token, strlen($token) + $pad, $tab, STR_PAD_LEFT);
             $result .= $line."\n"; // add to the cumulative result, with linefeed
             $token = strtok("\n"); // get the next token
             $pad += $indent; // update the pad size for subsequent lines

@@ -30,15 +30,16 @@ class CrudGenerator extends Command
     protected $description = 'Create CRUD operations';
 
     /**
-     * Logging
-     * @var boolean
+     * Logging.
+     *
+     * @var bool
      */
     protected $noLogDetailed;
 
     /**
      * @var string
      */
-    const STUB_DIR = __DIR__ . "/../stubs";
+    const STUB_DIR = __DIR__.'/../stubs';
 
     /**
      * Execute the console command.
@@ -53,11 +54,11 @@ class CrudGenerator extends Command
             return;
         }
 
-        $this->noLogDetailed = !($this->option('log-detailed') AND !$this->option('no-log'));
+        $this->noLogDetailed = !($this->option('log-detailed') and !$this->option('no-log'));
 
         $name = $this->argument('name');
 
-        $this->option('yes') ? $this->withoutConfirmation($name): $this->withConfirmation($name);
+        $this->option('yes') ? $this->withoutConfirmation($name) : $this->withConfirmation($name);
 
         if (!$this->option('log-detailed')) {
             $this->writeLog();
@@ -65,7 +66,8 @@ class CrudGenerator extends Command
     }
 
     /**
-     * @param  string  $name
+     * @param string $name
+     *
      * @return void
      */
     protected function migration(string $name): void
@@ -76,14 +78,15 @@ class CrudGenerator extends Command
             $params = ['name' => "create_{$namePluralLower}_table", '--no-log' => $this->noLogDetailed, '--schema' => $this->option('schema')];
             $params += $this->hasArgument('package') ? ['package' => $this->argument('package')] : [];
 
-            $this->call("ha-generator:migration",  $params);
+            $this->call('ha-generator:migration', $params);
         } catch (\Exception $exception) {
             $this->warn("Unable to create migration 'create_{$namePluralLower}_table'. {$exception->getMessage()}");
         }
     }
 
     /**
-     * @param  string  $name
+     * @param string $name
+     *
      * @return void
      */
     protected function model(string $name): void
@@ -92,14 +95,15 @@ class CrudGenerator extends Command
             $params = ['name' => $name, '--no-log' => $this->noLogDetailed, '--schema' => $this->option('schema'), '--api' => $this->option('api')];
             $params += $this->hasArgument('package') ? ['package' => $this->argument('package')] : [];
 
-            $this->call("ha-generator:model",  $params);
+            $this->call('ha-generator:model', $params);
         } catch (\Exception $exception) {
             $this->warn("Unable to create model {$name}. {$exception->getMessage()}");
         }
     }
 
     /**
-     * @param  string  $name
+     * @param string $name
+     *
      * @return void
      */
     protected function factory(string $name): void
@@ -108,14 +112,15 @@ class CrudGenerator extends Command
             $params = ['name' => $name, '--no-log' => $this->noLogDetailed, '--schema' => $this->option('schema')];
             $params += $this->hasArgument('package') ? ['package' => $this->argument('package')] : [];
 
-            $this->call("ha-generator:factory",  $params);
+            $this->call('ha-generator:factory', $params);
         } catch (\Exception $exception) {
             $this->warn("Unable to create factory {$name}Factory. {$exception->getMessage()}");
         }
     }
 
     /**
-     * @param  string  $name
+     * @param string $name
+     *
      * @return void
      */
     protected function requests(string $name): void
@@ -124,14 +129,15 @@ class CrudGenerator extends Command
             $params = ['name' => $name, '--no-log' => $this->noLogDetailed, '--schema' => $this->option('schema')];
             $params += $this->hasArgument('package') ? ['package' => $this->argument('package')] : [];
 
-            $this->call("ha-generator:request",  $params);
+            $this->call('ha-generator:request', $params);
         } catch (\Exception $exception) {
             $this->warn("Unable to create requests {$name}Request. {$exception->getMessage()}");
         }
     }
 
     /**
-     * @param  string  $name
+     * @param string $name
+     *
      * @return void
      */
     protected function controller(string $name): void
@@ -140,7 +146,7 @@ class CrudGenerator extends Command
             $params = ['name' => $name, '--no-log' => $this->noLogDetailed, '--schema' => $this->option('schema'), '--api' => $this->option('api')];
             $params += $this->hasArgument('package') ? ['package' => $this->argument('package')] : [];
 
-            $this->call("ha-generator:controller",  $params);
+            $this->call('ha-generator:controller', $params);
         } catch (\Exception $exception) {
             $this->warn("Unable to create controller {$name}. {$exception->getMessage()}");
             $this->warn($exception->getMessage());
@@ -148,7 +154,8 @@ class CrudGenerator extends Command
     }
 
     /**
-     * @param  string  $name
+     * @param string $name
+     *
      * @return void
      */
     protected function routes(string $name): void
@@ -157,14 +164,15 @@ class CrudGenerator extends Command
             $params = ['name' => $name, '--no-log' => $this->noLogDetailed, '--api' => $this->option('api')];
             $params += $this->hasArgument('package') ? ['package' => $this->argument('package')] : [];
 
-            $this->call("ha-generator:route",  $params);
+            $this->call('ha-generator:route', $params);
         } catch (\Exception $exception) {
             $this->warn("Unable to create routes to {$name}");
         }
     }
 
     /**
-     * @param  string  $name
+     * @param string $name
+     *
      * @return void
      */
     protected function tests(string $name): void
@@ -173,20 +181,22 @@ class CrudGenerator extends Command
             $params = ['name' => $name, '--no-log' => $this->noLogDetailed, '--schema' => $this->option('schema'), '--api' => $this->option('api')];
             $params += $this->hasArgument('package') ? ['package' => $this->argument('package')] : [];
 
-            $this->call("ha-generator:tests",  $params);
+            $this->call('ha-generator:tests', $params);
         } catch (\Exception $exception) {
             $this->warn("Unable to create tests to {$name}");
         }
     }
 
     /**
-     * @param  string  $name
+     * @param string $name
+     *
      * @return void
      */
     protected function views(string $name): void
     {
-        if ($this->option('api'))
+        if ($this->option('api')) {
             return;
+        }
 
         $this->lang($name);
         $this->nav($name);
@@ -216,13 +226,15 @@ class CrudGenerator extends Command
     }
 
     /**
-     * @param  string  $name
+     * @param string $name
+     *
      * @return void
      */
     protected function viewsWithConfirmation(string $name): void
     {
-        if ($this->option('api'))
+        if ($this->option('api')) {
             return;
+        }
 
         if ($this->confirm('Do you wish to create the lang?', true)) {
             $this->lang($name);
@@ -262,87 +274,104 @@ class CrudGenerator extends Command
     }
 
     /**
-     * @param  string  $name
+     * @param string $name
+     *
      * @return void
      */
     protected function lang(string $name): void
     {
         try {
-            $this->call("ha-generator:lang",  ['name' => $name, '--no-log' => $this->noLogDetailed, '--schema' => $this->option('schema')]);
+            $this->call('ha-generator:lang', ['name' => $name, '--no-log' => $this->noLogDetailed, '--schema' => $this->option('schema')]);
         } catch (\Exception $exception) {
             $this->warn("Unable to create lang to {$name}. {$exception->getMessage()}");
         }
     }
 
     /**
-     * @param  string  $name
+     * @param string $name
+     *
      * @return void
      */
     protected function nav(string $name): void
     {
         try {
-            $this->call("ha-generator:nav",  ['name' => $name, '--no-log' => $this->noLogDetailed]);
+            $this->call('ha-generator:nav', ['name' => $name, '--no-log' => $this->noLogDetailed]);
         } catch (\Exception $exception) {
             $this->warn("Unable to create nav to {$name}");
         }
     }
 
     /**
-     * @param  string  $name
-     * @param  string|null  $view
-     * @param  string|null  $parent
+     * @param string      $name
+     * @param string|null $view
+     * @param string|null $parent
+     *
      * @return void
      */
     protected function breadcrumbs(string $name, string $view = null, string $parent = null): void
     {
         $params = ['name' => $name, '--no-log' => $this->noLogDetailed];
 
-        if($view) $params['view'] = $view;
+        if ($view) {
+            $params['view'] = $view;
+        }
 
-        if($parent) $params['--parent'] = $parent;
+        if ($parent) {
+            $params['--parent'] = $parent;
+        }
 
-        if($parent != 'index') $params['--argparent'] = true;
+        if ($parent != 'index') {
+            $params['--argparent'] = true;
+        }
 
-        if($view != 'create') $params['--ownarg'] = true;
+        if ($view != 'create') {
+            $params['--ownarg'] = true;
+        }
 
         try {
-            $this->call("ha-generator:breadcrumb",  $params);
+            $this->call('ha-generator:breadcrumb', $params);
         } catch (\Exception $exception) {
             $this->warn("Unable to create breadcrumb to {$name} {$view}");
         }
     }
 
     /**
-     * @param  string  $name
-     * @param  string|null  $view
-     * @param  string  $schema
+     * @param string      $name
+     * @param string|null $view
+     * @param string      $schema
+     *
      * @return void
      */
     private function viewFile(string $name, string $view = null, string $schema = null): void
     {
         $params = ['name' => $name, '--no-log' => $this->noLogDetailed];
 
-        if($view) $params['view'] = $view;
+        if ($view) {
+            $params['view'] = $view;
+        }
 
-        if($schema) $params['--schema'] = $schema;
+        if ($schema) {
+            $params['--schema'] = $schema;
+        }
 
         try {
-            $this->call("ha-generator:view", $params);
+            $this->call('ha-generator:view', $params);
         } catch (\Exception $exception) {
             $this->warn("Unable to create view to {$name} {$view}. {$exception->getMessage()}");
         }
     }
 
     /**
-     * Log command
+     * Log command.
+     *
      * @return void
      */
     private function writeLog(): void
     {
         if (!$this->option('no-log')) {
-            $log = 'php artisan ' . $this->name . ' ' . $this->argument('name') ;
-            $log .= ($this->hasOption('api') AND $this->option('api')) ? ' -a' : '';
-            $log .= ($this->hasOption('schema') AND $this->option('schema')) ? " -s '" . $this->option('schema') . "'" : '';
+            $log = 'php artisan '.$this->name.' '.$this->argument('name');
+            $log .= ($this->hasOption('api') and $this->option('api')) ? ' -a' : '';
+            $log .= ($this->hasOption('schema') and $this->option('schema')) ? " -s '".$this->option('schema')."'" : '';
 
             File::append(storage_path('logs/'.config('ha-generator.logFile').'-'.now()->format('Y-m-d').'.log'), $log.PHP_EOL);
         }
@@ -381,7 +410,7 @@ class CrudGenerator extends Command
             $this->tests($name);
         }
 
-        if (!$this->option('api') AND $this->confirm('Do you wish to create the views?', true)) {
+        if (!$this->option('api') and $this->confirm('Do you wish to create the views?', true)) {
             $this->viewsWithConfirmation($name);
         }
     }

@@ -33,6 +33,7 @@ class RouteCommand extends AbstractCommand
 
         if (!$this->files->exists($path = $this->getPath())) {
             $this->error('Route file not found');
+
             return;
         }
 
@@ -50,6 +51,7 @@ class RouteCommand extends AbstractCommand
      * Get the path to where we should store the routes.
      *
      * @param array $args
+     *
      * @return string
      */
     protected function getPath(...$args): string
@@ -57,7 +59,8 @@ class RouteCommand extends AbstractCommand
         $name = $this->option('api') ? 'api' : 'web';
 
         if ($this->hasPackage()) {
-            $this->makeDirectory($path = $this->packagePath . '/' . config('ha-generator.packageRoutesFolder') . "/$name.php");
+            $this->makeDirectory($path = $this->packagePath.'/'.config('ha-generator.packageRoutesFolder')."/$name.php");
+
             return $path;
         }
 
