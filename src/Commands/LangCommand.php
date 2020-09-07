@@ -30,13 +30,14 @@ class LangCommand extends AbstractCommand
     /**
      * @var string
      */
-    const STUB_DIR = __DIR__ . "/../stubs";
+    const STUB_DIR = __DIR__.'/../stubs';
 
     /**
      * Execute the console command.
      *
-     * @return void
      * @throws FileNotFoundException
+     *
+     * @return void
      */
     public function handle(): void
     {
@@ -44,6 +45,7 @@ class LangCommand extends AbstractCommand
 
         if ($this->files->exists($path = $this->getPath())) {
             $this->error('Lang already exists!');
+
             return;
         }
 
@@ -63,6 +65,7 @@ class LangCommand extends AbstractCommand
      * Get the path to where we should store the lang.
      *
      * @param array $args
+     *
      * @return string
      */
     protected function getPath(...$args): string
@@ -73,14 +76,15 @@ class LangCommand extends AbstractCommand
     /**
      * Compile the lang stub.
      *
-     * @return string
      * @throws FileNotFoundException
+     *
+     * @return string
      */
     protected function compileStub(): string
     {
-        $stub = $this->files->get($this->resolveStubPath("/resources/lang/lang.stub"));
+        $stub = $this->files->get($this->resolveStubPath('/resources/lang/lang.stub'));
 
-        if($this->option('schema')) {
+        if ($this->option('schema')) {
             $this->replaceSchema($stub);
         }
 
@@ -96,7 +100,8 @@ class LangCommand extends AbstractCommand
     /**
      * Replace the table name in the stub.
      *
-     * @param  string $stub
+     * @param string $stub
+     *
      * @return LangCommand
      */
     protected function replaceModelNamePlural(string &$stub): LangCommand
@@ -109,16 +114,17 @@ class LangCommand extends AbstractCommand
     /**
      * Replace the schema for the stub.
      *
-     * @param  string  $stub
+     * @param string $stub
+     *
      * @return LangCommand
      */
     protected function replaceSchema(string &$stub): LangCommand
     {
         if ($schema = $this->option('schema')) {
-            $schema = (new SchemaParser)->parse($schema);
+            $schema = (new SchemaParser())->parse($schema);
         }
 
-        $stub = (new LangSyntaxBuilder)->create($schema);
+        $stub = (new LangSyntaxBuilder())->create($schema);
 
         return $this;
     }

@@ -7,7 +7,8 @@ class MigrationNameParser
     /**
      * Parse the migration name into something we can use.
      *
-     * @param  string $name
+     * @param string $name
+     *
      * @return array
      */
     public function parse(string $name): array
@@ -20,14 +21,15 @@ class MigrationNameParser
 
         return [
             'action' => $this->getAction($segments),
-            'table' => $this->getTableName($segments)
+            'table'  => $this->getTableName($segments),
         ];
     }
 
     /**
      * Calculate the table name.
      *
-     * @param  array $segments
+     * @param array $segments
+     *
      * @return string
      */
     private function getTableName(array $segments): string
@@ -48,7 +50,8 @@ class MigrationNameParser
     /**
      * Determine the user's desired action for the migration.
      *
-     * @param  array $segments
+     * @param array $segments
+     *
      * @return string
      */
     private function getAction(array &$segments): string
@@ -60,7 +63,8 @@ class MigrationNameParser
      * Normalize the user's chosen action to name to
      * something that we recognize.
      *
-     * @param  string $action
+     * @param string $action
+     *
      * @return string
      */
     private function normalizeActionName($action): string
@@ -86,7 +90,8 @@ class MigrationNameParser
     /**
      * Determine if the current segment is a connecting word.
      *
-     * @param  string $segment
+     * @param string $segment
+     *
      * @return bool
      */
     private function isConnectingWord(string $segment): bool

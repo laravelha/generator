@@ -15,9 +15,10 @@ class SchemaParser
 
     /**
      * Parse the command line migration schema.
-     * Ex: name:string, age:integer:nullable
+     * Ex: name:string, age:integer:nullable.
      *
-     * @param  string $schema
+     * @param string $schema
+     *
      * @return array
      */
     public function parse(string $schema): array
@@ -49,7 +50,8 @@ class SchemaParser
     /**
      * Add a field to the schema array.
      *
-     * @param  array $field
+     * @param array $field
+     *
      * @return SchemaParser
      */
     private function addField(array $field): SchemaParser
@@ -62,7 +64,8 @@ class SchemaParser
     /**
      * Get an array of fields from the given schema.
      *
-     * @param  string $schema
+     * @param string $schema
+     *
      * @return array
      */
     private function splitIntoFields(string $schema): array
@@ -73,7 +76,8 @@ class SchemaParser
     /**
      * Get the segments of the schema field.
      *
-     * @param  string $field
+     * @param string $field
+     *
      * @return array
      */
     private function parseSegments(string $field): array
@@ -93,9 +97,9 @@ class SchemaParser
             $arguments = explode(',', $matches[2]);
         }
 
-        if (!in_array($type, config('ha-generator.bluePrintTypes')))
+        if (!in_array($type, config('ha-generator.bluePrintTypes'))) {
             throw new \InvalidArgumentException("Column Type: $type not available");
-
+        }
 
         return compact('name', 'type', 'arguments', 'options');
     }
@@ -103,12 +107,15 @@ class SchemaParser
     /**
      * Parse any given options into something usable.
      *
-     * @param  array $options
+     * @param array $options
+     *
      * @return array
      */
     private function parseOptions(array $options): array
     {
-        if (empty($options)) return [];
+        if (empty($options)) {
+            return [];
+        }
 
         foreach ($options as $option) {
             if (Str::contains($option, '(')) {
@@ -141,9 +148,10 @@ class SchemaParser
 
     /**
      * Try to figure out the name of a table from a foreign key.
-     * Ex: user_id => users
+     * Ex: user_id => users.
      *
-     * @param  string $key
+     * @param string $key
+     *
      * @return string
      */
     private function getTableNameFromForeignKey(string $key): string
@@ -154,7 +162,8 @@ class SchemaParser
     /**
      * Determine if the user wants a foreign constraint for the field.
      *
-     * @param  array $segments
+     * @param array $segments
+     *
      * @return bool
      */
     private function fieldNeedsForeignConstraint(array $segments): bool
@@ -162,4 +171,3 @@ class SchemaParser
         return array_key_exists('foreign', $segments['options']);
     }
 }
-

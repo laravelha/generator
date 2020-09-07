@@ -30,13 +30,14 @@ class ControllerCommand extends AbstractCommand
     /**
      * @var string
      */
-    const STUB_DIR = __DIR__ . "/../stubs";
+    const STUB_DIR = __DIR__.'/../stubs';
 
     /**
      * Execute the console command.
      *
-     * @return void
      * @throws FileNotFoundException
+     *
+     * @return void
      */
     public function handle(): void
     {
@@ -44,6 +45,7 @@ class ControllerCommand extends AbstractCommand
 
         if ($this->files->exists($path = $this->getPath())) {
             $this->error('Controller already exists!');
+
             return;
         }
 
@@ -61,12 +63,14 @@ class ControllerCommand extends AbstractCommand
      * Get the path to where we should store the controller.
      *
      * @param array $args
+     *
      * @return string
      */
     protected function getPath(...$args): string
     {
         if ($this->hasPackage()) {
-            $this->makeDirectory($path = $this->packagePath . "/src/Http/Controllers/{$this->modelName}Controller.php");
+            $this->makeDirectory($path = $this->packagePath."/src/Http/Controllers/{$this->modelName}Controller.php");
+
             return $path;
         }
 
@@ -76,8 +80,9 @@ class ControllerCommand extends AbstractCommand
     /**
      * Compile the controller stub.
      *
-     * @return string
      * @throws FileNotFoundException
+     *
+     * @return string
      */
     protected function compileStub(): string
     {
@@ -87,12 +92,13 @@ class ControllerCommand extends AbstractCommand
     /**
      * Compile the controller api stub.
      *
-     * @return string
      * @throws FileNotFoundException
+     *
+     * @return string
      */
     protected function compileApiControllerStub(): string
     {
-        $stub = $this->files->get($this->resolveStubPath("/app/Http/Controllers/ApiController.stub"));
+        $stub = $this->files->get($this->resolveStubPath('/app/Http/Controllers/ApiController.stub'));
 
         $this->apiResources();
 
@@ -112,12 +118,13 @@ class ControllerCommand extends AbstractCommand
     /**
      * Compile the controller web stub.
      *
-     * @return string
      * @throws FileNotFoundException
+     *
+     * @return string
      */
     protected function compileWebControllerStub(): string
     {
-        $stub = $this->files->get($this->resolveStubPath("/app/Http/Controllers/WebController.stub"));
+        $stub = $this->files->get($this->resolveStubPath('/app/Http/Controllers/WebController.stub'));
 
         $this
             ->replaceNamespace($stub)
@@ -131,18 +138,17 @@ class ControllerCommand extends AbstractCommand
     }
 
     /**
-     * Run api resources command
+     * Run api resources command.
      *
      * @return void
      */
     private function apiResources(): void
     {
         try {
-
             $params = ['name' => $this->modelName, '--no-log' => $this->option('no-log')];
             $params += $this->hasPackage() ? ['package' => $this->argument('package')] : [];
 
-            $this->call("ha-generator:resources",  $params);
+            $this->call('ha-generator:resources', $params);
         } catch (\Exception $exception) {
             $this->warn("Não foi possível criar recursos para {$this->modelName}");
         }
@@ -151,16 +157,17 @@ class ControllerCommand extends AbstractCommand
     /**
      * Replace the schema for the stub.
      *
-     * @param  string  $stub
+     * @param string $stub
+     *
      * @return ControllerCommand
      */
     protected function replaceSchema(string &$stub): ControllerCommand
     {
         if ($schema = $this->option('schema')) {
-            $schema = (new SchemaParser)->parse($schema);
+            $schema = (new SchemaParser())->parse($schema);
         }
 
-        $stub = (new ControllerApiSyntaxBuilder)->create($schema);
+        $stub = (new ControllerApiSyntaxBuilder())->create($schema);
 
         return $this;
     }

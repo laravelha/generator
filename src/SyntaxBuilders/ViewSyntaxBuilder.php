@@ -24,8 +24,8 @@ class ViewSyntaxBuilder extends AbstractSintaxBuilder
     /**
      * Create a new command instance.
      *
-     * @param string $viewName
-     * @param  Filesystem  $files
+     * @param string     $viewName
+     * @param Filesystem $files
      */
     public function __construct(string $viewName, Filesystem $files)
     {
@@ -38,7 +38,8 @@ class ViewSyntaxBuilder extends AbstractSintaxBuilder
     /**
      * Create the PHP syntax for the given schema.
      *
-     * @param  array $schema
+     * @param array $schema
+     *
      * @return string
      */
     public function create(array $schema): string
@@ -49,7 +50,8 @@ class ViewSyntaxBuilder extends AbstractSintaxBuilder
     /**
      * Create the schema for the blade views.
      *
-     * @param  array $schema
+     * @param array $schema
+     *
      * @return string
      */
     private function createSchema(array $schema): string
@@ -62,7 +64,8 @@ class ViewSyntaxBuilder extends AbstractSintaxBuilder
     /**
      * Store the given template, to be inserted somewhere.
      *
-     * @param  string $template
+     * @param string $template
+     *
      * @return ViewSyntaxBuilder
      */
     private function insert(string $template): ViewSyntaxBuilder
@@ -75,13 +78,14 @@ class ViewSyntaxBuilder extends AbstractSintaxBuilder
     /**
      * Get the stored template, and insert into the given wrapper.
      *
-     * @param  string $wrapper
-     * @param  string $placeholder
+     * @param string $wrapper
+     * @param string $placeholder
+     *
      * @return string
      */
     private function into(string $wrapper, string $placeholder = 'column'): string
     {
-        return str_replace('{{' . $placeholder . '}}', $this->template, $wrapper);
+        return str_replace('{{'.$placeholder.'}}', $this->template, $wrapper);
     }
 
     /**
@@ -97,39 +101,47 @@ class ViewSyntaxBuilder extends AbstractSintaxBuilder
     /**
      * Construct the schema fields.
      *
-     * @param  array $schema
+     * @param array $schema
+     *
      * @return string|array
      */
     private function constructSchema(array $schema)
     {
-        if (!$schema) return '';
+        if (!$schema) {
+            return '';
+        }
 
         $fields = array_map(function ($field) {
             return $this->addColumn($field);
         }, $schema);
 
-        return implode("\n" . str_repeat(' ', 8), $this->removeEmpty($fields));
+        return implode("\n".str_repeat(' ', 8), $this->removeEmpty($fields));
     }
 
     /**
      * Construct the syntax to add a column.
      *
-     * @param  array  $field
-     * @return string
+     * @param array $field
+     *
      * @throws FileNotFoundException
+     *
+     * @return string
      */
     private function addColumn(array $field): string
     {
-        if($this->hasForeignConstraint($field))
+        if ($this->hasForeignConstraint($field)) {
             return '';
+        }
 
         return str_replace('{{column}}', $field['name'], $this->getElementStub($field));
     }
 
     /**
-     * @param  array  $field
-     * @return string
+     * @param array $field
+     *
      * @throws FileNotFoundException
+     *
+     * @return string
      */
     private function getElementStub(array $field): string
     {
@@ -138,34 +150,39 @@ class ViewSyntaxBuilder extends AbstractSintaxBuilder
         if (in_array($field['type'], $this->stringTypes)) {
             $element = 'text';
 
-            if ($field['type'] == 'text' || ($field['arguments'] && $field['arguments'][0] > 100))
+            if ($field['type'] == 'text' || ($field['arguments'] && $field['arguments'][0] > 100)) {
                 $element = 'textarea';
+            }
         }
 
-        if (in_array($field['type'], $this->integerTypes))
+        if (in_array($field['type'], $this->integerTypes)) {
             $element = 'number';
+        }
 
-        if (in_array($field['type'], $this->floatTypes))
+        if (in_array($field['type'], $this->floatTypes)) {
             $element = 'decimal';
+        }
 
-        if (in_array($field['type'], $this->dateTypes))
+        if (in_array($field['type'], $this->dateTypes)) {
             $element = 'date';
+        }
 
         $strSub = $this->files->get($this->resolveStubPath("/resources/views/elements/{$element}.blade.stub"));
 
         $strSub = str_replace('{{required}}', !array_key_exists('nullable', $field['options']) ? 'required' : '', $strSub);
 
         if (in_array($field['type'], $this->stringTypes)) {
-            if ($field['arguments'] && $field['arguments'][0])
+            if ($field['arguments'] && $field['arguments'][0]) {
                 $strSub = str_replace('{{maxlength}}', $field['arguments'][0], $strSub);
-            else
+            } else {
                 $strSub = str_replace('{{maxlength}}', '255', $strSub);
+            }
         }
 
         if (in_array($field['type'], $this->integerTypes)) {
             if ($field['arguments'] && $field['arguments'][0]) {
                 $strSub = str_replace('{{min}}', 'min="0"', $strSub);
-                $strSub = str_replace('{{max}}', 'max="' . str_repeat('9', $field['arguments'][0]) . '"', $strSub);
+                $strSub = str_replace('{{max}}', 'max="'.str_repeat('9', $field['arguments'][0]).'"', $strSub);
             } else {
                 $strSub = str_replace('{{min}}', '', $strSub);
                 $strSub = str_replace('{{max}}', '', $strSub);

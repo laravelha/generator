@@ -30,13 +30,14 @@ class ModelCommand extends AbstractCommand
     /**
      * @var string
      */
-    const STUB_DIR = __DIR__ . "/../stubs";
+    const STUB_DIR = __DIR__.'/../stubs';
 
     /**
      * Execute the console command.
      *
-     * @return void
      * @throws FileNotFoundException
+     *
+     * @return void
      */
     public function handle(): void
     {
@@ -44,6 +45,7 @@ class ModelCommand extends AbstractCommand
 
         if ($this->files->exists($path = $this->getPath())) {
             $this->error('Model already exists!');
+
             return;
         }
 
@@ -61,12 +63,14 @@ class ModelCommand extends AbstractCommand
      * Get the path to where we should store the model.
      *
      * @param array $args
+     *
      * @return string
      */
     protected function getPath(...$args): string
     {
         if ($this->hasPackage()) {
-            $this->makeDirectory($path = $this->packagePath . "/src/Models/{$this->modelName}.php");
+            $this->makeDirectory($path = $this->packagePath."/src/Models/{$this->modelName}.php");
+
             return $path;
         }
 
@@ -76,8 +80,9 @@ class ModelCommand extends AbstractCommand
     /**
      * Compile the model stub.
      *
-     * @return string
      * @throws FileNotFoundException
+     *
+     * @return string
      */
     protected function compileStub(): string
     {
@@ -87,12 +92,13 @@ class ModelCommand extends AbstractCommand
     /**
      * Compile the model api stub.
      *
-     * @return string
      * @throws FileNotFoundException
+     *
+     * @return string
      */
     protected function compileApiModelStub(): string
     {
-        $stub = $this->files->get($this->resolveStubPath("/app/ApiModel.stub"));
+        $stub = $this->files->get($this->resolveStubPath('/app/ApiModel.stub'));
 
         $this
             ->replaceSchema($stub)
@@ -105,12 +111,13 @@ class ModelCommand extends AbstractCommand
     /**
      * Compile the model web stub.
      *
-     * @return string
      * @throws FileNotFoundException
+     *
+     * @return string
      */
     protected function compileWebModelStub(): string
     {
-        $stub = $this->files->get($this->resolveStubPath("/app/WebModel.stub"));
+        $stub = $this->files->get($this->resolveStubPath('/app/WebModel.stub'));
 
         $this
             ->replaceSchema($stub)
@@ -123,16 +130,17 @@ class ModelCommand extends AbstractCommand
     /**
      * Replace the schema for the stub.
      *
-     * @param  string  $stub
+     * @param string $stub
+     *
      * @return ModelCommand
      */
     protected function replaceSchema(string &$stub): ModelCommand
     {
         if ($schema = $this->option('schema')) {
-            $schema = (new SchemaParser)->parse($schema);
+            $schema = (new SchemaParser())->parse($schema);
         }
 
-        $schema = (new ModelSyntaxBuilder)->create($schema);
+        $schema = (new ModelSyntaxBuilder())->create($schema);
 
         $stub = str_replace(['{{foreign}}', '{{searchables}}'], $schema, $stub);
 

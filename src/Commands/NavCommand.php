@@ -26,13 +26,14 @@ class NavCommand extends AbstractCommand
     /**
      * @var string
      */
-    const STUB_DIR = __DIR__ . "/../stubs";
+    const STUB_DIR = __DIR__.'/../stubs';
 
     /**
      * Execute the console command.
      *
-     * @return void
      * @throws FileNotFoundException
+     *
+     * @return void
      */
     public function handle(): void
     {
@@ -40,6 +41,7 @@ class NavCommand extends AbstractCommand
 
         if (!$this->files->exists($path = $this->getPath())) {
             $this->error('Nav not exists!');
+
             return;
         }
 
@@ -57,29 +59,30 @@ class NavCommand extends AbstractCommand
      * Get the path to where we should store the menu.
      *
      * @param array $args
+     *
      * @return string
      */
     protected function getPath(...$args): string
     {
-        return resource_path("views/layouts/nav.blade.php");
+        return resource_path('views/layouts/nav.blade.php');
     }
 
     /**
-     * Append menu
+     * Append menu.
      *
-     * @param  string  $path
-     * @param  string  $compileStub
+     * @param string $path
+     * @param string $compileStub
      */
     protected function append(string $path, string $compileStub)
     {
-        $menu = new DOMDocument;
+        $menu = new DOMDocument();
         $menu->load($path);
 
-        $item = new DOMDocument;
+        $item = new DOMDocument();
         $item->loadXML($compileStub);
 
-        $menu->getElementsByTagName("ul")->item(0)->appendChild(
-            $menu->importNode($item->getElementsByTagName("li")->item(0), true)
+        $menu->getElementsByTagName('ul')->item(0)->appendChild(
+            $menu->importNode($item->getElementsByTagName('li')->item(0), true)
         );
 
         // LIBXML_NOXMLDECL remove xml header to Libxml >= 2.6.21
@@ -92,12 +95,13 @@ class NavCommand extends AbstractCommand
     /**
      * Compile the menu stub.
      *
-     * @return string
      * @throws FileNotFoundException
+     *
+     * @return string
      */
     protected function compileStub(): string
     {
-        $stub = $this->files->get($this->resolveStubPath("/resources/views/layouts/nav.stub"));
+        $stub = $this->files->get($this->resolveStubPath('/resources/views/layouts/nav.stub'));
 
         $this->replaceRouteName($stub)
             ->replaceTableName($stub);
@@ -107,11 +111,12 @@ class NavCommand extends AbstractCommand
 
     /**
      * @param $content
-     * @param  string  $tab
+     * @param string $tab
+     *
      * @return string
      * @See https://stackoverflow.com/questions/7838929/keeping-line-breaks-when-using-phps-domdocument-appendchild
      */
-    protected function indentContent($content, $tab="\t")
+    protected function indentContent($content, $tab = "\t")
     {
         $indent = 0;
 
@@ -122,29 +127,35 @@ class NavCommand extends AbstractCommand
         $token = strtok($content, "\n");
         $result = ''; // holds formatted version as it is built
         $pad = 0; // initial indent
-        $matches = array(); // returns from preg_matches()
+        $matches = []; // returns from preg_matches()
 
         // scan each line and adjust indent based on opening/closing tags
-        while ($token !== false)
-        {
+        while ($token !== false) {
             $token = trim($token);
             // test for the various tag states
 
             // 1. open and closing tags on same line - no change
-            if (preg_match('/.+<\/\w[^>]*>$/', $token, $matches)) $indent=0;
+            if (preg_match('/.+<\/\w[^>]*>$/', $token, $matches)) {
+                $indent = 0;
+            }
             // 2. closing tag - outdent now
-            elseif (preg_match('/^<\/\w/', $token, $matches))
-            {
+            elseif (preg_match('/^<\/\w/', $token, $matches)) {
                 $pad--;
-                if($indent>0) $indent=0;
+                if ($indent > 0) {
+                    $indent = 0;
+                }
             }
             // 3. opening tag - don't pad this one, only subsequent tags
-            elseif (preg_match('/^<\w[^>]*[^\/]>.*$/', $token, $matches)) $indent=1;
+            elseif (preg_match('/^<\w[^>]*[^\/]>.*$/', $token, $matches)) {
+                $indent = 1;
+            }
             // 4. no indentation needed
-            else $indent = 0;
+            else {
+                $indent = 0;
+            }
 
             // pad the line with the required number of leading spaces
-            $line = str_pad($token, strlen($token)+$pad, $tab, STR_PAD_LEFT);
+            $line = str_pad($token, strlen($token) + $pad, $tab, STR_PAD_LEFT);
             $result .= $line."\n"; // add to the cumulative result, with linefeed
             $token = strtok("\n"); // get the next token
             $pad += $indent; // update the pad size for subsequent lines

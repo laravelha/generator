@@ -30,13 +30,14 @@ class TestsCommand extends AbstractCommand
     /**
      * @var string
      */
-    const STUB_DIR = __DIR__ . "/../stubs";
+    const STUB_DIR = __DIR__.'/../stubs';
 
     /**
      * Execute the console command.
      *
-     * @return void
      * @throws FileNotFoundException
+     *
+     * @return void
      */
     public function handle(): void
     {
@@ -44,11 +45,13 @@ class TestsCommand extends AbstractCommand
 
         if ($directoryExists = $this->files->exists($path = $this->getPath())) {
             $this->error('Test already exists!');
+
             return;
         }
 
-        if (!$directoryExists)
+        if (!$directoryExists) {
             $this->makeDirectory($path);
+        }
 
         $this->files->put($path, $this->compileStub());
 
@@ -63,13 +66,14 @@ class TestsCommand extends AbstractCommand
     /**
      * Get the path to where we should store the test.
      *
-     * @param  array $args
+     * @param array $args
+     *
      * @return string
      */
     protected function getPath(...$args): string
     {
         if ($this->hasPackage()) {
-            return $this->packagePath . "/tests/Feature/{$this->modelName}Test.php";
+            return $this->packagePath."/tests/Feature/{$this->modelName}Test.php";
         }
 
         return base_path("tests/Feature/{$this->modelName}Test.php");
@@ -78,14 +82,15 @@ class TestsCommand extends AbstractCommand
     /**
      * Compile the requests stub.
      *
-     * @return string
      * @throws FileNotFoundException
+     *
+     * @return string
      */
     protected function compileStub(): string
     {
         $stub = $this->option('api')
-            ? $this->files->get($this->resolveStubPath("/tests/Feature/ApiTest.stub"))
-            : $this->files->get($this->resolveStubPath("/tests/Feature/WebTest.stub"));
+            ? $this->files->get($this->resolveStubPath('/tests/Feature/ApiTest.stub'))
+            : $this->files->get($this->resolveStubPath('/tests/Feature/WebTest.stub'));
 
         $this->replaceSchema($stub)
             ->replacePackageRouteName($stub)
@@ -96,23 +101,23 @@ class TestsCommand extends AbstractCommand
             ->replaceRouteName($stub)
             ->replaceObjectName($stub);
 
-
         return $stub;
     }
 
     /**
      * Replace the schema for the stub.
      *
-     * @param  string  $stub
+     * @param string $stub
+     *
      * @return TestsCommand
      */
     protected function replaceSchema(string &$stub): TestsCommand
     {
         if ($schema = $this->option('schema')) {
-            $schema = (new SchemaParser)->parse($schema);
+            $schema = (new SchemaParser())->parse($schema);
         }
 
-        $stub = (new TestSyntaxBuilder)->create($schema, $this->option('api'));
+        $stub = (new TestSyntaxBuilder())->create($schema, $this->option('api'));
 
         return $this;
     }

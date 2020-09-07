@@ -39,29 +39,32 @@ class MigrationCommand extends AbstractCommand
     /**
      * @var string
      */
-    const STUB_DIR = __DIR__ . "/../stubs";
+    const STUB_DIR = __DIR__.'/../stubs';
 
     /**
      * Execute the console command.
      *
-     * @return void
      * @throws FileNotFoundException
+     *
+     * @return void
      */
     public function handle(): void
     {
         $this->setNames();
 
-        $this->meta = (new MigrationNameParser)->parse($this->argument('name'));
+        $this->meta = (new MigrationNameParser())->parse($this->argument('name'));
 
         $name = $this->argument('name');
 
         if ($this->files->exists($path = $this->getPath($name))) {
             $this->error('Migration already exists!');
+
             return;
         }
 
         if ($this->migrationAlreadyExist($name)) {
             $this->error("A {$this->getClassName($name)} class already exists.");
+
             return;
         }
 
@@ -81,27 +84,28 @@ class MigrationCommand extends AbstractCommand
      * Get the path to where we should store the migration.
      *
      * @param array $args
+     *
      * @return string
      */
     protected function getPath(...$args): string
     {
         if ($this->hasPackage()) {
-            return $this->packagePath . '/' . config('ha-generator.packageMigrationsFolder') . '/' . date('Y_m_d_His') . '_' . $args[0] . '.php';
+            return $this->packagePath.'/'.config('ha-generator.packageMigrationsFolder').'/'.date('Y_m_d_His').'_'.$args[0].'.php';
         }
 
-        return base_path() . '/database/migrations/' . date('Y_m_d_His') . '_' . $args[0] . '.php';
-
+        return base_path().'/database/migrations/'.date('Y_m_d_His').'_'.$args[0].'.php';
     }
 
     /**
      * Compile the migration stub.
      *
-     * @return string
      * @throws FileNotFoundException
+     *
+     * @return string
      */
     protected function compileStub(): string
     {
-        $stub = $this->files->get($this->resolveStubPath("/database/migrations/migration.stub"));
+        $stub = $this->files->get($this->resolveStubPath('/database/migrations/migration.stub'));
 
         $this->replaceClassName($stub)
             ->replaceSchema($stub)
@@ -113,7 +117,8 @@ class MigrationCommand extends AbstractCommand
     /**
      * Replace the table name in the stub.
      *
-     * @param  string $stub
+     * @param string $stub
+     *
      * @return AbstractCommand
      */
     protected function replaceTableName(string &$stub): AbstractCommand
@@ -125,21 +130,22 @@ class MigrationCommand extends AbstractCommand
         return $this;
     }
 
-
     /**
      * Replace the schema for the stub.
      *
-     * @param  string  $stub
-     * @return MigrationCommand
+     * @param string $stub
+     *
      * @throws GeneratorException
+     *
+     * @return MigrationCommand
      */
     protected function replaceSchema(string &$stub): MigrationCommand
     {
         if ($schema = $this->option('schema')) {
-            $schema = (new SchemaParser)->parse($schema);
+            $schema = (new SchemaParser())->parse($schema);
         }
 
-        $schema = (new MigrationSyntaxBuilder)->create($schema, $this->meta);
+        $schema = (new MigrationSyntaxBuilder())->create($schema, $this->meta);
 
         $stub = str_replace(['{{schema_up}}', '{{schema_down}}'], $schema, $stub);
 
@@ -148,6 +154,7 @@ class MigrationCommand extends AbstractCommand
 
     /**
      * @param $name
+     *
      * @return string
      */
     private function getClassName($name)
@@ -157,6 +164,7 @@ class MigrationCommand extends AbstractCommand
 
     /**
      * @param $name
+     *
      * @return bool
      */
     protected function migrationAlreadyExist($name)

@@ -5,17 +5,17 @@ return [
     'customStubs' => true,
 
     'stringTypes' => [
-        'char', 'string', 'text', 'mediumText', 'longText', 'json', 'jsonb'
+        'char', 'string', 'text', 'mediumText', 'longText', 'json', 'jsonb',
     ],
 
     'integerTypes' => [
         'increments', 'integerIncrements', 'tinyIncrements', 'smallIncrements', 'mediumIncrements', 'bigIncrements',
         'integer', 'tinyInteger', 'smallInteger', 'mediumInteger', 'bigInteger',
-        'unsignedInteger', 'unsignedTinyInteger', 'unsignedSmallInteger', 'unsignedMediumInteger', 'unsignedBigInteger'
+        'unsignedInteger', 'unsignedTinyInteger', 'unsignedSmallInteger', 'unsignedMediumInteger', 'unsignedBigInteger',
     ],
 
     'floatTypes' => [
-        'float', 'double', 'decimal', 'unsignedDecimal'
+        'float', 'double', 'decimal', 'unsignedDecimal',
     ],
 
     'dateTypes' => [
@@ -60,7 +60,7 @@ return [
     'packageConfigsFolder' => 'config',
 
     'packageMigrationsFolder' => 'database/migrations',
-    'packageFactoriesFolder' => 'database/factories',
+    'packageFactoriesFolder'  => 'database/factories',
 
     'packageLangsFolder' => 'resource/lang',
     'packageViewsFolder' => 'resource/view',

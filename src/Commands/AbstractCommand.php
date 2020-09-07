@@ -66,12 +66,11 @@ abstract class AbstractCommand extends Command
      */
     protected $packageRoute;
 
-
     /**
      * Create a new command instance.
      *
-     * @param  Filesystem  $files
-     * @param  Composer  $composer
+     * @param Filesystem $files
+     * @param Composer   $composer
      */
     public function __construct(Filesystem $files, Composer $composer)
     {
@@ -82,7 +81,7 @@ abstract class AbstractCommand extends Command
     }
 
     /**
-     * Set ModelName, TableName, RouteName and ObjectName by argument
+     * Set ModelName, TableName, RouteName and ObjectName by argument.
      *
      * @return void
      */
@@ -106,7 +105,7 @@ abstract class AbstractCommand extends Command
     /**
      * Build the directory for the command result if necessary.
      *
-     * @param  string $path
+     * @param string $path
      */
     protected function makeDirectory($path): void
     {
@@ -118,7 +117,8 @@ abstract class AbstractCommand extends Command
     /**
      * Replace the namespace in the stub.
      *
-     * @param  string $stub
+     * @param string $stub
+     *
      * @return AbstractCommand
      */
     protected function replaceNamespace(string &$stub): AbstractCommand
@@ -131,7 +131,8 @@ abstract class AbstractCommand extends Command
     /**
      * Replace the namespace in the stub.
      *
-     * @param  string $stub
+     * @param string $stub
+     *
      * @return AbstractCommand
      */
     protected function replaceTestNamespace(string &$stub): AbstractCommand
@@ -146,12 +147,13 @@ abstract class AbstractCommand extends Command
     /**
      * Replace the model namespace in the stub.
      *
-     * @param  string $stub
+     * @param string $stub
+     *
      * @return AbstractCommand
      */
     protected function replaceModelNamespace(string &$stub): AbstractCommand
     {
-        $namespace = $this->hasPackage() ? $this->namespace . '\\Models' : $this->namespace;
+        $namespace = $this->hasPackage() ? $this->namespace.'\\Models' : $this->namespace;
 
         $stub = str_replace('{{modelNamespace}}', $namespace, $stub);
 
@@ -161,7 +163,8 @@ abstract class AbstractCommand extends Command
     /**
      * Replace the model name in the stub.
      *
-     * @param  string $stub
+     * @param string $stub
+     *
      * @return AbstractCommand
      */
     protected function replaceModelName(string &$stub): AbstractCommand
@@ -174,7 +177,8 @@ abstract class AbstractCommand extends Command
     /**
      * Replace the class name in the stub.
      *
-     * @param  string $stub
+     * @param string $stub
+     *
      * @return AbstractCommand
      */
     protected function replaceClassName(string &$stub): AbstractCommand
@@ -189,7 +193,8 @@ abstract class AbstractCommand extends Command
     /**
      * Replace the table name in the stub.
      *
-     * @param  string $stub
+     * @param string $stub
+     *
      * @return AbstractCommand
      */
     protected function replaceTableName(string &$stub): AbstractCommand
@@ -202,7 +207,8 @@ abstract class AbstractCommand extends Command
     /**
      * Replace the route name in the stub.
      *
-     * @param  string $stub
+     * @param string $stub
+     *
      * @return AbstractCommand
      */
     protected function replacePackageRouteName(string &$stub): AbstractCommand
@@ -217,7 +223,8 @@ abstract class AbstractCommand extends Command
     /**
      * Replace the route name in the stub.
      *
-     * @param  string $stub
+     * @param string $stub
+     *
      * @return AbstractCommand
      */
     protected function replaceRouteName(string &$stub): AbstractCommand
@@ -230,7 +237,8 @@ abstract class AbstractCommand extends Command
     /**
      * Replace the object name in the stub.
      *
-     * @param  string $stub
+     * @param string $stub
+     *
      * @return AbstractCommand
      */
     protected function replaceObjectName(string &$stub): AbstractCommand
@@ -244,33 +252,35 @@ abstract class AbstractCommand extends Command
      * Get the path to where we should store the command result.
      *
      * @param array $args
+     *
      * @return string
      */
-    protected abstract function getPath(...$args): string;
+    abstract protected function getPath(...$args): string;
 
     /**
      * Compile the command result stub.
      *
      * @return string
      */
-    protected abstract function compileStub(): string;
+    abstract protected function compileStub(): string;
 
     /**
-     * Log command
+     * Log command.
+     *
      * @return void
      */
     protected function writeLog(): void
     {
         if (!$this->option('no-log')) {
-            $log = 'php artisan ' . $this->name . ' ' . $this->argument('name') ;
-            $log .= ($this->hasArgument('package') AND $this->argument('package')) ? ' '.$this->argument('package') : '';
-            $log .= ($this->hasArgument('view') AND $this->argument('view')) ? ' '.$this->argument('view') : '';
-            $log .= ($this->hasArgument('folder') AND $this->argument('folder')) ? ' '.$this->argument('folder') : '';
-            $log .= ($this->hasOption('api') AND $this->option('api')) ? ' -a' : '';
-            $log .= ($this->hasOption('schema') AND $this->option('schema')) ? " -s '" . $this->option('schema') . "'" : '';
-            $log .= ($this->hasOption('parent') AND $this->option('parent')) ? " -p '" . $this->option('parent') . "'" : '';
-            $log .= ($this->hasOption('ownarg') AND $this->option('ownarg')) ? ' -o': '';
-            $log .= ($this->hasOption('argparent') AND $this->option('argparent')) ? ' -ar' : '';
+            $log = 'php artisan '.$this->name.' '.$this->argument('name');
+            $log .= ($this->hasArgument('package') and $this->argument('package')) ? ' '.$this->argument('package') : '';
+            $log .= ($this->hasArgument('view') and $this->argument('view')) ? ' '.$this->argument('view') : '';
+            $log .= ($this->hasArgument('folder') and $this->argument('folder')) ? ' '.$this->argument('folder') : '';
+            $log .= ($this->hasOption('api') and $this->option('api')) ? ' -a' : '';
+            $log .= ($this->hasOption('schema') and $this->option('schema')) ? " -s '".$this->option('schema')."'" : '';
+            $log .= ($this->hasOption('parent') and $this->option('parent')) ? " -p '".$this->option('parent')."'" : '';
+            $log .= ($this->hasOption('ownarg') and $this->option('ownarg')) ? ' -o' : '';
+            $log .= ($this->hasOption('argparent') and $this->option('argparent')) ? ' -ar' : '';
 
             $this->files->append(storage_path('logs/'.config('ha-generator.logFile').'-'.now()->format('Y-m-d').'.log'), $log.PHP_EOL);
         }
@@ -279,9 +289,9 @@ abstract class AbstractCommand extends Command
     /**
      * @return bool
      */
-    protected function hasPackage():bool
+    protected function hasPackage(): bool
     {
-        return ($this->hasArgument('package') AND $this->argument('package'));
+        return $this->hasArgument('package') and $this->argument('package');
     }
 
     /**
@@ -289,7 +299,7 @@ abstract class AbstractCommand extends Command
      */
     protected function resolveStubPath($stub)
     {
-        return file_exists($customPath = base_path('stubs/ha-generator/' . trim($stub, '/'))) && config('ha-generator.customStubs')
+        return file_exists($customPath = base_path('stubs/ha-generator/'.trim($stub, '/'))) && config('ha-generator.customStubs')
                     ? $customPath
                     : static::STUB_DIR.$stub;
     }

@@ -5,9 +5,9 @@ namespace Laravelha\Generator\SyntaxBuilders;
 class AbstractSintaxBuilder
 {
     /**
-     *  Root dir of stubs
+     *  Root dir of stubs.
      */
-    const STUB_DIR = __DIR__ . '/../stubs/';
+    const STUB_DIR = __DIR__.'/../stubs/';
 
     /**
      * A template to be inserted.
@@ -17,40 +17,39 @@ class AbstractSintaxBuilder
     protected $template;
 
     /**
-     * String types supported by bluePrint
+     * String types supported by bluePrint.
      *
      * @var array
      */
     protected $stringTypes;
 
     /**
-     * Integer types supported by bluePrint
+     * Integer types supported by bluePrint.
      *
      * @var array
      */
     protected $integerTypes;
 
     /**
-     * Float types supported by bluePrint
+     * Float types supported by bluePrint.
      *
      * @var array
      */
     protected $floatTypes;
 
     /**
-     * Date types supported by bluePrint
+     * Date types supported by bluePrint.
      *
      * @var array
      */
     protected $dateTypes;
 
     /**
-     * All types supported by bluePrint
+     * All types supported by bluePrint.
      *
      * @var array
      */
     protected $bluePrintTypes;
-
 
     /**
      * AbstractSintaxBuilder constructor.
@@ -67,7 +66,8 @@ class AbstractSintaxBuilder
     /**
      * Determine if field has foreign constraint.
      *
-     * @param  array $field
+     * @param array $field
+     *
      * @return bool
      */
     protected function hasForeignConstraint(array $field): bool
@@ -76,16 +76,18 @@ class AbstractSintaxBuilder
     }
 
     /**
-     * Remove empty fields
+     * Remove empty fields.
+     *
      * @param array $fields
+     *
      * @return array
      */
     protected function removeEmpty(array $fields): array
     {
         foreach ($fields as $key => $field) {
-            if($field == '')
+            if ($field == '') {
                 unset($fields[$key]);
-
+            }
         }
 
         return $fields;
@@ -96,7 +98,7 @@ class AbstractSintaxBuilder
      */
     protected function resolveStubPath($stub)
     {
-        return file_exists($customPath = base_path('stubs/ha-generator/' . trim($stub, '/'))) && config('ha-generator.customStubs')
+        return file_exists($customPath = base_path('stubs/ha-generator/'.trim($stub, '/'))) && config('ha-generator.customStubs')
             ? $customPath
             : static::STUB_DIR.$stub;
     }

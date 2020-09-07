@@ -48,14 +48,13 @@ class MigrationPivotCommand extends Command
     /**
      * @var string
      */
-    const STUB_DIR = __DIR__ . "/../stubs";
-
+    const STUB_DIR = __DIR__.'/../stubs';
 
     /**
      * Create a new command instance.
      *
-     * @param  Filesystem  $files
-     * @param  Composer  $composer
+     * @param Filesystem $files
+     * @param Composer   $composer
      */
     public function __construct(Filesystem $files, Composer $composer)
     {
@@ -68,18 +67,21 @@ class MigrationPivotCommand extends Command
     /**
      * Execute the console command.
      *
-     * @return void
      * @throws FileNotFoundException
+     *
+     * @return void
      */
     public function handle(): void
     {
         if ($this->files->exists($path = $this->getPath())) {
             $this->error('Migration already exists!');
+
             return;
         }
 
         if ($this->migrationAlreadyExist()) {
             $this->error("A {$this->getClassName()} class already exists.");
+
             return;
         }
 
@@ -122,7 +124,7 @@ class MigrationPivotCommand extends Command
      */
     protected function resolveStubPath($stub)
     {
-        return file_exists($customPath = base_path('stubs/ha-generator/' . trim($stub, '/'))) && config('ha-generator.customStubs')
+        return file_exists($customPath = base_path('stubs/ha-generator/'.trim($stub, '/'))) && config('ha-generator.customStubs')
             ? $customPath
             : static::STUB_DIR.$stub;
     }
@@ -134,15 +136,16 @@ class MigrationPivotCommand extends Command
      */
     protected function getPath(): string
     {
-        return base_path() . '/database/migrations/' . date('Y_m_d_His') .
-            '_create_' . $this->getPivotTableName() . '_pivot_table.php';
+        return base_path().'/database/migrations/'.date('Y_m_d_His').
+            '_create_'.$this->getPivotTableName().'_pivot_table.php';
     }
 
     /**
      * Build the class with the given name.
      *
-     * @return string
      * @throws FileNotFoundException
+     *
+     * @return string
      */
     protected function buildClass(): string
     {
@@ -156,7 +159,8 @@ class MigrationPivotCommand extends Command
     /**
      * Apply the name of the pivot table to the stub.
      *
-     * @param  string $stub
+     * @param string $stub
+     *
      * @return MigrationPivotCommand
      */
     protected function replacePivotTableName(&$stub): MigrationPivotCommand
@@ -169,7 +173,8 @@ class MigrationPivotCommand extends Command
     /**
      * Apply the correct schema to the stub.
      *
-     * @param  string $stub
+     * @param string $stub
+     *
      * @return MigrationPivotCommand
      */
     protected function replaceSchema(&$stub): MigrationPivotCommand
@@ -191,8 +196,9 @@ class MigrationPivotCommand extends Command
     /**
      * Replace the class name for the given stub.
      *
-     * @param  string $stub
-     * @param  string $name
+     * @param string $stub
+     * @param string $name
+     *
      * @return string
      */
     protected function replaceClass($stub, $name): string
@@ -228,6 +234,7 @@ class MigrationPivotCommand extends Command
 
     /**
      * Sort the two tables in alphabetical order, in singular form.
+     *
      * @return array
      */
     protected function getSortedSingularTableNames(): array
@@ -248,7 +255,7 @@ class MigrationPivotCommand extends Command
     {
         return [
             strtolower($this->argument('tableOne')),
-            strtolower($this->argument('tableTwo'))
+            strtolower($this->argument('tableTwo')),
         ];
     }
 

@@ -29,13 +29,14 @@ class RequestsCommand extends AbstractCommand
     /**
      * @var string
      */
-    const STUB_DIR = __DIR__ . "/../stubs";
+    const STUB_DIR = __DIR__.'/../stubs';
 
     /**
      * Execute the console command.
      *
-     * @return void
      * @throws FileNotFoundException
+     *
+     * @return void
      */
     public function handle(): void
     {
@@ -49,19 +50,18 @@ class RequestsCommand extends AbstractCommand
             $this->error('UpdateRequest already exists!');
         }
 
-        if (!$directoryExists)
+        if (!$directoryExists) {
             $this->makeDirectory($path);
+        }
 
-        if (! $this->files->exists($path = $this->getPath('Store'))) {
-
+        if (!$this->files->exists($path = $this->getPath('Store'))) {
             $this->files->put($path, $this->compileStub());
 
             $filename = pathinfo($path, PATHINFO_FILENAME);
             $this->line("<info>Created Request:</info> {$filename}");
         }
 
-        if (! $this->files->exists($path = $this->getPath('Update'))) {
-
+        if (!$this->files->exists($path = $this->getPath('Update'))) {
             $this->files->put($path, $this->compileStub('update'));
 
             $filename = pathinfo($path, PATHINFO_FILENAME);
@@ -76,13 +76,15 @@ class RequestsCommand extends AbstractCommand
     /**
      * Get the path to where we should store the requests.
      *
-     * @param  array $args
+     * @param array $args
+     *
      * @return string
      */
     protected function getPath(...$args): string
     {
         if ($this->hasPackage()) {
-            $this->makeDirectory($path = $this->packagePath . "/src/Http/Requests/{$this->modelName}{$args[0]}Request.php");
+            $this->makeDirectory($path = $this->packagePath."/src/Http/Requests/{$this->modelName}{$args[0]}Request.php");
+
             return $path;
         }
 
@@ -92,13 +94,15 @@ class RequestsCommand extends AbstractCommand
     /**
      * Compile the requests stub.
      *
-     * @param String $type
-     * @return string
+     * @param string $type
+     *
      * @throws FileNotFoundException
+     *
+     * @return string
      */
     protected function compileStub(string $type = 'store'): string
     {
-        $stub = $this->files->get($this->resolveStubPath("/app/Http/Requests/Request.stub"));
+        $stub = $this->files->get($this->resolveStubPath('/app/Http/Requests/Request.stub'));
 
         $this
             ->replaceSchema($stub)
@@ -114,6 +118,7 @@ class RequestsCommand extends AbstractCommand
      *
      * @param string $stub
      * @param string $type
+     *
      * @return RequestsCommand
      */
     protected function replaceClassTypeName(string &$stub, string $type = 'Store'): RequestsCommand
@@ -126,16 +131,17 @@ class RequestsCommand extends AbstractCommand
     /**
      * Replace the schema for the stub.
      *
-     * @param  string  $stub
+     * @param string $stub
+     *
      * @return RequestsCommand
      */
     protected function replaceSchema(string &$stub): RequestsCommand
     {
         if ($schema = $this->option('schema')) {
-            $schema = (new SchemaParser)->parse($schema);
+            $schema = (new SchemaParser())->parse($schema);
         }
 
-        $stub = (new RequestSyntaxBuilder)->create($schema);
+        $stub = (new RequestSyntaxBuilder())->create($schema);
 
         return $this;
     }

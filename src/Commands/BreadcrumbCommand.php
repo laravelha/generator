@@ -42,6 +42,7 @@ class BreadcrumbCommand extends AbstractCommand
 
         if (!$this->files->exists($path = $this->getPath())) {
             $this->error('Breadcrumb file not found');
+
             return;
         }
 
@@ -58,11 +59,12 @@ class BreadcrumbCommand extends AbstractCommand
      * Get the path to where we should store the breadcrumb.
      *
      * @param array $args
+     *
      * @return string
      */
     protected function getPath(...$args): string
     {
-        return base_path("routes/breadcrumbs.php");
+        return base_path('routes/breadcrumbs.php');
     }
 
     /**
