@@ -1,0 +1,15 @@
+/**
+     * ['data' => 'columnName', 'searchable' => true, 'orderable' => true, 'linkable' => false]
+     *
+     * searchable and orderable is true by default
+     * linkable is false by default
+     *
+     * @return array[]
+     */
+    public static function getColumns(): array
+    {
+        return [
+            ['data' => 'id', 'linkable' => true],
+            {{column}}
+        ];
+    }
