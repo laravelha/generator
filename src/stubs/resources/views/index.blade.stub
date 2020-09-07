@@ -17,35 +17,35 @@
                         <table class="table table-striped table-hover" id="{{tableName}}-table">
                             <thead>
                                 <tr>
-                                    @foreach($columns as $column)
-                                        <th>@lang('{{tableName}}.'.$column['data'])</th>
+                                    @foreach(${{routeName}}->first()->getAttributes() as $key => $value)
+                                    <th>@lang('{{tableName}}.'.$key)</th>
                                     @endforeach
                                 </tr>
                             </thead>
-                            <tbody></tbody>
+                            <tbody>
+                                @foreach(${{routeName}} as ${{objectName}})
+                                <tr>
+                                    @foreach(${{objectName}}->toArray() as $key => $value)
+                                    <td>
+                                        @if('id' === $key)
+                                            <a href="{{ route('{{routeName}}.show', ${{objectName}}) }}"
+                                               title="{{ __('app.show.title', ['item' => __('{{routeName}}.show', ['{{objectName}}' => ${{objectName}}->id])]) }}"
+                                            >
+                                            {{ $value }}
+                                            </a>
+                                        @else
+                                        {{ $value }}
+                                        @endif
+                                    </td>
+                                    @endforeach
+                                </tr>
+                                @endforeach
+                            </tbody>
                         </table>
                     </div>
+                    {{ ${{routeName}}->links() }}
                 </div>
             </div>
         </div>
     </div>
 @endsection
-
-
-@push('scripts')
-<script id="script">
-    $(function () {
-        var table = $('#{{tableName}}-table').DataTable({
-            serverSide: true,
-            processing: true,
-            responsive: true,
-            order: [ [0, 'desc'] ],
-            ajax: {
-                url: '{{routeName}}/data'
-            },
-            columns: @json($columns),
-            pagingType: 'full_numbers'
-        });
-    });
-</script>
-@endpush

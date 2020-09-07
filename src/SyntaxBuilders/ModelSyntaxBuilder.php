@@ -15,24 +15,10 @@ class ModelSyntaxBuilder extends AbstractSintaxBuilder
      */
     public function create(array $schema): array
     {
-        $column = $this->createSchemaForColumn($schema);
         $foreign = $this->createSchemaForForeign($schema);
         $searchable = $this->createSchemaForSearchable($schema);
 
-        return compact('column', 'foreign', 'searchable');
-    }
-
-    /**
-     * Create the schema for the columns in getColumns.
-     *
-     * @param  array $schema
-     * @return string
-     */
-    private function createSchemaForColumn(array $schema): string
-    {
-        $fields = $this->constructSchema($schema);
-
-        return $this->insert($fields)->into($this->getSchemaWrapper());
+        return compact('foreign', 'searchable');
     }
 
     /**
@@ -79,7 +65,7 @@ class ModelSyntaxBuilder extends AbstractSintaxBuilder
      * @param  string $placeholder
      * @return string
      */
-    private function into(string $wrapper, string $placeholder = 'column'): string
+    private function into(string $wrapper, string $placeholder = 'foreign'): string
     {
         return str_replace('{{' . $placeholder . '}}', $this->template, $wrapper);
     }
@@ -90,7 +76,7 @@ class ModelSyntaxBuilder extends AbstractSintaxBuilder
      * @param string $type
      * @return string
      */
-    private function getSchemaWrapper(string $type = 'Column'): string
+    private function getSchemaWrapper(string $type = 'Foreign'): string
     {
         return file_get_contents($this->resolveStubPath("/app/{$type}Model.stub"));
     }
@@ -102,7 +88,7 @@ class ModelSyntaxBuilder extends AbstractSintaxBuilder
      * @param string $method
      * @return string|array
      */
-    private function constructSchema(array $schema, string $method = 'addColumn')
+    private function constructSchema(array $schema, string $method = 'addForeign')
     {
         if (!$schema) return '';
 
@@ -111,23 +97,6 @@ class ModelSyntaxBuilder extends AbstractSintaxBuilder
         }, $schema);
 
         return implode("\n" . str_repeat(' ', 12), $this->removeEmpty($fields));
-    }
-
-    /**
-     * Construct the syntax to add a column.
-     *
-     * @param  array $field
-     * @return string
-     */
-    private function addColumn(array $field): string
-    {
-        if (array_key_exists('nullable', $field['options']))
-            return '';
-
-        if($this->hasForeignConstraint($field))
-            return '';
-
-        return sprintf("['data' => '%s'],", $field['name']);
     }
 
     /**

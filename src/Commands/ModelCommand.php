@@ -134,7 +134,7 @@ class ModelCommand extends AbstractCommand
 
         $schema = (new ModelSyntaxBuilder)->create($schema);
 
-        $stub = str_replace(['{{column}}', '{{foreign}}', '{{searchables}}'], $schema, $stub);
+        $stub = str_replace(['{{foreign}}', '{{searchables}}'], $schema, $stub);
 
         return $this;
     }
