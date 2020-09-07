@@ -20,6 +20,7 @@ class CrudGenerator extends Command
         {--no-log : No logging}
         {--y|yes : Skip confirmation}
         {--a|api : The application is an API?}
+        {--d|datatables : Use to datatables}
         {--s|schema= : Schema options?}';
 
     /**
@@ -94,6 +95,7 @@ class CrudGenerator extends Command
         try {
             $params = ['name' => $name, '--no-log' => $this->noLogDetailed, '--schema' => $this->option('schema'), '--api' => $this->option('api')];
             $params += $this->hasArgument('package') ? ['package' => $this->argument('package')] : [];
+            $params += $this->option('datatables') ? ['--datatables' => $this->option('datatables')] : [];
 
             $this->call('ha-generator:model', $params);
         } catch (\Exception $exception) {
@@ -145,6 +147,7 @@ class CrudGenerator extends Command
         try {
             $params = ['name' => $name, '--no-log' => $this->noLogDetailed, '--schema' => $this->option('schema'), '--api' => $this->option('api')];
             $params += $this->hasArgument('package') ? ['package' => $this->argument('package')] : [];
+            $params += $this->option('datatables') ? ['--datatables' => $this->option('datatables')] : [];
 
             $this->call('ha-generator:controller', $params);
         } catch (\Exception $exception) {
@@ -163,6 +166,7 @@ class CrudGenerator extends Command
         try {
             $params = ['name' => $name, '--no-log' => $this->noLogDetailed, '--api' => $this->option('api')];
             $params += $this->hasArgument('package') ? ['package' => $this->argument('package')] : [];
+            $params += $this->option('datatables') ? ['--datatables' => $this->option('datatables')] : [];
 
             $this->call('ha-generator:route', $params);
         } catch (\Exception $exception) {
@@ -345,6 +349,7 @@ class CrudGenerator extends Command
     private function viewFile(string $name, string $view = null, string $schema = null): void
     {
         $params = ['name' => $name, '--no-log' => $this->noLogDetailed];
+        $params += $this->option('datatables') ? ['--datatables' => $this->option('datatables')] : [];
 
         if ($view) {
             $params['view'] = $view;

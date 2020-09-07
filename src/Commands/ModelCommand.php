@@ -18,6 +18,7 @@ class ModelCommand extends AbstractCommand
         {package? : Package name (Optional)}
         {--no-log : No logging}
         {--a|api : The application is an API?}
+        {--d|datatables : Use to datatables}
         {--s|schema= : Schema options?}';
 
     /**
@@ -117,7 +118,9 @@ class ModelCommand extends AbstractCommand
      */
     protected function compileWebModelStub(): string
     {
-        $stub = $this->files->get($this->resolveStubPath('/app/WebModel.stub'));
+        $datatables = $this->option('datatables') ? 'Datatables' : '';
+
+        $stub = $this->files->get($this->resolveStubPath("/app/WebModel{$datatables}.stub"));
 
         $this
             ->replaceSchema($stub)
@@ -142,7 +145,7 @@ class ModelCommand extends AbstractCommand
 
         $schema = (new ModelSyntaxBuilder())->create($schema);
 
-        $stub = str_replace(['{{foreign}}', '{{searchables}}'], $schema, $stub);
+        $stub = str_replace(['{{column}}', '{{foreign}}', '{{searchables}}'], $schema, $stub);
 
         return $this;
     }

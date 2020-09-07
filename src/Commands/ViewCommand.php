@@ -17,6 +17,7 @@ class ViewCommand extends AbstractCommand
         {name : Model name (singular) for example User.}
         {view=index : View name [index, show, create, edit, delete]}
         {--no-log : No logging}
+        {--d|datatables : Use to datatables}
         {--s|schema= : Schema options?}';
 
     /**
@@ -88,7 +89,9 @@ class ViewCommand extends AbstractCommand
      */
     protected function compileStub(): string
     {
-        $stub = $this->files->get($this->resolveStubPath("/resources/views/{$this->viewName}.blade.stub"));
+        $datatables = 'index' === $this->viewName && $this->option('datatables') ? 'Datatables' : '';
+
+        $stub = $this->files->get($this->resolveStubPath("/resources/views/{$this->viewName}{$datatables}.blade.stub"));
 
         if ($this->option('schema')) {
             $this->replaceSchema($stub);
