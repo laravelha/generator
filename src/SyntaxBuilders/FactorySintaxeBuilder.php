@@ -108,7 +108,7 @@ class FactorySintaxeBuilder extends AbstractSintaxBuilder
             return '';
         }
 
-        return sprintf("'%s' => \$faker->%s,", $field['name'], $this->getFakerType($field));
+        return sprintf("'%s' => \$this->faker->%s,", $field['name'], $this->getFakerType($field));
     }
 
     /**
