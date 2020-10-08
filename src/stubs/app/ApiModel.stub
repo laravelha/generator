@@ -4,6 +4,7 @@ namespace {{modelNamespace}};
 
 use Laravelha\Support\Traits\RequestQueryBuildable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class {{modelName}} extends Model
 {

@@ -21,7 +21,7 @@ class {{modelName}}Test extends TestCase
         {{modelName}}::factory()->count(30)->create();
 
         $this->assertCount(30, {{modelName}}::all());
-
+git
         $response = $this->json('GET', self::BASE_URI);
 
         $response->assertJsonStructure([
@@ -84,7 +84,7 @@ class {{modelName}}Test extends TestCase
      */
     public function {{objectName}}CanBeUpdated()
     {
-        ${{objectName}}Fakes = {{modelName}}::factory()->make();
+        ${{objectName}}Fakes = {{modelName}}::factory()->count(2)->make();
         $this->json('POST', self::BASE_URI, ${{objectName}}Fakes->first()->toArray());
 
         ${{objectName}}  = {{modelName}}::first();
