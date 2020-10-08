@@ -28,7 +28,7 @@ class {{modelName}}Test extends TestCase
      */
     public function {{objectName}}CanBeCreated()
     {
-        ${{objectName}}Fake = factory({{modelName}}::class)->make();
+        ${{objectName}}Fake = {{modelName}}::factory()->make();
 
         $response = $this->post(self::BASE_URI, ${{objectName}}Fake->toArray());
 
@@ -44,8 +44,8 @@ class {{modelName}}Test extends TestCase
      */
     public function {{objectName}}CanBeUpdated()
     {
-        ${{objectName}} = factory({{modelName}}::class)->create();
-        ${{objectName}}Fake = factory({{modelName}}::class)->make();
+        ${{objectName}} = {{modelName}}::factory()->make();
+        ${{objectName}}Fake = {{modelName}}::factory()->make();
 
         $response = $this->put(self::BASE_URI . '/' . ${{objectName}}->id, ${{objectName}}Fake->toArray());
 
@@ -59,7 +59,7 @@ class {{modelName}}Test extends TestCase
      */
     public function {{objectName}}CanBeDeleted()
     {
-        ${{objectName}} = factory({{modelName}}::class)->create();
+        ${{objectName}} = {{modelName}}::factory()->make();
 
         $response = $this->delete(self::BASE_URI . '/' . ${{objectName}}->id);
 
