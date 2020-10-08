@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class {{modelName}} extends Model
 {
-    use RequestQueryBuildable;
+    use RequestQueryBuildable, HasFactory;
 
     protected $guarded = ['id'];
 

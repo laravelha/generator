@@ -49,6 +49,8 @@ return [
         'foreign',
     ],
 
+    'modelsFolder' => 'App\Models',
+
     'logFile' => 'ha-generator',
 
     'packagesFolder' => 'packages',

@@ -153,7 +153,7 @@ abstract class AbstractCommand extends Command
      */
     protected function replaceModelNamespace(string &$stub): AbstractCommand
     {
-        $namespace = $this->hasPackage() ? $this->namespace.'\\Models' : $this->namespace;
+        $namespace = $this->hasPackage() ? $this->namespace.'\\Models' : config('ha-generator.modelsFolder');
 
         $stub = str_replace('{{modelNamespace}}', $namespace, $stub);
 
