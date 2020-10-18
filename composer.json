@@ -11,12 +11,12 @@
     ],
     "require": {
         "doctrine/dbal": "^2.10",
-        "illuminate/console": "^6.0|^7.0",
-        "illuminate/filesystem": "^6.0|^7.0",
-        "illuminate/support": "^6.0|^7.0",
-        "laravelha/preset-api": "^1.0",
-        "laravelha/preset-web": "^1.2",
-        "laravelha/support": "^1.0",
+        "illuminate/console": "^6.0|^7.0|^8.0",
+        "illuminate/filesystem": "^6.0|^7.0|^8.0",
+        "illuminate/support": "^6.0|^7.0|^8.0",
+        "laravelha/preset-api": "^1.0.8",
+        "laravelha/preset-web": "^1.4",
+        "laravelha/support": "^1.0.4",
         "orangehill/iseed": "^2.6",
         "ext-dom": "*"
     },

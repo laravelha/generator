@@ -101,14 +101,14 @@ class FactorySintaxeBuilder extends AbstractSintaxBuilder
         if ($this->hasForeignConstraint($field)) {
             $foreignName = Str::studly(str_replace('_id', '', $field['name']));
 
-            return sprintf("'%s' => factory({{modelNamespace}}\\$foreignName::class),", $field['name']);
+            return sprintf("'%s' => {{modelNamespace}}\\$foreignName::factory()->create(),", $field['name']);
         }
 
         if (strpos($field['name'], '_id')) {
             return '';
         }
 
-        return sprintf("'%s' => \$faker->%s,", $field['name'], $this->getFakerType($field));
+        return sprintf("'%s' => \$this->faker->%s,", $field['name'], $this->getFakerType($field));
     }
 
     /**

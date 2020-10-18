@@ -85,11 +85,11 @@ class RouteCommand extends AbstractCommand
      */
     protected function compileApiStub(): string
     {
-        $stub = PHP_EOL."Route::apiResource('{{routeName}}', '{{modelName}}Controller');".PHP_EOL;
+        $stub = PHP_EOL."Route::apiResource('{{routeName}}', App\Http\Controllers\{{modelName}}Controller::class);".PHP_EOL;
 
         $this
             ->replaceModelName($stub)
-            ->replaceRouteName($stub);
+            ->replaceRouteName($stub)
 
         return $stub;
     }
@@ -104,12 +104,13 @@ class RouteCommand extends AbstractCommand
         $stub = PHP_EOL;
 
         $stub = $this->option('datatables')
-                ? $stub."Route::get('/{{routeName}}/data', '{{modelName}}Controller@data')->name('{{routeName}}.data');".PHP_EOL
+                ? $stub."Route::get('/{{routeName}}/data', [App\Http\Controllers\{{modelName}}Controller::class, 'data'])->name('{{routeName}}.data');".PHP_EOL
                 : '';
 
         $stub = $stub.
-            "Route::get('/{{routeName}}/{{{objectName}}}/delete', '{{modelName}}Controller@delete')->name('{{routeName}}.delete');".PHP_EOL.
-            "Route::resource('{{routeName}}', '{{modelName}}Controller');".PHP_EOL;
+            "Route::get('/{{routeName}}/{{{objectName}}}/delete', [App\Http\Controllers\{{modelName}}Controller::class, 'delete'])->name('{{routeName}}.delete');".PHP_EOL.
+            "Route::resource('{{routeName}}', App\Http\Controllers\{{modelName}}Controller::class);".PHP_EOL;
+
 
         $this
             ->replaceModelName($stub)

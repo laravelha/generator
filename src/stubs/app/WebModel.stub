@@ -3,10 +3,11 @@
 namespace {{modelNamespace}};
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class {{modelName}} extends Model
 {
     protected $guarded = ['id'];
-
+    use HasFactory;
     {{foreign}}
 }
