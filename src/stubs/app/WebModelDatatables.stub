@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class {{modelName}} extends Model
 {
     use Tableable;
+    use HasFactory;
 
     protected $guarded = ['id'];
 

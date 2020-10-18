@@ -75,7 +75,7 @@ class ModelCommand extends AbstractCommand
             return $path;
         }
 
-        return app_path("{$this->modelName}.php");
+        return is_dir(app_path('Models')) ? app_path("Models/{$this->modelName}.php") : app_path("{$this->modelName}.php");
     }
 
     /**
