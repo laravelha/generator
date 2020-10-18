@@ -14,9 +14,7 @@
         "illuminate/console": "^8.0",
         "illuminate/filesystem": "^8.0",
         "illuminate/support": "^8.0",
-        "laravelha/preset-api": "^1.0.8",
-        "laravelha/preset-web": "^1.4",
-        "laravelha/support": "^1.0.4",
+        "laravelha/support": "^1.0",
         "orangehill/iseed": "^2.6",
         "ext-dom": "*"
     },
