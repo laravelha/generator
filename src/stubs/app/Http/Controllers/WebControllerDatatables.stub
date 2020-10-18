@@ -1,0 +1,191 @@
+<?php
+
+namespace {{namespace}}\Http\Controllers;
+
+use {{namespace}}\Http\Requests\{{modelName}}StoreRequest;
+use {{namespace}}\Http\Requests\{{modelName}}UpdateRequest;
+use {{modelNamespace}}\{{modelName}};
+
+use Exception;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
+use Illuminate\Routing\Controller;
+
+class {{modelName}}Controller extends Controller
+{
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Factory|View
+     */
+    public function index()
+    {
+        $columns = {{modelName}}::getColumns();
+
+        return view('{{routeName}}.index', compact('columns'));
+    }
+
+    /**
+     * Get a listing of the resource.
+     *
+     * @return JsonResponse
+     * @throws Exception
+     */
+    public function data()
+    {
+        return {{modelName}}::getDatatable();
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return Factory|View
+     */
+    public function create()
+    {
+        return view('{{routeName}}.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  {{modelName}}StoreRequest $request
+     *
+     * @return RedirectResponse
+     */
+    public function store({{modelName}}StoreRequest $request)
+    {
+        try {
+            ${{objectName}} = {{modelName}}::create($request->validated());
+            return redirect()
+                ->route('{{routeName}}.show', ${{objectName}})
+                ->with([
+                    'type' => 'success',
+                    'message' => __('messages.success.store', [
+                        'item' => __('{{routeName}}.show', ['{{objectName}}' => ${{objectName}}->id]),
+                    ]),
+                ]);
+        } catch (\Exception  $exception) {
+            return redirect()
+                ->back()
+                ->with([
+                    'type' => 'danger',
+                    'message' => __('messages.danger.store', [
+                        'item' => __('{{routeName}}.model'),
+                    ]),
+                    'error' => $exception->getMessage(),
+                ])
+                ->withInput();
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  {{modelName}} ${{objectName}}
+     *
+     * @return Factory|View
+     */
+    public function show({{modelName}} ${{objectName}})
+    {
+        return view('{{routeName}}.show', compact('{{objectName}}'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  {{modelName}} ${{objectName}}
+     *
+     * @return Factory|View
+     */
+    public function edit({{modelName}} ${{objectName}})
+    {
+        return view('{{routeName}}.edit', compact('{{objectName}}'));
+    }
+
+    /**
+     * Update the specified resource in storage
+     *
+     * @param  {{modelName}}UpdateRequest $request
+     * @param  {{modelName}} ${{objectName}}
+     *
+     * @return RedirectResponse
+     */
+    public function update({{modelName}}UpdateRequest $request, {{modelName}} ${{objectName}})
+    {
+        try {
+            ${{objectName}}->update($request->validated());
+            return redirect()
+                ->route('{{routeName}}.show', ${{objectName}})
+                ->with([
+                    'type' => 'success',
+                    'message' => __('messages.success.update', [
+                        'item' => __('{{routeName}}.show', ['{{objectName}}' => ${{objectName}}->id]),
+                    ]),
+                ]);
+        } catch (\Exception  $exception) {
+            return redirect()
+                ->back()
+                ->with([
+                    'type' => 'danger',
+                    'message' => __('messages.danger.update', [
+                        'item' => __('{{routeName}}.show', ['{{objectName}}' => ${{objectName}}->id]),
+                    ]),
+                    'error' => $exception->getMessage(),
+                ])
+                ->withInput();
+        }
+    }
+
+    /**
+     * Show the form for deleting the specified resource.
+     *
+     * @param  {{modelName}} ${{objectName}}
+     *
+     * @return Factory|View
+     */
+    public function delete({{modelName}} ${{objectName}})
+    {
+        return view('{{routeName}}.delete', compact('{{objectName}}'));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  {{modelName}} ${{objectName}}
+     *
+     * @return RedirectResponse
+     */
+    public function destroy({{modelName}} ${{objectName}})
+    {
+        try {
+            ${{objectName}}->delete();
+            return redirect()
+                ->route('{{routeName}}.index')
+                ->with([
+                    'type' => 'success',
+                    'message' => __('messages.success.destroy', [
+                        'item' => __('{{routeName}}.show', ['{{objectName}}' => ${{objectName}}->id]),
+                    ]),
+                ]);
+        } catch (\Exception  $exception) {
+            return redirect()
+                ->back()
+                ->with([
+                    'type' => 'danger',
+                    'message' => __('messages.danger.destroy', [
+                        'item' => __('{{routeName}}.show', ['{{objectName}}' => ${{objectName}}->id]),
+                    ]),
+                    'error' => $exception->getMessage(),
+                ])
+                ->withInput();
+        }
+    }
+}

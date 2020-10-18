@@ -1,0 +1,17 @@
+<?php
+
+namespace {{modelNamespace}};
+
+use Laravelha\Support\Traits\Tableable;
+use Illuminate\Database\Eloquent\Model;
+
+class {{modelName}} extends Model
+{
+    use Tableable;
+
+    protected $guarded = ['id'];
+
+    {{foreign}}
+
+    {{column}}
+}

@@ -13,6 +13,7 @@ class RouteCommand extends AbstractCommand
         {name : Model name (singular) for example User}
         {package? : Package name (Optional)}
         {--no-log : No logging}
+        {--d|datatables : Use to datatables}
         {--a|api : Schema options?}';
 
     /**
@@ -100,9 +101,16 @@ class RouteCommand extends AbstractCommand
      */
     protected function compileWebStub(): string
     {
-        $stub = PHP_EOL.
+        $stub = PHP_EOL;
+
+        $stub = $this->option('datatables')
+                ? $stub."Route::get('/{{routeName}}/data', [App\Http\Controllers\{{modelName}}Controller::class, 'data'])->name('{{routeName}}.data');".PHP_EOL
+                : '';
+
+        $stub = $stub.
             "Route::get('/{{routeName}}/{{{objectName}}}/delete', [App\Http\Controllers\{{modelName}}Controller::class, 'delete'])->name('{{routeName}}.delete');".PHP_EOL.
             "Route::resource('{{routeName}}', App\Http\Controllers\{{modelName}}Controller::class);".PHP_EOL;
+
 
         $this
             ->replaceModelName($stub)

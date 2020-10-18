@@ -18,6 +18,7 @@ class ControllerCommand extends AbstractCommand
         {package? : Package name (Optional)}
         {--no-log : No logging}
         {--a|api : The application is an API?}
+        {--d|datatables : Use to datatables}
         {--s|schema= : Schema options?}';
 
     /**
@@ -124,7 +125,9 @@ class ControllerCommand extends AbstractCommand
      */
     protected function compileWebControllerStub(): string
     {
-        $stub = $this->files->get($this->resolveStubPath('/app/Http/Controllers/WebController.stub'));
+        $datatables = $this->option('datatables') ? 'Datatables' : '';
+
+        $stub = $this->files->get($this->resolveStubPath("/app/Http/Controllers/WebController{$datatables}.stub"));
 
         $this
             ->replaceNamespace($stub)
