@@ -49,7 +49,7 @@ return [
         'foreign',
     ],
 
-    'modelsFolder' => 'App\Models',
+    'modelNamespace' => 'App\Models',
 
     'logFile' => 'ha-generator',
 

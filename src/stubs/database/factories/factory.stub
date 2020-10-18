@@ -3,7 +3,6 @@ namespace Database\Factories;
 
 use {{modelNamespace}}\{{modelName}};
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 class {{modelName}}Factory extends Factory
 {

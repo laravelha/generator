@@ -89,7 +89,7 @@ class RouteCommand extends AbstractCommand
 
         $this
             ->replaceModelName($stub)
-            ->replaceRouteName($stub)
+            ->replaceRouteName($stub);
 
         return $stub;
     }
