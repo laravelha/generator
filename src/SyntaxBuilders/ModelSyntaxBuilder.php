@@ -6,11 +6,11 @@ use Illuminate\Support\Str;
 
 class ModelSyntaxBuilder extends AbstractSintaxBuilder
 {
-
     /**
      * Create the PHP syntax for the given schema.
      *
-     * @param  array $schema
+     * @param array $schema
+     *
      * @return array
      */
     public function create(array $schema): array
@@ -25,7 +25,8 @@ class ModelSyntaxBuilder extends AbstractSintaxBuilder
     /**
      * Create the schema for the columns in getColumns.
      *
-     * @param  array $schema
+     * @param array $schema
+     *
      * @return string
      */
     private function createSchemaForColumn(array $schema): string
@@ -38,7 +39,8 @@ class ModelSyntaxBuilder extends AbstractSintaxBuilder
     /**
      * Create the schema for the foreign methods.
      *
-     * @param  array $schema
+     * @param array $schema
+     *
      * @return string
      */
     private function createSchemaForForeign(array $schema): string
@@ -49,7 +51,8 @@ class ModelSyntaxBuilder extends AbstractSintaxBuilder
     /**
      * Create the schema for the api searchable method.
      *
-     * @param  array $schema
+     * @param array $schema
+     *
      * @return string
      */
     private function createSchemaForSearchable(array $schema): string
@@ -62,7 +65,8 @@ class ModelSyntaxBuilder extends AbstractSintaxBuilder
     /**
      * Store the given template, to be inserted somewhere.
      *
-     * @param  string $template
+     * @param string $template
+     *
      * @return ModelSyntaxBuilder
      */
     private function insert(string $template): ModelSyntaxBuilder
@@ -75,19 +79,21 @@ class ModelSyntaxBuilder extends AbstractSintaxBuilder
     /**
      * Get the stored template, and insert into the given wrapper.
      *
-     * @param  string $wrapper
-     * @param  string $placeholder
+     * @param string $wrapper
+     * @param string $placeholder
+     *
      * @return string
      */
     private function into(string $wrapper, string $placeholder = 'column'): string
     {
-        return str_replace('{{' . $placeholder . '}}', $this->template, $wrapper);
+        return str_replace('{{'.$placeholder.'}}', $this->template, $wrapper);
     }
 
     /**
      * Get the wrapper template.
      *
      * @param string $type
+     *
      * @return string
      */
     private function getSchemaWrapper(string $type = 'Column'): string
@@ -98,34 +104,40 @@ class ModelSyntaxBuilder extends AbstractSintaxBuilder
     /**
      * Construct the schema fields.
      *
-     * @param array $schema
+     * @param array  $schema
      * @param string $method
+     *
      * @return string|array
      */
     private function constructSchema(array $schema, string $method = 'addColumn')
     {
-        if (!$schema) return '';
+        if (!$schema) {
+            return '';
+        }
 
         $fields = array_map(function ($field) use ($method) {
             return $this->$method($field);
         }, $schema);
 
-        return implode("\n" . str_repeat(' ', 12), $this->removeEmpty($fields));
+        return implode("\n".str_repeat(' ', 12), $this->removeEmpty($fields));
     }
 
     /**
      * Construct the syntax to add a column.
      *
-     * @param  array $field
+     * @param array $field
+     *
      * @return string
      */
     private function addColumn(array $field): string
     {
-        if (array_key_exists('nullable', $field['options']))
+        if (array_key_exists('nullable', $field['options'])) {
             return '';
+        }
 
-        if($this->hasForeignConstraint($field))
+        if ($this->hasForeignConstraint($field)) {
             return '';
+        }
 
         return sprintf("['data' => '%s'],", $field['name']);
     }
@@ -133,15 +145,17 @@ class ModelSyntaxBuilder extends AbstractSintaxBuilder
     /**
      * Construct the syntax to add a foreign.
      *
-     * @param  array $field
+     * @param array $field
+     *
      * @return string
      */
     private function addForeign(array $field): string
     {
-        if (! $this->hasForeignConstraint($field))
+        if (!$this->hasForeignConstraint($field)) {
             return '';
+        }
 
-        $objectForeign = Str::singular(str_replace("'", '',$field['options']['on']));
+        $objectForeign = Str::singular(str_replace("'", '', $field['options']['on']));
 
         return str_replace(['{{objectForeigntName}}', '{{ModelForeigntName}}'], [$objectForeign, ucwords($objectForeign)], $this->getSchemaWrapper('Foreign'));
     }
@@ -149,30 +163,35 @@ class ModelSyntaxBuilder extends AbstractSintaxBuilder
     /**
      * Construct the syntax to add a searchable.
      *
-     * @param  array $field
+     * @param array $field
+     *
      * @return string
      */
     private function addSearchable(array $field): string
     {
-        if (array_key_exists('nullable', $field['options']))
+        if (array_key_exists('nullable', $field['options'])) {
             return '';
+        }
 
-        if($this->hasForeignConstraint($field))
+        if ($this->hasForeignConstraint($field)) {
             return '';
+        }
 
         return sprintf("'%s' => 'like',", $field['name']);
     }
 
     /**
-     * @param  array  $schema
+     * @param array $schema
+     *
      * @return array
      */
     private function getRequiredFields(array $schema): array
     {
         $fields = [];
         foreach ($schema as $field) {
-            if (! array_key_exists('nullable', $field['options']))
+            if (!array_key_exists('nullable', $field['options'])) {
                 $fields[] = $field;
+            }
         }
 
         return $fields;

@@ -111,7 +111,6 @@ class RouteCommand extends AbstractCommand
             "Route::get('/{{routeName}}/{{{objectName}}}/delete', [App\Http\Controllers\{{modelName}}Controller::class, 'delete'])->name('{{routeName}}.delete');".PHP_EOL.
             "Route::resource('{{routeName}}', App\Http\Controllers\{{modelName}}Controller::class);".PHP_EOL;
 
-
         $this
             ->replaceModelName($stub)
             ->replaceRouteName($stub)
