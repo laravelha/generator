@@ -15,7 +15,7 @@
         "illuminate/filesystem": "^8.0",
         "illuminate/support": "^8.0",
         "laravelha/support": "^1.0",
-        "orangehill/iseed": "^2.6",
+        "orangehill/iseed": "^3.0",
         "ext-dom": "*"
     },
     "autoload": {
